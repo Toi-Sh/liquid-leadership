@@ -1,0 +1,3 @@
+name,close,ema8w,dist_to_ema8w_pct,ema8w_slope_pct,off_8w_high_pct,tagged_ema8w,ema8w_rising,signal,tradingview_url,description,exchange,industry,Perf.1M,Perf.3M,Perf.6M
+PBF,71.44,71.3625,0.11,0.031,13.52,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NYSE:PBF&interval=D,PBF Energy Inc.,NYSE,Oil Refining/Marketing,1.5782738518413186,79.36228973135827,43.597989949748744
+BLZE,14.3,14.0158,2.03,0.583,40.39,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:BLZE&interval=D,"Backblaze, Inc.",NASDAQ,Computer Peripherals,-11.78285009253547,20.37037037037037,300.5602240896359

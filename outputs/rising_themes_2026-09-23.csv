@@ -1,0 +1,6 @@
+date,frame,kind,industry,signal,prior_count,current_count,delta,members
+2026-09-23,1m,industry,Financial Conglomerates,RISING,2,3,1,
+2026-09-23,1m,industry,Miscellaneous Commercial Services,RISING,1,2,1,
+2026-09-23,6m,industry,Packaged Software,RISING,6,7,1,
+2026-09-23,3m,industry,Financial Conglomerates,RISING,2,3,1,
+2026-09-23,3m,industry,Oil Refining/Marketing,RISING,2,3,1,
