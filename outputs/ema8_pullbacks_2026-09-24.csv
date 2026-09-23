@@ -1,0 +1,4 @@
+name,close,ema8w,dist_to_ema8w_pct,ema8w_slope_pct,off_8w_high_pct,tagged_ema8w,ema8w_rising,signal,tradingview_url,description,exchange,industry,Perf.1M,Perf.3M,Perf.6M
+BLZE,14.06,13.9625,0.7,0.2,41.39,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:BLZE&interval=D,"Backblaze, Inc.",NASDAQ,Computer Peripherals,-11.627906976744184,16.82592438720399,304.02298850574715
+CORT,112.94,110.1179,2.56,0.738,10.63,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:CORT&interval=D,Corcept Therapeutics Incorporated,NASDAQ,Pharmaceuticals: Major,-6.3205043132050465,37.91671754793015,196.50826988710944
+AMLX,30.605,29.8108,2.66,0.767,25.61,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:AMLX&interval=D,"Amylyx Pharmaceuticals, Inc.",NASDAQ,Pharmaceuticals: Major,-20.794513457556935,75.18603319977106,127.71577380952381

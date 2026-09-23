@@ -1,0 +1,6 @@
+date,frame,kind,industry,signal,prior_count,current_count,delta,members
+2026-09-24,1m,cluster,Semis complex,RISING,5,7,2,Computer Peripherals|Computer Processing Hardware|Electronic Equipment/Instruments|Electronic Production Equipment|Electronics/Appliances|Semiconductors
+2026-09-24,1m,industry,Semiconductors,RISING,3,5,2,
+2026-09-24,6m,cluster,Semis complex,RISING,10,11,1,Computer Peripherals|Computer Processing Hardware|Electronic Equipment/Instruments|Electronic Production Equipment|Electronics/Appliances|Semiconductors
+2026-09-24,6m,industry,Semiconductors,RISING,5,6,1,
+2026-09-24,3m,cluster,Semis complex,RISING,1,2,1,Computer Peripherals|Computer Processing Hardware|Electronic Equipment/Instruments|Electronic Production Equipment|Electronics/Appliances|Semiconductors
