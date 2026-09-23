@@ -66,6 +66,22 @@ Every run also refreshes `industry_flow_dashboard.html`. Open it in a browser to
 
 `KICKOFF` = new/thin theme reaching real breadth; `RISING` = already-present theme adding names.
 
+## Theme tape
+
+`theme_tracker.html` is a separate page (nav: **Tape**) for investable themes that cut across TradingView industries: GPUs, CPUs, Memory, MLCC, Semi Testing, Robotics, Agentic AI, Edge AI, Routers, GLP-1, and the rest of the baskets in `themes_catalog.py`.
+
+Each row is the equal-weight average of the listed common stocks and major ADRs that printed on NYSE, NASDAQ, or AMEX. A period stays blank until at least three names print. Proxy ETFs are labels only. Click a theme for the members. The daily scan refreshes it with the desk; standalone:
+
+```bash
+python theme_tracker.py
+```
+
+Outputs:
+
+- `theme_tracker.html`
+- `outputs/theme_tracker_YYYY-MM-DD.csv`
+- `outputs/theme_members_YYYY-MM-DD.csv`
+
 ## RS leads (1ChartMaster)
 
 After the universe is built, the desk also scans StockCharts-style relative strength vs SPY:

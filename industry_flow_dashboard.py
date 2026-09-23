@@ -1309,6 +1309,7 @@ tbody tr:nth-child(even) { background: color-mix(in oklch, var(--color-paper-2) 
       <a href="#ema8-title"><kbd>F7</kbd> 8W</a>
       <a href="#ma-stack-title"><kbd>F8</kbd> MA</a>
       <a href="#aplus-title"><kbd>F9</kbd> A++</a>
+      <a href="theme_tracker.html" title="Theme tracker"><kbd>F10</kbd> Tape</a>
     </nav>
     <div class="nav-edge__controls">
       <span id="bbg-clock" class="bbg-clock" aria-live="off"></span>
@@ -1808,6 +1809,12 @@ document.addEventListener('input', event => {
   saveNote(field.dataset.symbol, field.value);
 });
 document.addEventListener('keydown', event => {
+  if (event.target.closest('input, textarea, select')) return;
+  if (event.key === 'F10') {
+    event.preventDefault();
+    window.location.href = 'theme_tracker.html';
+    return;
+  }
   const map = { F1: '#hard-rules', F2: '#thematic-title', F3: '#liquid-title', F4: '#focus-title', F5: '#nel-title', F6: '#rs-title', F7: '#ema8-title', F8: '#ma-stack-title', F9: '#aplus-title' };
   const href = map[event.key];
   if (!href) return;

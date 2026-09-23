@@ -533,9 +533,16 @@ def main() -> None:
     except Exception as error:  # noqa: BLE001
         ap_summary = f" | A++ flag scan failed ({error})"
     paths.append(write_dashboard(args.output_dir))
+    try:
+        from theme_tracker import write_theme_tracker
+
+        paths.extend(write_theme_tracker(args.output_dir, snapshot))
+        theme_summary = " | theme tape"
+    except Exception as error:  # noqa: BLE001 — tape is additive; a quote outage must not drop the desk
+        theme_summary = f" | theme tape failed ({error})"
     print(
         f"Scanned: {len(raw):,} | eligible: {len(universe):,} | leaders: {len(leaders):,} | "
-        f"NEL: {len(nel):,} | focus: {len(focus):,}{rs_summary}{ema_summary}{ma_summary}{ap_summary}"
+        f"NEL: {len(nel):,} | focus: {len(focus):,}{rs_summary}{ema_summary}{ma_summary}{ap_summary}{theme_summary}"
     )
     print("Saved:\n" + "\n".join(str(path) for path in paths))
 

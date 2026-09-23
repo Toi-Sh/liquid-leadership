@@ -1,3 +1,4 @@
 name,close,ema8w,dist_to_ema8w_pct,ema8w_slope_pct,off_8w_high_pct,tagged_ema8w,ema8w_rising,signal,tradingview_url,description,exchange,industry,Perf.1M,Perf.3M,Perf.6M
-PBF,71.44,71.3625,0.11,0.031,13.52,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NYSE:PBF&interval=D,PBF Energy Inc.,NYSE,Oil Refining/Marketing,1.5782738518413186,79.36228973135827,43.597989949748744
-BLZE,14.3,14.0158,2.03,0.583,40.39,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:BLZE&interval=D,"Backblaze, Inc.",NASDAQ,Computer Peripherals,-11.78285009253547,20.37037037037037,300.5602240896359
+SHAZ,59.93,59.2776,1.1,0.315,25.09,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:SHAZ&interval=D,"SharonAI Holdings, Inc.",NASDAQ,Data Processing Services,2.847380410022779,-26.052877866167528,158.10534912209067
+PBF,72.48,71.5936,1.24,0.355,12.26,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NYSE:PBF&interval=D,PBF Energy Inc.,NYSE,Oil Refining/Marketing,1.5782738518413186,79.36228973135827,43.597989949748744
+PENG,54.91,54.2187,1.28,0.366,16.49,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:PENG&interval=D,"Penguin Solutions, Inc.",NASDAQ,Semiconductors,9.206716850028943,-15.552238805970152,208.84279475982532
