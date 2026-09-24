@@ -1,0 +1,7 @@
+setting,value
+benchmark,SPY
+lookback_daily,252
+lookback_weekly,52
+price_buffer_pct,0.5
+history_period,2y
+min_bars,60

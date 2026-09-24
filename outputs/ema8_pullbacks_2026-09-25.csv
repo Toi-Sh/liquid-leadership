@@ -1,0 +1,2 @@
+name,close,ema8w,dist_to_ema8w_pct,ema8w_slope_pct,off_8w_high_pct,tagged_ema8w,ema8w_rising,signal,tradingview_url,description,exchange,industry,Perf.1M,Perf.3M,Perf.6M
+LIFE,35.31,34.3791,2.71,0.78,17.02,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:LIFE&interval=D,Ethos Technologies Inc.,NASDAQ,Packaged Software,-4.46428571428571,94.43832599118944,249.6039603960396
