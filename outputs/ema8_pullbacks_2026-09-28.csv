@@ -1,0 +1,6 @@
+name,close,ema8w,dist_to_ema8w_pct,ema8w_slope_pct,off_8w_high_pct,tagged_ema8w,ema8w_rising,signal,tradingview_url,description,exchange,industry,Perf.1M,Perf.3M,Perf.6M
+WIX,73.79,73.5037,0.39,0.111,23.77,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:WIX&interval=D,Wix.com Ltd.,NASDAQ,Packaged Software,-12.175672458938337,74.23848878394334,-16.583766674203016
+LIFE,34.3,34.1547,0.43,0.122,19.39,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:LIFE&interval=D,Ethos Technologies Inc.,NASDAQ,Packaged Software,-10.303347280334739,88.87665198237885,239.60396039603955
+APPS,11.11,10.9471,1.49,0.427,27.57,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:APPS&interval=D,"Digital Turbine, Inc.",NASDAQ,Packaged Software,5.009451795841204,10.65737051792829,277.89115646258506
+PBF,73.69,71.8625,2.54,0.732,10.8,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NYSE:PBF&interval=D,PBF Energy Inc.,NYSE,Oil Refining/Marketing,13.1603194103194,75.8711217183771,46.28287841191067
+FTFT,4.38,4.2558,2.92,0.841,55.03,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:FTFT&interval=D,Future FinTech Group Inc.,NASDAQ,Finance/Rental/Leasing,58.2827406764961,-58.8778729157278,-77.6530612244898

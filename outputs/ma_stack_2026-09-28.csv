@@ -1,0 +1,5 @@
+name,close,SMA5,SMA10,SMA20,SMA30,sma5_gt_sma10,sma20_gt_sma30,sma20_30_gap_pct,cross_days_ago,signal,tradingview_url,description,exchange,industry,Perf.1M,Perf.3M,Perf.6M
+MXL,93.84,87.376,79.441,71.8925,71.132,True,True,1.069,0,20x30_TODAY,https://www.tradingview.com/chart/?symbol=NASDAQ:MXL&interval=D,"MaxLinear, Inc",NASDAQ,Semiconductors,43.201587059362126,4.0585495675316,455.595026642984
+ALAB,364.62,357.958,316.536,303.2105,300.9503,True,True,0.751,1,20x30_1D,https://www.tradingview.com/chart/?symbol=NASDAQ:ALAB&interval=D,"Astera Labs, Inc.",NASDAQ,Semiconductors,29.014224046422758,-4.662047326447897,228.48648648648648
+AMBQ,69.79,69.996,65.815,62.4245,61.8607,True,True,0.911,1,20x30_1D,https://www.tradingview.com/chart/?symbol=NYSE:AMBQ&interval=D,"Ambiq Micro, Inc.",NYSE,Semiconductors,14.409836065573781,-13.250466128029826,188.7463798096814
+BAND,61.81,59.096,54.42,51.5885,51.0395,True,True,1.076,1,20x30_1D,https://www.tradingview.com/chart/?symbol=NASDAQ:BAND&interval=D,Bandwidth Inc.,NASDAQ,Packaged Software,33.4989200863931,18.364611260053625,263.5882352941176

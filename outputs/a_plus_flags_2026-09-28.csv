@@ -1,0 +1,1 @@
+name,signal,grade,close,sma20,sma50,flag_len,flag_high,flag_low,flag_depth_pct,thrust_pct,range_ratio,median_vs_sma50_pct,ma_pinch_pct,dist_to_pivot_pct,dist_above_sma20_pct,break_days_ago,rvol,vol_dry_ratio,day_atr_mult,macd_hist,macd_turning_up,checks_passed,tradingview_url

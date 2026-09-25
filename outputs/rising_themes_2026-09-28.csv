@@ -1,0 +1,7 @@
+date,frame,kind,industry,signal,prior_count,current_count,delta,members
+2026-09-28,1m,cluster,Semis complex,RISING,5,7,2,Computer Peripherals|Computer Processing Hardware|Electronic Equipment/Instruments|Electronic Production Equipment|Electronics/Appliances|Semiconductors
+2026-09-28,1m,industry,Semiconductors,RISING,3,4,1,
+2026-09-28,1m,industry,Financial Conglomerates,RISING,2,3,1,
+2026-09-28,3m,industry,Financial Conglomerates,RISING,3,4,1,
+2026-09-28,6m,industry,Financial Conglomerates,RISING,2,3,1,
+2026-09-28,3m,industry,Oil Refining/Marketing,RISING,1,2,1,
