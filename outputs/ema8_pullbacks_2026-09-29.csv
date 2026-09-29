@@ -1,0 +1,4 @@
+name,close,ema8w,dist_to_ema8w_pct,ema8w_slope_pct,off_8w_high_pct,tagged_ema8w,ema8w_rising,signal,tradingview_url,description,exchange,industry,Perf.1M,Perf.3M,Perf.6M
+LIFE,34.3,34.1547,0.43,0.122,19.39,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:LIFE&interval=D,Ethos Technologies Inc.,NASDAQ,Packaged Software,-13.535353535353535,84.68176914778859,205.71428571428578
+APPS,11.11,10.9471,1.49,0.427,27.57,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:APPS&interval=D,"Digital Turbine, Inc.",NASDAQ,Packaged Software,-1.0582010582010513,-12.480499219968797,281.6326530612245
+FTFT,4.38,4.2558,2.92,0.841,55.03,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:FTFT&interval=D,Future FinTech Group Inc.,NASDAQ,Finance/Rental/Leasing,74.58333333333336,-64.61148648648648,-78.08944109772422

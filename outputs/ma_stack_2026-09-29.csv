@@ -1,0 +1,6 @@
+name,close,SMA5,SMA10,SMA20,SMA30,sma5_gt_sma10,sma20_gt_sma30,sma20_30_gap_pct,cross_days_ago,signal,tradingview_url,description,exchange,industry,Perf.1M,Perf.3M,Perf.6M
+MXL,93.84,87.376,79.441,71.8925,71.132,True,True,1.069,0,20x30_TODAY,https://www.tradingview.com/chart/?symbol=NASDAQ:MXL&interval=D,"MaxLinear, Inc",NASDAQ,Semiconductors,44.115292233787024,-17.642752562225475,411.3636363636364
+ALAB,364.62,357.958,316.536,303.2105,300.9503,True,True,0.751,1,20x30_1D,https://www.tradingview.com/chart/?symbol=NASDAQ:ALAB&interval=D,"Astera Labs, Inc.",NASDAQ,Semiconductors,18.218528115220238,-23.316525876934495,215.89785091268774
+AMBQ,69.79,69.996,65.815,62.4245,61.8607,True,True,0.911,1,20x30_1D,https://www.tradingview.com/chart/?symbol=NYSE:AMBQ&interval=D,"Ambiq Micro, Inc.",NYSE,Semiconductors,13.871290430143382,-20.618317061831714,163.91035548686244
+BAND,61.81,59.096,54.42,51.5885,51.0395,True,True,1.076,1,20x30_1D,https://www.tradingview.com/chart/?symbol=NASDAQ:BAND&interval=D,Bandwidth Inc.,NASDAQ,Packaged Software,17.666345226615228,1.717239079693233,239.13285158421348
+GCT,53.98,53.314,52.9645,51.9683,51.6185,True,True,0.678,,20x30_NEAR,https://www.tradingview.com/chart/?symbol=NASDAQ:GCT&interval=D,GigaCloud Technology Inc,NASDAQ,Wholesale Distributors,1.5242137758055165,62.65842349304481,13.283100107642614
