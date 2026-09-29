@@ -1,0 +1,5 @@
+name,close,SMA5,SMA10,SMA20,SMA30,sma5_gt_sma10,sma20_gt_sma30,sma20_30_gap_pct,cross_days_ago,signal,tradingview_url,description,exchange,industry,Perf.1M,Perf.3M,Perf.6M
+P,130.05,123.396,114.727,105.6185,105.2567,True,True,0.344,0,20x30_TODAY,https://www.tradingview.com/chart/?symbol=NYSE:P&interval=D,"Everpure, Inc.",NYSE,Computer Peripherals,33.04347826086958,67.07348406988696,120.42372881355934
+COHU,65.97,65.444,61.619,56.22,54.8683,True,True,2.463,1,20x30_1D,https://www.tradingview.com/chart/?symbol=NASDAQ:COHU&interval=D,"Cohu, Inc.",NASDAQ,Semiconductors,29.150352388410337,-6.10589239965842,118.79145661979304
+VICR,290.68,283.392,253.222,218.948,213.5937,True,True,2.507,1,20x30_1D,https://www.tradingview.com/chart/?symbol=NASDAQ:VICR&interval=D,Vicor Corporation,NASDAQ,Electronic Components,43.9009900990099,-20.891562002476558,96.1006543884504
+MXL,92.72,89.238,84.522,74.9465,71.5693,True,True,4.719,2,20x30_2D,https://www.tradingview.com/chart/?symbol=NASDAQ:MXL&interval=D,"MaxLinear, Inc",NASDAQ,Semiconductors,48.47077662129703,-22.306016423663486,446.3759575721862
