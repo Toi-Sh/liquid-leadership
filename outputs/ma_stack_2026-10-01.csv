@@ -1,0 +1,7 @@
+name,close,SMA5,SMA10,SMA20,SMA30,sma5_gt_sma10,sma20_gt_sma30,sma20_30_gap_pct,cross_days_ago,signal,tradingview_url,description,exchange,industry,Perf.1M,Perf.3M,Perf.6M
+BB,9.04,8.7,8.496,8.0995,8.0843,True,True,0.188,0,20x30_TODAY,https://www.tradingview.com/chart/?symbol=NYSE:BB&interval=D,BlackBerry Limited,NYSE,Packaged Software,11.330049261083746,-29.67716841695839,174.7720364741641
+PENG,54.69,54.952,54.598,51.9215,51.5563,True,True,0.708,0,20x30_TODAY,https://www.tradingview.com/chart/?symbol=NASDAQ:PENG&interval=D,"Penguin Solutions, Inc.",NASDAQ,Semiconductors,8.922525393347932,-21.09363728177753,177.75520568816657
+P,130.78,127.622,118.044,107.4685,105.714,True,True,1.66,1,20x30_1D,https://www.tradingview.com/chart/?symbol=NYSE:P&interval=D,"Everpure, Inc.",NYSE,Computer Peripherals,38.28909802262875,68.92275897700853,121.66101694915254
+COHU,68.14,66.176,63.327,57.419,55.1657,True,True,4.085,2,20x30_2D,https://www.tradingview.com/chart/?symbol=NASDAQ:COHU&interval=D,"Cohu, Inc.",NASDAQ,Semiconductors,41.369294605809124,-0.7428987618354044,125.98832581586628
+VICR,288.94,284.548,263.725,224.5955,215.1447,True,True,4.393,2,20x30_2D,https://www.tradingview.com/chart/?symbol=NASDAQ:VICR&interval=D,Vicor Corporation,NASDAQ,Electronic Components,53.89613848202397,-17.329976252467738,94.9268029413749
+OMER,19.04,19.586,19.453,18.94,18.9103,True,True,0.157,,20x30_NEAR,https://www.tradingview.com/chart/?symbol=NASDAQ:OMER&interval=D,Omeros Corporation,NASDAQ,Pharmaceuticals: Major,2.696871628910464,102.33793836344313,63.85542168674699
