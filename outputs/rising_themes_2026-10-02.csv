@@ -1,0 +1,4 @@
+date,frame,kind,industry,signal,prior_count,current_count,delta,members
+2026-10-02,1m,industry,Electronic Production Equipment,RISING,1,2,1,
+2026-10-02,6m,industry,Packaged Software,RISING,5,8,3,
+2026-10-02,3m,industry,Medical Specialties,RISING,3,4,1,

@@ -1,0 +1,4 @@
+name,close,ema8w,dist_to_ema8w_pct,ema8w_slope_pct,off_8w_high_pct,tagged_ema8w,ema8w_rising,signal,tradingview_url,description,exchange,industry,Perf.1M,Perf.3M,Perf.6M
+PENG,54.98,54.6143,0.67,0.192,16.38,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:PENG&interval=D,"Penguin Solutions, Inc.",NASDAQ,Semiconductors,15.747368421052624,-20.675227239936522,179.22803453529704
+CORT,114.025,111.5323,2.23,0.643,9.78,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:CORT&interval=D,Corcept Therapeutics Incorporated,NASDAQ,Pharmaceuticals: Major,0.09216994382022821,26.27353266888152,178.44932844932845
+PLSE,49.83,48.6146,2.5,0.719,15.4,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:PLSE&interval=D,"Pulse Biosciences, Inc",NASDAQ,Medical Specialties,-0.20028039254957225,72.84079084287201,123.55316285329745
