@@ -1,0 +1,4 @@
+name,close,ema8w,dist_to_ema8w_pct,ema8w_slope_pct,off_8w_high_pct,tagged_ema8w,ema8w_rising,signal,tradingview_url,description,exchange,industry,Perf.1M,Perf.3M,Perf.6M
+OSCR,30.94,30.9354,0.01,0.004,10.27,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NYSE:OSCR&interval=D,"Oscar Health, Inc.",NYSE,Managed Health Care,3.1333333333333377,-4.032258064516131,171.6417910447761
+APPS,11.17,10.9966,1.58,0.453,25.83,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:APPS&interval=D,"Digital Turbine, Inc.",NASDAQ,Packaged Software,12.261306532663323,-16.26686656671664,290.5594405594406
+FCEL,18.47,18.0086,2.56,0.737,24.24,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:FCEL&interval=D,"FuelCell Energy, Inc.",NASDAQ,Electronic Equipment/Instruments,20.718954248366,-41.495090275578086,192.70998415213947
