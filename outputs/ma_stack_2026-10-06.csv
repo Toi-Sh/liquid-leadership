@@ -1,0 +1,2 @@
+name,close,SMA5,SMA10,SMA20,SMA30,sma5_gt_sma10,sma20_gt_sma30,sma20_30_gap_pct,cross_days_ago,signal,tradingview_url,description,exchange,industry,Perf.1M,Perf.3M,Perf.6M
+VIAV,46.91,44.506,41.414,38.8285,37.9697,True,True,2.262,2,20x30_2D,https://www.tradingview.com/chart/?symbol=NASDAQ:VIAV&interval=D,Viavi Solutions Inc.,NASDAQ,Information Technology Services,36.56477438136825,16.691542288557194,14.442546962673807

@@ -1,0 +1,7 @@
+date,frame,kind,industry,signal,prior_count,current_count,delta,members
+2026-10-06,1m,industry,Semiconductors,RISING,3,4,1,
+2026-10-06,1m,industry,Medical Specialties,RISING,1,2,1,
+2026-10-06,6m,industry,Packaged Software,RISING,5,7,2,
+2026-10-06,3m,industry,Packaged Software,RISING,5,6,1,
+2026-10-06,6m,industry,Financial Conglomerates,RISING,2,3,1,
+2026-10-06,6m,industry,Medical Specialties,RISING,2,3,1,
