@@ -1,2 +1,5 @@
 name,close,SMA5,SMA10,SMA20,SMA30,sma5_gt_sma10,sma20_gt_sma30,sma20_30_gap_pct,cross_days_ago,signal,tradingview_url,description,exchange,industry,Perf.1M,Perf.3M,Perf.6M
-VIAV,46.91,44.506,41.414,38.8285,37.9697,True,True,2.262,2,20x30_2D,https://www.tradingview.com/chart/?symbol=NASDAQ:VIAV&interval=D,Viavi Solutions Inc.,NASDAQ,Information Technology Services,36.56477438136825,16.691542288557194,14.442546962673807
+VIAV,47.1,43.298,40.343,38.226,37.7027,True,True,1.388,1,20x30_1D,https://www.tradingview.com/chart/?symbol=NASDAQ:VIAV&interval=D,Viavi Solutions Inc.,NASDAQ,Information Technology Services,36.56477438136825,16.691542288557194,14.442546962673807
+BB,9.3,9.008,8.751,8.258,8.151,True,True,1.313,2,20x30_2D,https://www.tradingview.com/chart/?symbol=NYSE:BB&interval=D,BlackBerry Limited,NYSE,Packaged Software,18.383311603650586,-18.161333934204603,150.13774104683196
+PENG,61.36,56.36,55.647,52.9275,51.9647,True,True,1.853,2,20x30_2D,https://www.tradingview.com/chart/?symbol=NASDAQ:PENG&interval=D,"Penguin Solutions, Inc.",NASDAQ,Semiconductors,21.395720855828838,-3.573697585768742,179.76958525345626
+AXTI,85.87,79.388,78.248,71.445,68.4363,True,True,4.396,2,20x30_2D,https://www.tradingview.com/chart/?symbol=NASDAQ:AXTI&interval=D,AXT Inc,NASDAQ,Electronic Production Equipment,50.216675333680016,46.10132344263677,69.9548931162973
