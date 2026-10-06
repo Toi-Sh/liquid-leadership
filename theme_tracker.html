@@ -7,10 +7,11 @@
   <meta name="description" content="Equal-weight market themes: semis, AI, health, power, materials, and macro.">
   <meta name="robots" content="index, follow">
   <link rel="icon" type="image/png" href="assets/nel-favicon.png">
-  <link rel="preload" href="assets/fonts/ibm-plex-mono-latin-400.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="tokens.css">
+  <link rel="preload" href="assets/fonts/newsreader-latin-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/source-sans-3-latin-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="tokens.css?v=20261006">
   <style>
-    html { color-scheme: dark; background: var(--color-paper); }
+    html { color-scheme: light; background: var(--color-paper); }
     html, body { overflow-x: clip; margin: 0; }
     body {
       background: var(--color-paper);
@@ -28,7 +29,7 @@
       padding: var(--space-xs) var(--space-sm);
       background: var(--color-accent);
       color: var(--color-accent-ink);
-      font-family: var(--font-display);
+      font-family: var(--font-body);
       text-decoration: none;
       transform: translateY(-200%);
     }
@@ -48,63 +49,89 @@
       padding: var(--space-xs) var(--page-gutter);
       padding-left: max(var(--page-gutter), env(safe-area-inset-left));
       padding-right: max(var(--page-gutter), env(safe-area-inset-right));
-      background: var(--grey-800);
-      border-bottom: var(--rule) solid var(--grey-100);
+      background: var(--color-paper);
+      border-bottom: var(--rule) solid var(--color-rule);
     }
     .brand { grid-area: brand; }
     .bbg-keys {
       grid-area: keys;
       display: flex;
-      flex-wrap: wrap;
       min-width: 0;
-      align-items: center;
-      gap: var(--space-4);
+      align-items: stretch;
+      overflow: visible;
     }
-    .bbg-keys a {
+    .desk-menu { position: relative; display: flex; }
+    .desk-tab {
       display: flex;
       align-items: center;
       gap: var(--space-4);
+      margin: 0;
+      padding: 0 var(--space-12);
       min-height: 45px;
-      padding: 0 var(--space-8);
-      border-top: var(--rule) solid var(--grey-100);
-      border-bottom: var(--rule) solid var(--grey-100);
-      color: var(--grey-100);
-      font-family: var(--font-display);
+      border: 0;
+      border-bottom: 2px solid transparent;
+      background: transparent;
+      color: var(--color-ink);
+      font-family: var(--font-body);
+      font-size: var(--text-xs);
+      font-style: normal;
+      letter-spacing: 0.08em;
+      text-decoration: none;
+      text-transform: uppercase;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+    .desk-caret {
+      width: 0;
+      height: 0;
+      border-left: 0.28rem solid transparent;
+      border-right: 0.28rem solid transparent;
+      border-top: 0.32rem solid currentColor;
+    }
+    .desk-tab[aria-current="page"],
+    .desk-tab[aria-expanded="true"] {
+      color: var(--color-accent);
+      border-bottom-color: var(--color-accent);
+    }
+    .desk-menu__panel {
+      position: absolute;
+      top: calc(100% + 1px);
+      left: 0;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 13.5rem;
+      padding: var(--space-4) 0;
+      background: var(--color-paper);
+      border: var(--rule) solid var(--color-rule);
+    }
+    .desk-menu__panel[hidden] { display: none; }
+    .desk-menu__panel a {
+      display: flex;
+      align-items: center;
+      gap: var(--space-8);
+      min-height: 2.75rem;
+      padding: 0 var(--space-sm);
+      color: var(--color-ink);
+      font-family: var(--font-body);
       font-size: var(--text-xs);
       letter-spacing: 0.08em;
       text-decoration: none;
       text-transform: uppercase;
       white-space: nowrap;
-      flex: 0 0 auto;
     }
-    .bbg-keys kbd {
-      padding: 0 0.2rem;
-      border: var(--rule) solid var(--cyan-300);
-      color: var(--cyan-300);
-      font-family: var(--font-mono);
-      font-size: 0.625rem;
-    }
-    .bbg-keys a[aria-current="page"] {
-      background: var(--grey-100);
-      color: var(--grey-800);
-    }
-    .bbg-keys a[aria-current="page"] kbd {
-      border-color: var(--grey-800);
-      color: var(--grey-800);
-    }
-    .bbg-keys a:hover { color: var(--cyan-300); border-color: var(--cyan-300); }
-    .bbg-keys a[aria-current="page"]:hover { color: var(--grey-800); border-color: var(--grey-100); }
-    .bbg-keys a:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 1px; }
-    .wordmark, .product {
+    .desk-tab:hover, .desk-menu__panel a:hover { color: var(--color-accent); }
+    .desk-tab:focus-visible, .desk-menu__panel a:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 1px; }
+    .product {
       font-family: var(--font-display);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
+      font-size: var(--text-md);
+      letter-spacing: -0.02em;
+      text-transform: none;
       text-decoration: none;
       white-space: nowrap;
       line-height: 1;
+      color: var(--color-ink);
     }
-    .wordmark { color: var(--cyan-300); font-size: var(--text-md); }
-    .product { color: var(--grey-500); font-size: var(--text-xs); }
     .brand { display: flex; align-items: center; gap: var(--space-sm); }
     .lanes {
       grid-area: lanes;
@@ -117,9 +144,9 @@
     .lane, .sort, .icon-btn {
       min-height: 45px;
       padding: 0 var(--space-xs);
-      border: var(--rule) solid var(--grey-100);
+      border: var(--rule) solid var(--color-rule);
       background: transparent;
-      color: var(--grey-100);
+      color: var(--color-ink);
       font-family: var(--font-mono);
       font-size: var(--text-xs);
       letter-spacing: 0.08em;
@@ -129,11 +156,11 @@
     }
     .lane { border-top-width: var(--rule); border-bottom-width: var(--rule); }
     .lane[aria-pressed="true"] {
-      background: var(--grey-100);
-      color: var(--grey-800);
+      background: var(--color-ink);
+      color: var(--color-paper);
     }
-    .lane:hover, .sort:hover, .icon-btn:hover, .ticker:hover { color: var(--cyan-300); }
-    .lane[aria-pressed="true"]:hover { color: var(--grey-800); }
+    .lane:hover, .sort:hover, .icon-btn:hover, .ticker:hover { color: var(--color-accent); }
+    .lane[aria-pressed="true"]:hover { color: var(--color-paper); }
     .lane:focus-visible, .sort:focus-visible, .icon-btn:focus-visible, .search:focus-visible, .ticker:focus-visible {
       outline: 2px solid var(--color-focus);
       outline-offset: 1px;
@@ -143,14 +170,14 @@
       width: 9rem;
       min-height: 45px;
       padding: 0 var(--space-sm);
-      border: var(--rule) solid var(--grey-100);
-      background: var(--grey-800);
-      color: var(--grey-100);
+      border: var(--rule) solid var(--color-rule);
+      background: var(--color-paper);
+      color: var(--color-ink);
       font-family: var(--font-mono);
       font-size: var(--text-xs);
       letter-spacing: 0.06em;
     }
-    .clock { color: var(--grey-400); font-family: var(--font-mono); font-size: var(--text-xs); white-space: nowrap; }
+    .clock { color: var(--color-muted); font-family: var(--font-mono); font-size: var(--text-xs); white-space: nowrap; }
     .lede, .foot {
       margin: 0;
       padding: var(--space-xs) var(--page-gutter);
@@ -159,17 +186,29 @@
     }
     .tape {
       display: flex;
-      flex-wrap: wrap;
-      gap: var(--space-xs) var(--space-md);
-      padding: var(--space-xs) var(--page-gutter) var(--space-sm);
+      flex-direction: column;
+      gap: var(--space-xs);
+      padding: var(--space-sm) var(--page-gutter);
       border-bottom: var(--rule) solid var(--color-rule);
     }
+    .tape-row {
+      display: grid;
+      grid-template-columns: 6.75rem minmax(0, 1fr);
+      align-items: baseline;
+      column-gap: var(--space-md);
+    }
     .tape-label {
-      font-family: var(--font-display);
+      font-family: var(--font-body);
+      font-size: var(--text-xs);
+      font-weight: 600;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--color-accent);
-      font-size: var(--text-xs);
+    }
+    .tape-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs) var(--space-md);
     }
     .chip {
       display: inline-flex;
@@ -178,7 +217,7 @@
       padding: 0;
       border: 0;
       background: transparent;
-      color: var(--grey-100);
+      color: var(--color-ink);
       font-family: var(--font-mono);
       font-size: var(--text-xs);
       cursor: pointer;
@@ -198,23 +237,23 @@
       font-variant-numeric: tabular-nums;
     }
     th:first-child, td:first-child, th:nth-child(2), td:nth-child(2) { text-align: left; }
-    thead th { background: var(--grey-800); }
+    thead th { background: var(--color-paper); }
     .sort {
       min-height: 32px;
       padding: 0;
       border: 0;
       letter-spacing: 0.08em;
     }
-    .name { font-family: var(--font-display); letter-spacing: 0.04em; text-transform: uppercase; color: var(--grey-100); }
+    .name { font-family: var(--font-display); letter-spacing: 0.04em; text-transform: uppercase; color: var(--color-ink); }
     .meta { display: block; margin-top: var(--space-4); color: var(--color-muted); font-family: var(--font-mono); letter-spacing: 0; text-transform: none; }
     .lane-tag { color: var(--color-accent); letter-spacing: 0.08em; text-transform: uppercase; font-size: var(--text-xs); }
-    .ticker { color: var(--cyan-300); text-decoration: none; }
+    .ticker { color: var(--color-accent); text-decoration: none; }
     .meter {
       display: inline-block;
       width: 3.2rem;
       height: 0.35rem;
       margin-right: var(--space-xs);
-      background: var(--grey-700);
+      background: var(--color-paper-2);
       vertical-align: middle;
     }
     .meter i {
@@ -223,9 +262,9 @@
       width: var(--fill);
       background: var(--color-up);
     }
-    tr.detail td { background: var(--grey-900); text-align: left; }
+    tr.detail td { background: var(--color-paper-3); text-align: left; }
     .members { width: 100%; min-width: 40rem; }
-    .members th, .members td { border-bottom-color: var(--grey-700); }
+    .members th, .members td { border-bottom-color: var(--color-paper-2); }
     .blurb { margin: 0 0 var(--space-sm); max-width: 46rem; color: var(--color-ink-2); }
     .miss { color: var(--color-muted); }
     .empty { padding: var(--space-lg) var(--page-gutter); }
@@ -238,6 +277,7 @@
           "lanes lanes";
       }
       .search { width: 6.5rem; }
+      .tape-row { grid-template-columns: 1fr; row-gap: 2px; }
     }
     @media (prefers-reduced-motion: reduce) {
       .lane, .sort, .chip, .ticker { transition: none; }
@@ -248,20 +288,28 @@
 <a class="skip-link" href="#tape">Skip to tape</a>
 <header class="nav-edge">
   <div class="brand">
-    <a class="wordmark" href="index.html">LLD</a>
     <span class="product">Theme Tape</span>
   </div>
   <nav class="bbg-keys" aria-label="Terminal panels">
-    <a href="index.html#hard-rules"><kbd>F1</kbd> Rules</a>
-    <a href="index.html#thematic-title"><kbd>F2</kbd> Themes</a>
-    <a href="index.html#liquid-title"><kbd>F3</kbd> LL</a>
-    <a href="index.html#focus-title"><kbd>F4</kbd> Focus</a>
-    <a href="index.html#nel-title"><kbd>F5</kbd> NEL</a>
-    <a href="index.html#rs-title"><kbd>F6</kbd> RS</a>
-    <a href="index.html#ema8-title"><kbd>F7</kbd> 8W</a>
-    <a href="index.html#ma-stack-title"><kbd>F8</kbd> MA</a>
-    <a href="index.html#aplus-title"><kbd>F9</kbd> A++</a>
-    <a href="theme_tracker.html" aria-current="page" title="Theme tracker"><kbd>F10</kbd> Tape</a>
+    <a class="desk-tab" href="index.html#thematic-title">Themes</a>
+    <div class="desk-menu">
+      <button class="desk-tab" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="menu-leaders">Leaders <span class="desk-caret" aria-hidden="true"></span></button>
+      <div id="menu-leaders" class="desk-menu__panel" role="menu" hidden>
+        <a role="menuitem" href="index.html#liquid-title">Liquid Leaders</a>
+        <a role="menuitem" href="index.html#focus-title">Focus</a>
+        <a role="menuitem" href="index.html#nel-title">Non-extended</a>
+      </div>
+    </div>
+    <div class="desk-menu">
+      <button class="desk-tab" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="menu-setups">Setups <span class="desk-caret" aria-hidden="true"></span></button>
+      <div id="menu-setups" class="desk-menu__panel" role="menu" hidden>
+        <a role="menuitem" href="index.html#rs-title">Relative strength</a>
+        <a role="menuitem" href="index.html#ema8-title">8-week</a>
+        <a role="menuitem" href="index.html#ma-stack-title">Moving averages</a>
+        <a role="menuitem" href="index.html#aplus-title">Flag breakouts</a>
+      </div>
+    </div>
+    <a class="desk-tab" href="theme_tracker.html" aria-current="page">Tape</a>
   </nav>
   <div class="tools">
     <label class="visually-hidden" for="q" style="position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)">Filter themes</label>
@@ -358,15 +406,19 @@ function paintHead() {
 function memberTable(theme) {
   const head = `<tr><th>Symbol</th><th>Name</th>${PERIODS.map(([, label]) => `<th>${label}</th>`).join("")}</tr>`;
   const rows = theme.members.map(member => `<tr><td><a class="ticker" href="${esc(member.url)}" target="_blank" rel="noopener noreferrer">${esc(member.symbol)}</a></td><td>${esc(member.description || "—")}</td>${PERIODS.map(([key]) => `<td class="${tone(member[key])}">${fmt(member[key])}</td>`).join("")}</tr>`).join("");
-  const missing = theme.unquoted.length ? `<p class="miss">No print: ${theme.unquoted.map(esc).join(", ")}</p>` : "";
-  const proxy = theme.etf ? ` Proxy ETF ${esc(theme.etf)} is a label, not part of the average.` : "";
-  return `<p class="blurb">${esc(theme.blurb)}${proxy}</p>${missing}<table class="members"><thead>${head}</thead><tbody>${rows || `<tr><td colspan="8">No prints for this basket.</td></tr>`}</tbody></table>`;
+  const missing = theme.unquoted.length ? `<p class="miss">These stocks have no price: ${theme.unquoted.map(esc).join(", ")}.</p>` : "";
+  const proxy = theme.etf ? ` The fund ${esc(theme.etf)} is a label only. It is not part of the average.` : "";
+  return `<p class="blurb">${esc(theme.blurb)}${proxy}</p>${missing}<table class="members"><thead>${head}</thead><tbody>${rows || `<tr><td colspan="8">No stocks in this theme have a price.</td></tr>`}</tbody></table>`;
 }
 function paintTape(rows) {
   const ranked = rows.filter(theme => finite(theme.today));
   const leaders = [...ranked].sort((a, b) => b.today - a.today).slice(0, 6);
   const laggards = [...ranked].sort((a, b) => a.today - b.today).slice(0, 4);
-  const chips = (label, list) => `<span class="tape-label">${label}</span>` + list.map(theme => `<button type="button" class="chip" data-open="${esc(theme.id)}"><span>${esc(theme.name)}</span><span class="${tone(theme.today)}">${fmt(theme.today)}</span></button>`).join("");
+  const chips = (label, list) => {
+    if (!list.length) return "";
+    const buttons = list.map(theme => `<button type="button" class="chip" data-open="${esc(theme.id)}"><span>${esc(theme.name)}</span><span class="${tone(theme.today)}">${fmt(theme.today)}</span></button>`).join("");
+    return `<div class="tape-row"><span class="tape-label">${label}</span><div class="tape-chips">${buttons}</div></div>`;
+  };
   tapeEl.innerHTML = chips("Leaders", leaders) + chips("Laggards", laggards);
 }
 function paint() {
@@ -374,8 +426,13 @@ function paint() {
   paintLanes();
   paintHead();
   paintTape(lane === "All" && !query ? data.themes : rows);
-  ledeEl.textContent = `${data.themes.length} themes · ${rows.length} showing · ${data.as_of} · ${data.method}`;
-  footEl.textContent = "Click a theme for the basket. Returns are percent change, equal-weighted. Names without a print are listed and left out of the average.";
+  const totalThemes = data.themes.length;
+  const shownThemes = rows.length;
+  const showing = shownThemes === totalThemes
+    ? (totalThemes === 1 ? '1 theme is showing.' : `${totalThemes} themes are showing.`)
+    : `${shownThemes === 1 ? '1 theme is showing' : shownThemes + ' themes are showing'} out of ${totalThemes === 1 ? '1 theme' : totalThemes + ' themes'}.`;
+  ledeEl.textContent = `${showing} The date is ${data.as_of}. Each theme is the average of its stocks that have a price. Each stock has the same weight. A period stays blank until at least three stocks have a price.`;
+  footEl.textContent = "Select a theme to see its stocks. The numbers are the percent change. Stocks with no price are listed, and they are left out of the average.";
   bodyEl.innerHTML = rows.map(theme => {
     const cells = PERIODS.map(([key]) => `<td class="${tone(theme[key])}">${fmt(theme[key])}</td>`).join("");
     const breadth = finite(theme.breadth)
@@ -386,7 +443,7 @@ function paint() {
       : "—";
     const open = theme.id === openId;
     return `<tr>
-      <td><button type="button" class="sort name" data-open="${esc(theme.id)}" aria-expanded="${open ? "true" : "false"}">${esc(theme.name)}</button><span class="meta">${theme.n} of ${theme.listed} printing</span></td>
+      <td><button type="button" class="sort name" data-open="${esc(theme.id)}" aria-expanded="${open ? "true" : "false"}">${esc(theme.name)}</button><span class="meta">${theme.n === 1 ? `1 of ${theme.listed} has a price` : `${theme.n} of ${theme.listed} have a price`}</span></td>
       <td class="lane-tag">${esc(theme.lane)}</td>
       ${cells}
       <td>${breadth}</td>
@@ -417,29 +474,47 @@ document.addEventListener("click", event => {
   }
 });
 searchEl.addEventListener("input", () => { query = searchEl.value; paint(); });
-document.addEventListener("keydown", event => {
-  const typing = Boolean(event.target.closest("input, textarea, select"));
-  const panels = {
-    F1: "index.html#hard-rules",
-    F2: "index.html#thematic-title",
-    F3: "index.html#liquid-title",
-    F4: "index.html#focus-title",
-    F5: "index.html#nel-title",
-    F6: "index.html#rs-title",
-    F7: "index.html#ema8-title",
-    F8: "index.html#ma-stack-title",
-    F9: "index.html#aplus-title"
-  };
-  if (!typing && panels[event.key]) {
-    event.preventDefault();
-    window.location.href = panels[event.key];
+function closeDeskMenus() {
+  document.querySelectorAll(".desk-menu__panel").forEach(panel => {
+    panel.hidden = true;
+    const toggle = document.querySelector(`[aria-controls="${panel.id}"]`);
+    if (toggle) toggle.setAttribute("aria-expanded", "false");
+  });
+}
+document.addEventListener("click", event => {
+  const toggle = event.target.closest(".desk-tab[aria-haspopup]");
+  if (toggle) {
+    const panel = document.getElementById(toggle.getAttribute("aria-controls"));
+    const open = toggle.getAttribute("aria-expanded") === "true";
+    closeDeskMenus();
+    if (!open && panel) {
+      panel.hidden = false;
+      toggle.setAttribute("aria-expanded", "true");
+    }
     return;
   }
-  if (event.key === "/" && document.activeElement !== searchEl) {
+  if (!event.target.closest(".desk-menu")) closeDeskMenus();
+});
+document.addEventListener("keydown", event => {
+  const typing = Boolean(event.target.closest("input, textarea, select"));
+  const menu = event.target.closest(".desk-menu__panel");
+  if (menu && (event.key === "ArrowDown" || event.key === "ArrowUp")) {
+    const items = [...menu.querySelectorAll("a")];
+    const index = items.indexOf(document.activeElement);
+    const next = event.key === "ArrowDown" ? (index + 1) % items.length : (index - 1 + items.length) % items.length;
+    event.preventDefault();
+    items[next]?.focus();
+    return;
+  }
+  if (!typing && event.key === "/" && document.activeElement !== searchEl) {
     event.preventDefault();
     searchEl.focus();
   }
   if (event.key === "Escape") {
+    if (document.querySelector(".desk-menu__panel:not([hidden])")) {
+      closeDeskMenus();
+      return;
+    }
     openId = "";
     paint();
   }

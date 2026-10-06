@@ -79,7 +79,7 @@ class ThemeTapeTests(unittest.TestCase):
         self.assertIn("Theme Tape", html)
         self.assertIn('aria-current="page"', html)
         self.assertIn("index.html#liquid-title", html)
-        self.assertIn("F10</kbd> Tape</a>", html)
+        self.assertIn('aria-current="page">Tape</a>', html)
         self.assertNotIn("<script>", html.split('type="application/json">', 1)[1].split("</script>", 1)[0])
         self.assertIn("\\u003c", html)
 

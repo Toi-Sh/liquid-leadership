@@ -532,6 +532,17 @@ def main() -> None:
         ap_summary = f" | A++ flag scan skipped ({error})"
     except Exception as error:  # noqa: BLE001
         ap_summary = f" | A++ flag scan failed ({error})"
+    try:
+        from theme_scan import ThemeScanSettings, scan_top_themes, write_theme_scan
+
+        theme_settings = ThemeScanSettings()
+        theme_frame, theme_names = scan_top_themes(leaders, args.output_dir, theme_settings, snapshot)
+        paths.extend(write_theme_scan(theme_frame, theme_names, args.output_dir, snapshot, theme_settings))
+        theme_scan_summary = f" | theme scan: {len(theme_frame):,}"
+    except SystemExit as error:
+        theme_scan_summary = f" | theme scan skipped ({error})"
+    except Exception as error:  # noqa: BLE001 — the desk still publishes if the theme scan fails
+        theme_scan_summary = f" | theme scan failed ({error})"
     paths.append(write_dashboard(args.output_dir))
     try:
         from theme_tracker import write_theme_tracker
@@ -542,7 +553,7 @@ def main() -> None:
         theme_summary = f" | theme tape failed ({error})"
     print(
         f"Scanned: {len(raw):,} | eligible: {len(universe):,} | leaders: {len(leaders):,} | "
-        f"NEL: {len(nel):,} | focus: {len(focus):,}{rs_summary}{ema_summary}{ma_summary}{ap_summary}{theme_summary}"
+        f"NEL: {len(nel):,} | focus: {len(focus):,}{rs_summary}{ema_summary}{ma_summary}{ap_summary}{theme_scan_summary}{theme_summary}"
     )
     print("Saved:\n" + "\n".join(str(path) for path in paths))
 

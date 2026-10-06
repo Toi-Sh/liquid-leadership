@@ -1,107 +1,78 @@
-/* Hallmark · pre-emit critique: P5 H5 E5 S5 R5 V5
- * Hallmark · genre: atmospheric · macrostructure: Index-First · theme: custom
- * source: Kelex Design System (trentlutmer/kelex-design-system)
- * vibe: kelex FUI terminal — grey-800 / cyan-300 / IBM Plex Mono
- * paper #151517 · accent #00fff2
- * display/body/outlier: IBM Plex Mono
- * theme_axes: dark / mono / cool
- * enrichment: none · nav: N8 · footer: Ft2
+/* Hallmark · pre-emit critique: P5 H4 E4 S4 R5 V4
+ * genre: editorial · tone: austere
+ * paper oklch(97.2% 0.008 85) · accent oklch(36% 0.05 165)
+ * display: Newsreader · body: Source Sans 3
+ * theme_axes: light / roman-serif / cool
  */
 @font-face {
-  font-family: "IBM Plex Mono";
+  font-family: "Newsreader";
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url("assets/fonts/ibm-plex-mono-latin-400.woff2") format("woff2");
+  src: url("assets/fonts/newsreader-latin-400.woff2") format("woff2");
 }
 @font-face {
-  font-family: "IBM Plex Mono";
+  font-family: "Newsreader";
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url("assets/fonts/ibm-plex-mono-latin-600.woff2") format("woff2");
+  src: url("assets/fonts/newsreader-latin-600.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Source Sans 3";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/source-sans-3-latin-400.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Source Sans 3";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("assets/fonts/source-sans-3-latin-600.woff2") format("woff2");
 }
 
 :root {
-  --grey-100: #ffffff;
-  --grey-200: #e3e3e5;
-  --grey-300: #ceced3;
-  --grey-400: #ababb1;
-  --grey-500: #858484;
-  --grey-600: #706e6e;
-  --grey-700: #232426;
-  --grey-800: #151517;
-  --grey-900: #000000;
+  --color-paper: oklch(97.2% 0.008 85);
+  --color-paper-2: oklch(94.4% 0.012 85);
+  --color-paper-3: oklch(99% 0.004 85);
+  --color-rule: oklch(88% 0.012 85);
+  --color-rule-2: oklch(80% 0.016 80);
+  --color-muted: oklch(44% 0.02 70);
+  --color-ink-2: oklch(32% 0.02 65);
+  --color-ink: oklch(22% 0.02 60);
+  --color-accent: oklch(36% 0.05 165);
+  --color-accent-ink: oklch(97.2% 0.008 85);
+  --color-focus: oklch(36% 0.05 165);
 
-  --red-100: #ffded9;
-  --red-200: #ffbcb0;
-  --red-300: #ff2600;
-  --red-400: #e62200;
-  --red-500: #cc1e00;
-  --red-600: #bf1d00;
-  --red-700: #991700;
-  --red-800: #731100;
-  --red-900: #590d00;
+  --color-graphite: var(--color-paper-2);
+  --color-graphite-2: var(--color-paper);
+  --color-graphite-ink: var(--color-ink);
+  --color-graphite-muted: var(--color-muted);
+  --color-graphite-rule: var(--color-rule);
 
-  --orange-100: #fff2d9;
-  --orange-200: #ffe3b0;
-  --orange-300: #ffa600;
-  --orange-400: #e69500;
-  --orange-500: #cc8500;
-  --orange-600: #bf7d00;
-  --orange-700: #996400;
-  --orange-800: #734b00;
-  --orange-900: #593a00;
+  --color-frame-1m: oklch(38% 0.06 165);
+  --color-frame-3m: oklch(46% 0.08 75);
+  --color-frame-6m: oklch(46% 0.08 40);
+  --color-rank-1: oklch(38% 0.06 165);
+  --color-rank-2: oklch(48% 0.09 78);
+  --color-rank-3: oklch(46% 0.08 40);
+  --color-rank-4: oklch(42% 0.05 250);
+  --color-rank-5: oklch(48% 0.08 22);
+  --color-prior: oklch(78% 0.012 85);
+  --color-liquidity: oklch(42% 0.07 75);
+  --color-warn: oklch(46% 0.09 75);
+  --color-danger: oklch(46% 0.13 28);
+  --color-up: oklch(40% 0.09 155);
+  --color-down: oklch(46% 0.13 28);
 
-  --yellow-100: #fffcd9;
-  --yellow-200: #fff8b0;
-  --yellow-300: #ffea00;
-  --yellow-400: #e6d300;
-  --yellow-500: #ccbb00;
-  --yellow-600: #bfb000;
-  --yellow-700: #998c00;
-  --yellow-800: #736900;
-  --yellow-900: #595200;
-
-  --green-100: #d9ffec;
-  --green-200: #b0ffd8;
-  --green-300: #00ff80;
-  --green-400: #00e673;
-  --green-500: #00cc66;
-  --green-600: #00bf60;
-  --green-700: #00994d;
-  --green-800: #00733a;
-  --green-900: #00592d;
-
-  --cyan-100: #d9fffd;
-  --cyan-200: #b0fffb;
-  --cyan-300: #00fff2;
-  --cyan-400: #00e6da;
-  --cyan-500: #00ccc2;
-  --cyan-600: #00bfb6;
-  --cyan-700: #009991;
-  --cyan-800: #00736d;
-  --cyan-900: #005955;
-
-  --blue-100: #d9efff;
-  --blue-200: #b0deff;
-  --blue-300: #0095ff;
-  --blue-400: #0086e6;
-  --blue-500: #0077cc;
-  --blue-600: #0070bf;
-  --blue-700: #005999;
-  --blue-800: #004373;
-  --blue-900: #003459;
-
-  --purple-100: #f0d9ff;
-  --purple-200: #dfb0ff;
-  --purple-300: #9900ff;
-  --purple-400: #8a00e6;
-  --purple-500: #7a00cc;
-  --purple-600: #7300bf;
-  --purple-700: #5c0099;
-  --purple-800: #450073;
-  --purple-900: #360059;
+  --font-serif: "Newsreader", "Iowan Old Style", Palatino, serif;
+  --font-sans: "Source Sans 3", "Helvetica Neue", sans-serif;
+  --font-display: var(--font-serif);
+  --font-body: var(--font-sans);
+  --font-outlier: var(--font-sans);
+  --font-mono: var(--font-sans);
 
   --space-0: 0px;
   --space-1: 1px;
@@ -115,50 +86,6 @@
   --space-40: 40px;
   --space-48: 48px;
   --space-52: 52px;
-
-  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
-  --text-label: 12.8px;
-  --text-body: 16px;
-  --font-weight-regular: 400;
-  --font-weight-bold: 400;
-  --line-height-tight: 1;
-  --bevel-size: 8px;
-
-  --color-paper: var(--grey-800);
-  --color-paper-2: var(--grey-700);
-  --color-paper-3: var(--grey-900);
-  --color-rule: var(--grey-600);
-  --color-rule-2: var(--grey-500);
-  --color-muted: var(--grey-400);
-  --color-ink-2: var(--grey-200);
-  --color-ink: var(--grey-100);
-  --color-accent: var(--cyan-300);
-  --color-accent-ink: var(--grey-900);
-  --color-focus: var(--cyan-300);
-  --color-graphite: var(--grey-700);
-  --color-graphite-2: var(--grey-800);
-  --color-graphite-ink: var(--grey-100);
-  --color-graphite-muted: var(--grey-400);
-  --color-graphite-rule: var(--cyan-600);
-  --color-frame-1m: var(--cyan-300);
-  --color-frame-3m: var(--yellow-300);
-  --color-frame-6m: var(--orange-300);
-  --color-rank-1: var(--cyan-300);
-  --color-rank-2: var(--yellow-300);
-  --color-rank-3: var(--green-300);
-  --color-rank-4: var(--blue-300);
-  --color-rank-5: var(--orange-300);
-  --color-prior: var(--grey-600);
-  --color-liquidity: var(--yellow-300);
-  --color-warn: var(--yellow-300);
-  --color-danger: var(--red-300);
-  --color-up: var(--green-300);
-  --color-down: var(--red-300);
-
-  --font-display: var(--font-mono);
-  --font-body: var(--font-mono);
-  --font-outlier: var(--font-mono);
-
   --space-3xs: var(--space-1);
   --space-2xs: var(--space-4);
   --space-xs: var(--space-8);
@@ -169,13 +96,13 @@
   --space-2xl: var(--space-40);
   --space-3xl: var(--space-52);
 
-  --text-xs: var(--text-label);
-  --text-sm: var(--text-label);
-  --text-base: var(--text-label);
-  --text-md: var(--text-body);
-  --text-lg: 20.8px;
-  --text-xl: 24px;
-  --text-display: 20.8px;
+  --text-xs: 13px;
+  --text-sm: 15px;
+  --text-base: 15px;
+  --text-md: 18px;
+  --text-lg: 22px;
+  --text-xl: 28px;
+  --text-display: 28px;
 
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in: cubic-bezier(0.7, 0, 0.84, 0);
@@ -184,29 +111,16 @@
   --dur-short: 160ms;
   --dur-long: 280ms;
 
-  --radius-control: 0;
-  --radius-card: 0;
+  --radius-control: 6px;
+  --radius-card: 8px;
   --rule: 1px;
-  --page-gutter: var(--space-16);
-  --banner-height: 70px;
+  --page-gutter: var(--space-24);
+  --banner-height: 3.5rem;
   --chart-height: 14rem;
-  --control-height: 45px;
+  --control-height: 2.25rem;
 
   --z-base: 1;
   --z-raised: 10;
   --z-sticky: 200;
   --z-sticky-nav: 300;
-}
-
-[data-theme="light"] {
-  --grey-100: #000000;
-  --grey-200: #151517;
-  --grey-300: #232426;
-  --grey-400: #706e6e;
-  --grey-500: #858484;
-  --grey-600: #ababb1;
-  --grey-700: #ceced3;
-  --grey-800: #e3e3e5;
-  --grey-900: #ffffff;
-  --cyan-300: #bf7d00;
 }

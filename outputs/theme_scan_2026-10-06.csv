@@ -1,0 +1,6 @@
+name,description,exchange,industry,close,change,volume,earn_yoy,sales_yoy,Perf.1M,sma10_rising,sma20_rising,tradingview_url
+MXL,"MaxLinear, Inc",NASDAQ,Semiconductors,105.49,-0.41536863966771637,2820286,51.948786299931335,55.17171661474273,75.18890641866642,True,True,https://www.tradingview.com/chart/?symbol=NASDAQ:MXL&interval=D
+CDNA,"CareDx, Inc.",NASDAQ,Medical Specialties,69.85,4.020848845867444,1639565,103.17304867299974,52.22602937274312,40.68479355488418,True,True,https://www.tradingview.com/chart/?symbol=NASDAQ:CDNA&interval=D
+TER,"Teradyne, Inc.",NASDAQ,Electronic Production Equipment,444.53,-1.004364867272414,1679186,385.3085410706989,103.98956867163265,28.517736852756652,True,True,https://www.tradingview.com/chart/?symbol=NASDAQ:TER&interval=D
+SNPS,"Synopsys, Inc.",NASDAQ,Packaged Software,488.47,-0.29189630536843236,2819071,89.21261417427829,42.21447177486842,16.825313307184544,True,True,https://www.tradingview.com/chart/?symbol=NASDAQ:SNPS&interval=D
+SMCI,"Super Micro Computer, Inc.",NASDAQ,Computer Processing Hardware,43.19,-1.1444266422522318,22118837,445.48655569782323,93.1552702482286,13.181341719077572,True,True,https://www.tradingview.com/chart/?symbol=NASDAQ:SMCI&interval=D
