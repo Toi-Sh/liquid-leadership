@@ -247,6 +247,13 @@ THEMES: list[dict] = [
         ["TSLA", "GOOGL", "GM", "MBLY", "APTV", "AUR"],
     ),
     theme(
+        "lidar",
+        "Lidar",
+        "AI",
+        "Lidar makers for cars, robots, and factories.",
+        ["OUST", "HSAI", "AEVA", "INVZ", "MVIS"],
+    ),
+    theme(
         "drones",
         "Drones",
         "AI",
@@ -266,6 +273,21 @@ THEMES: list[dict] = [
         "Health",
         "Incretin drugs on the market and the next-wave obesity programs.",
         ["LLY", "NVO", "AMGN", "VKTX", "GPCR", "ALT", "PFE", "NVS", "REGN"],
+    ),
+    theme(
+        "genomics",
+        "Genomics",
+        "Health",
+        "Gene sequencing, gene editing, and cancer blood tests.",
+        ["ILMN", "TXG", "PACB", "TWST", "NTRA", "GH", "CRSP", "BEAM", "NTLA"],
+        "ARKG",
+    ),
+    theme(
+        "ai_drug_discovery",
+        "AI Drug Discovery",
+        "Health",
+        "Companies that use AI to find new drugs.",
+        ["RXRX", "SDGR", "ABCL", "RLAY", "ABSI", "CERT", "TEM"],
     ),
     theme(
         "devices",
@@ -381,6 +403,13 @@ THEMES: list[dict] = [
         "SIL",
     ),
     theme(
+        "superconductors",
+        "Superconductors",
+        "Materials",
+        "Superconductor wire, magnet materials, and MRI systems. Few pure plays are listed.",
+        ["AMSC", "BRKR", "GEHC"],
+    ),
+    theme(
         "defense",
         "Defense",
         "Macro",
@@ -410,6 +439,14 @@ THEMES: list[dict] = [
         "Macro",
         "Treasury, exchange, and broker names tied to crypto prices.",
         ["MSTR", "COIN", "HOOD", "CRCL", "GLXY", "MARA"],
+    ),
+    theme(
+        "crypto",
+        "Crypto",
+        "Macro",
+        "Bitcoin holders, exchanges, and miners.",
+        ["MSTR", "COIN", "HOOD", "CRCL", "GLXY", "MARA", "RIOT", "IREN"],
+        "BITQ",
     ),
     theme(
         "fintech",
@@ -545,6 +582,22 @@ THEMES: list[dict] = [
         "US steel and service-center names.",
         ["NUE", "STLD", "CLF", "RS", "CMC", "MT", "GGB"],
         "SLX",
+    ),
+    theme(
+        "brazil",
+        "Brazil",
+        "Macro",
+        "Brazilian oil, mining, banks, beverages, and the digital bank.",
+        ["PBR", "VALE", "ITUB", "BBD", "ABEV", "EMBJ", "NU", "GGB", "SBS", "STNE", "VIV"],
+        "EWZ",
+    ),
+    theme(
+        "argentina",
+        "Argentina",
+        "Macro",
+        "Argentine energy and bank names, plus Mercado Libre.",
+        ["MELI", "YPF", "GGAL", "BMA", "PAM", "VIST", "TEO", "CEPU", "BBAR", "ARCO"],
+        "ARGT",
     ),
 ]
 

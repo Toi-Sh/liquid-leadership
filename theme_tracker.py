@@ -508,9 +508,8 @@ HTML_TEMPLATE = r"""<!doctype html>
       letter-spacing: 0.08em;
     }
     .name { font-family: var(--font-display); letter-spacing: -0.01em; text-transform: none; color: var(--color-ink); }
-    .meta { display: block; margin-top: var(--space-4); color: var(--color-muted); font-family: var(--font-mono); letter-spacing: 0; text-transform: none; }
     .lane-tag { color: var(--color-accent); letter-spacing: 0.08em; text-transform: uppercase; font-size: var(--text-xs); }
-    .ticker { color: var(--color-accent); text-decoration: none; }
+    .ticker { color: var(--color-accent); font-family: var(--font-body); text-decoration: none; }
     .meter {
       display: inline-block;
       width: 3.2rem;
@@ -607,6 +606,7 @@ let lane = "All";
 let sortKey = "today";
 let sortDir = -1;
 let query = "";
+let symbolFilter = [];
 let openId = "";
 
 function esc(value) {
@@ -633,8 +633,10 @@ function visible() {
   const needle = query.trim().toLowerCase();
   return data.themes.filter(theme => {
     if (lane !== "All" && theme.lane !== lane) return false;
-    if (!needle) return true;
-    const hay = [theme.name, theme.lane, theme.blurb, ...(theme.members || []).map(m => m.symbol), ...(theme.unquoted || [])].join(" ").toLowerCase();
+    const memberSymbols = [...(theme.members || []).map(member => member.symbol), ...(theme.unquoted || [])].map(symbol => String(symbol).toUpperCase());
+    if (symbolFilter.length && symbolFilter.some(symbol => memberSymbols.includes(symbol))) return true;
+    if (!needle) return symbolFilter.length === 0;
+    const hay = [theme.name, theme.lane, theme.blurb, ...memberSymbols].join(" ").toLowerCase();
     return hay.includes(needle);
   }).sort((a, b) => {
     if (sortKey === "name" || sortKey === "lane") {
@@ -706,7 +708,7 @@ function paint() {
       : "—";
     const open = theme.id === openId;
     return `<tr>
-      <td><button type="button" class="sort name" data-open="${esc(theme.id)}" aria-expanded="${open ? "true" : "false"}">${esc(theme.name)}</button><span class="meta">${theme.n === 1 ? `1 of ${theme.listed} has a price` : `${theme.n} of ${theme.listed} have a price`}</span></td>
+      <td><button type="button" class="sort name" data-open="${esc(theme.id)}" aria-expanded="${open ? "true" : "false"}">${esc(theme.name)}</button></td>
       <td class="lane-tag">${esc(theme.lane)}</td>
       ${cells}
       <td>${breadth}</td>
@@ -736,7 +738,7 @@ document.addEventListener("click", event => {
     if (openId) document.querySelector(`#body [data-open="${CSS.escape(openId)}"]`)?.scrollIntoView({ block: "nearest" });
   }
 });
-searchEl.addEventListener("input", () => { query = searchEl.value; paint(); });
+searchEl.addEventListener("input", () => { query = searchEl.value; symbolFilter = []; paint(); });
 function closeDeskMenus() {
   document.querySelectorAll(".desk-menu__panel").forEach(panel => {
     panel.hidden = true;
@@ -784,6 +786,13 @@ document.addEventListener("keydown", event => {
 });
 tick();
 setInterval(tick, 1000);
+const params = new URLSearchParams(window.location.search);
+const industry = params.get("industry");
+if (industry) {
+  searchEl.value = industry;
+  query = industry;
+}
+symbolFilter = (params.get("symbols") || "").split(",").map(symbol => symbol.trim().toUpperCase()).filter(Boolean);
 paint();
 </script>
 </body>

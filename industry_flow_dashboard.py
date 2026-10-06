@@ -8,6 +8,8 @@ from pathlib import Path
 
 import pandas as pd
 
+from themes_catalog import THEMES
+
 
 TIMEFRAMES = {
     "1m": "is_top_1m",
@@ -542,6 +544,10 @@ def write_dashboard(output_dir: Path) -> Path:
     pages_entrypoint = Path("index.html")
     payload = json.dumps(history, separators=(",", ":"))
     quotes_payload = json.dumps(LIVERMORE_QUOTES, ensure_ascii=False, separators=(",", ":"))
+    baskets_payload = json.dumps(
+        [{"id": item["id"], "name": item["name"], "tickers": list(item["tickers"])} for item in THEMES],
+        separators=(",", ":"),
+    )
     template = r'''<!doctype html>
 <html lang="en">
 <head>
@@ -787,7 +793,8 @@ select { width: 9.5rem; max-width: 100%; min-width: 0; background: var(--color-p
 @media (hover: hover) and (pointer: fine) {
   select:hover, .btn:hover, .note-input:hover { border-color: var(--color-accent); color: var(--color-accent); }
   .btn--primary:hover { background: var(--color-ink-2); color: var(--color-paper); border-color: var(--color-ink-2); }
-  .ticker-link:hover { color: var(--color-accent); text-decoration: underline; text-underline-offset: var(--space-3xs); }
+  .ticker-link:hover,
+  .industry-link:hover { color: var(--color-accent); text-decoration: underline; text-underline-offset: var(--space-3xs); }
   .desk-tab:hover,
   .desk-menu__panel a:hover,
   .subnav__tab:hover { color: var(--color-accent); }
@@ -796,6 +803,7 @@ select:focus-visible,
 .btn:focus-visible,
 .note-input:focus-visible,
 .ticker-link:focus-visible,
+.industry-link:focus-visible,
 .desk-tab:focus-visible,
 .desk-menu__panel a:focus-visible,
 .subnav__tab:focus-visible {
@@ -877,7 +885,7 @@ main {
 #bbg-session { flex: 0 0 auto; }
 .qotd-strip {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: var(--space-sm);
   margin: 0 calc(var(--page-gutter) * -1) var(--space-sm);
   padding: var(--space-2xs) var(--page-gutter);
@@ -892,9 +900,7 @@ main {
   font-style: normal;
   line-height: 1.45;
   color: var(--color-ink);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: normal;
 }
 .qotd-strip__meta {
   flex: 0 0 auto;
@@ -1080,6 +1086,40 @@ tbody tr.row--theme-lead.row--theme-rising {
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
+.desk-note,
+.session-note {
+  margin: 0 0 var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  border: var(--rule) solid var(--color-rule);
+  background: var(--color-paper);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  color: var(--color-ink-2);
+}
+.desk-note[hidden],
+.session-note[hidden] { display: none; }
+.desk-note__label,
+.session-note__label {
+  display: block;
+  width: fit-content;
+  margin: 0 0 var(--space-xs);
+  color: var(--color-muted);
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.session-note__input {
+  min-height: 2.25rem;
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+.industry-link {
+  color: inherit;
+  font: inherit;
+  text-decoration: none;
+}
 .industry--rising::after {
   content: " ▲";
   color: var(--color-frame-1m);
@@ -1129,9 +1169,10 @@ svg {
 .table-wrap { overflow-x: auto; max-width: 100%; -webkit-overflow-scrolling: touch; }
 .scrollable-table { max-height: 16rem; overflow-y: auto; }
 table {
-  width: 100%;
+  width: max-content;
+  min-width: 100%;
   border-collapse: collapse;
-  table-layout: fixed;
+  table-layout: auto;
   font-family: var(--font-body);
   font-variant-numeric: tabular-nums;
 }
@@ -1147,6 +1188,8 @@ th, td {
   border-bottom: var(--rule) solid var(--color-rule);
   text-align: right;
   font-size: var(--text-xs);
+  white-space: nowrap;
+  vertical-align: top;
 }
 .desk-block--graphite th,
 .desk-block--graphite td { border-bottom-color: var(--color-graphite-rule); }
@@ -1159,8 +1202,36 @@ th {
   background: var(--color-paper-3);
 }
 .desk-block--graphite th { color: var(--color-accent); }
-td.col-industry { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--color-muted); }
-td.col-rules { white-space: normal; line-height: 1.4; }
+table.sheet {
+  width: 100%;
+  min-width: 100%;
+  table-layout: fixed;
+}
+table.sheet col.c-symbol { width: 5rem; }
+table.sheet col.c-perf { width: 8rem; }
+table.sheet col.c-vol { width: 8.5rem; }
+table.sheet col.c-stretch { width: 5.5rem; }
+table.sheet col.c-score { width: 3.5rem; }
+table.sheet col.c-checks { width: 12rem; }
+table.sheet col.c-note { width: 8rem; }
+table.sheet col.c-status { width: 10rem; }
+table.sheet col.c-mid { width: 9rem; }
+table.sheet col.c-flag { width: 6.5rem; }
+table.sheet col.c-wide { width: 9rem; }
+#rs-sections td:nth-child(3),
+#ma-stack-sections td:nth-child(3) {
+  white-space: normal;
+}
+td.col-industry {
+  white-space: normal;
+  color: var(--color-muted);
+}
+td.col-rules,
+th.col-rules { text-align: left; }
+td.col-rules {
+  white-space: normal;
+  line-height: 1.4;
+}
 .ticker-link {
   font-family: var(--font-outlier);
   font-weight: 600;
@@ -1227,12 +1298,6 @@ tbody tr:nth-child(even) { background: color-mix(in oklch, var(--color-paper-2) 
   .section-heading .btn,
   .section-heading .theme-scan__count { justify-self: end; }
   .bar-row { grid-template-columns: minmax(0, 11rem) minmax(0, 1fr) 2.5rem; }
-}
-@media (min-width: 60rem) {
-  .window-sections { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
-@media (min-width: 90rem) {
-  .window-sections { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 @media (max-width: 60rem) {
   .bbg-clock { display: none; }
@@ -1308,7 +1373,7 @@ tbody tr:nth-child(even) { background: color-mix(in oklch, var(--color-paper-2) 
   }
   .lede { flex-wrap: wrap; }
   .qotd-strip { flex-wrap: wrap; align-items: center; }
-  .qotd-strip__text { flex-basis: 100%; white-space: normal; }
+  .qotd-strip__text { flex-basis: 100%; }
   .qotd-strip__meta { flex: 1 1 auto; }
   .desk-block,
   .foot-line {
@@ -1409,6 +1474,14 @@ tbody tr:nth-child(even) { background: color-mix(in oklch, var(--color-paper-2) 
   <section class="desk-block" aria-labelledby="thematic-title">
     <div class="section-heading"><h1 id="thematic-title" class="dashboard-title">Thematic Leadership</h1></div>
     <div id="rising-theme-alert" class="rising-alert" hidden role="status" aria-live="polite"></div>
+    <div id="session-note" class="session-note">
+      <label class="session-note__label" for="session-note-input">Note for this session</label>
+      <input id="session-note-input" class="note-input session-note__input" type="text" placeholder="What stood out?" maxlength="500" autocomplete="off" spellcheck="true">
+    </div>
+    <div id="what-changed" class="desk-note" hidden></div>
+    <div id="overlap-list" class="desk-note" hidden></div>
+    <div id="earnings-week" class="desk-note" hidden></div>
+    <div id="basket-match" class="desk-note" hidden></div>
     <div id="theme-scan" class="theme-scan" hidden></div>
     <div id="leadership-sections" class="window-sections"></div>
   </section>
@@ -1485,6 +1558,7 @@ tbody tr:nth-child(even) { background: color-mix(in oklch, var(--color-paper-2) 
 <script>
 const history = __DATA__;
 const QUOTES = __QUOTES__;
+const BASKETS = __BASKETS__;
 (function initQuoteOfDay() {
   const text = document.getElementById('qotd-text');
   const meta = document.getElementById('qotd-meta');
@@ -1557,6 +1631,7 @@ const downloadAplusButton = document.getElementById('download-aplus');
 const flowMeta = { '1m': { label:'1 month', color:'var(--color-frame-1m)' }, '3m': { label:'3 months', color:'var(--color-frame-3m)' }, '6m': { label:'6 months', color:'var(--color-frame-6m)' } };
 const rankColors = ['var(--color-rank-1)', 'var(--color-rank-2)', 'var(--color-rank-3)', 'var(--color-rank-4)', 'var(--color-rank-5)'];
 const NOTE_KEY = 'nel-note:';
+const SESSION_NOTE_KEY = 'lld-session-note:';
 
 function risingThemes(snapshot) { return snapshot?.rising_themes || []; }
 function risingIndustrySet(snapshot) { return new Set(snapshot?.rising_industries || []); }
@@ -1573,11 +1648,18 @@ function leaderPhrase(count) {
   if (n === 0) return 'no stocks';
   return stockCount(n);
 }
+function listCount(n) {
+  const count = Math.max(0, Number(n) || 0);
+  return count === 1 ? '1 list' : `${count} lists`;
+}
+function countNow(count) {
+  const after = Number(count) || 0;
+  return after === 1 ? '1 stock' : `${after} stocks`;
+}
 function riseSentence(row) {
   const name = row.industry;
   const before = leaderPhrase(row.prior_count);
-  const after = Number(row.current_count) || 0;
-  const now = after === 1 ? '1 stock' : `${after} stocks`;
+  const now = countNow(row.current_count);
   if (row.signal === 'KICKOFF') return `${name} is new. Last time it had ${before}. Now it has ${now}.`;
   return `${name} has more stocks than last time. It had ${before}. Now it has ${now}.`;
 }
@@ -1637,6 +1719,29 @@ function chartUrl(row) {
   const name = String(row.name || '').trim();
   return `https://www.tradingview.com/chart/?symbol=${encodeURIComponent(name)}&interval=D`;
 }
+function industrySymbols(name) {
+  const snapshot = currentSnapshot();
+  const found = new Set();
+  function take(rows) {
+    (Array.isArray(rows) ? rows : []).forEach(row => {
+      if (String(row?.industry || '').trim() !== name) return;
+      const symbol = String(row?.name || '').trim().toUpperCase();
+      if (symbol) found.add(symbol);
+    });
+  }
+  ['liquid', 'focus', 'nel', 'rs_leads'].forEach(key => take(snapshot?.[key]));
+  if (Array.isArray(snapshot?.theme_scan)) take(snapshot.theme_scan);
+  return [...found].slice(0, 30);
+}
+function industryLink(industry) {
+  const name = String(industry ?? '').trim();
+  if (!name || name === '—') return escapeHTML(industry ?? '—');
+  const params = new URLSearchParams();
+  params.set('industry', name);
+  const symbols = industrySymbols(name);
+  if (symbols.length) params.set('symbols', symbols.join(','));
+  return `<a class="industry-link" href="theme_tracker.html?${params.toString()}">${escapeHTML(name)}</a>`;
+}
 function tickerMarkup(row) {
   const name = String(row.name || '').trim();
   const highLiquidity = Number(averageDollarVolume(row)) > 450_000_000;
@@ -1655,7 +1760,7 @@ function metricCells(row, performance, top) {
   const lead = top && row.industry === top[0] ? ' industry--lead' : '';
   const move = Number(row[performance]);
   const tick = Number.isFinite(move) && move > 0 ? ' tick-up' : Number.isFinite(move) && move < 0 ? ' tick-down' : '';
-  return `${tickerMarkup(row)}<td class="col-industry${lead}">${escapeHTML(row.industry)}</td><td class="col-perf${tick}">${formatPct(row[performance])}</td><td class="col-vol${highLiquidity ? ' high-liquidity' : ''}">${formatDollarVolume(dollarVolume)}</td><td class="col-ext">${formatNumber(row.atr_extension_from_50d)}×</td>`;
+  return `${tickerMarkup(row)}<td class="col-industry${lead}">${industryLink(row.industry)}</td><td class="col-perf${tick}">${formatPct(row[performance])}</td><td class="col-vol${highLiquidity ? ' high-liquidity' : ''}">${formatDollarVolume(dollarVolume)}</td><td class="col-ext">${formatNumber(row.atr_extension_from_50d)}×</td>`;
 }
 function focusExtras(row) {
   const score = Number.isFinite(Number(row.focus_score)) ? String(row.focus_score) : '—';
@@ -1708,7 +1813,7 @@ function renderBars(current, previous, frame, container) {
     const nowCount = now[name] || 0;
     const thenCount = then[name] || 0;
     const title = rising.has(name) ? `${name} has more stocks than last time. It had ${leaderPhrase(thenCount)}. Now it has ${leaderPhrase(nowCount)}.` : name;
-    return `<div class="bar-row"><div class="industry${risingClass}" style="color:${color}" title="${escapeHTML(title)}">${escapeHTML(name)}</div><div class="track"><div class="bar current" style="width:${nowCount/max*100}%;background:${color}" title="This session has ${leaderPhrase(nowCount)}."></div><div class="bar previous" style="width:${thenCount/max*100}%" title="The last session had ${leaderPhrase(thenCount)}."></div></div><div class="value">${nowCount}</div></div>`;
+    return `<div class="bar-row"><div class="industry${risingClass}" style="color:${color}" title="${escapeHTML(title)}">${industryLink(name)}</div><div class="track"><div class="bar current" style="width:${nowCount/max*100}%;background:${color}" title="This session has ${leaderPhrase(nowCount)}."></div><div class="bar previous" style="width:${thenCount/max*100}%" title="The last session had ${leaderPhrase(thenCount)}."></div></div><div class="value">${nowCount}</div></div>`;
   }).join('');
   return names;
 }
@@ -1732,7 +1837,8 @@ function renderTrend(frame, svg, names) {
 function windowTables(prefix, heading, extraHead, extraCell, emptyLabel) {
   return Object.entries(flowMeta).map(([frame, meta]) => {
     const extras = extraHead ? extraHead : '';
-    return `<section class="nel-window" data-frame="${frame}"><h3>${meta.label} ${heading}</h3><div id="${prefix}-theme-${frame}" class="theme-card frame-${frame}"></div><div class="table-wrap${prefix === 'liquid' ? ' scrollable-table' : ''}"><table><thead><tr><th>Symbol</th><th class="col-industry">Industry</th><th>Performance</th><th class="col-vol">Dollar volume</th><th class="col-ext">Stretch</th>${extras}<th>Notes</th></tr></thead><tbody id="${prefix}-table-${frame}"></tbody></table></div></section>`;
+    const extraCols = extras.includes('col-score') ? '<col class="c-score"><col class="c-checks">' : '';
+    return `<section class="nel-window" data-frame="${frame}"><h3>${meta.label} ${heading}</h3><div id="${prefix}-theme-${frame}" class="theme-card frame-${frame}"></div><div class="table-wrap${prefix === 'liquid' ? ' scrollable-table' : ''}"><table class="sheet"><colgroup><col class="c-symbol"><col class="c-industry"><col class="c-perf"><col class="c-vol"><col class="c-stretch">${extraCols}<col class="c-note"></colgroup><thead><tr><th>Symbol</th><th class="col-industry">Industry</th><th>Performance</th><th class="col-vol">Dollar volume</th><th class="col-ext">Stretch</th>${extras}<th>Notes</th></tr></thead><tbody id="${prefix}-table-${frame}"></tbody></table></div></section>`;
   }).join('');
 }
 function leadingTheme(snapshot, frame) {
@@ -1829,7 +1935,7 @@ function renderRS(snapshot) {
   const rsTheme = !top ? '' : Number(top[1]) === 1
     ? ` That row is in <strong>${escapeHTML(top[0])}</strong>.`
     : ` Green rows are in <strong>${escapeHTML(top[0])}</strong>.`;
-  rsSections.innerHTML = `<section class="nel-window" data-frame="1m"><h3>Relative strength</h3><div class="theme-card frame-1m"><span class="theme-line">${rsSummary}${rsTheme}</span></div><div class="table-wrap scrollable-table"><table><thead><tr><th>Symbol</th><th class="col-industry">Industry</th><th>Status</th><th class="col-rs-d">Daily high</th><th class="col-rs-w">Weekly high</th><th>Leads</th><th class="col-below">Below the high</th><th>Notes</th></tr></thead><tbody id="rs-table">${rows.length ? rows.map(row => { const classes = rowThemeClasses(row, top, snapshot); const title = rowThemeTitle(row, top, snapshot); return `<tr class="${classes}"${title ? ` title="${escapeHTML(title)}"` : ''}>${tickerMarkup(row)}<td class="col-industry${isLeadingThemeRow(row, top) ? ' industry--lead' : ''}">${escapeHTML(row.industry || '—')}</td><td>${escapeHTML(rsSignalLabel(row.signal))}</td><td class="col-rs-d">${rsFlag(row.rs_new_high_d) === 'Y' ? 'Yes' : 'No'}</td><td class="col-rs-w">${rsFlag(row.rs_new_high_w) === 'Y' ? 'Yes' : 'No'}</td><td>${isTrue(row.is_rs_lead) ? 'Yes' : 'No'}</td><td class="col-below">${formatNumber(row.pct_below_price_high)}%</td>${noteMarkup(row)}</tr>`; }).join('') : `<tr><td colspan="8" class="empty">No stocks lead the market today.</td></tr>`}</tbody></table></div></section>`;
+  rsSections.innerHTML = `<section class="nel-window" data-frame="1m"><h3>Relative strength</h3><div class="theme-card frame-1m"><span class="theme-line">${rsSummary}${rsTheme}</span></div><div class="table-wrap scrollable-table"><table class="sheet"><colgroup><col class="c-symbol"><col class="c-industry"><col class="c-status"><col class="c-flag"><col class="c-flag"><col class="c-flag"><col class="c-wide"><col class="c-note"></colgroup><thead><tr><th>Symbol</th><th class="col-industry">Industry</th><th>Status</th><th class="col-rs-d">Daily high</th><th class="col-rs-w">Weekly high</th><th>Leads</th><th class="col-below">Below the high</th><th>Notes</th></tr></thead><tbody id="rs-table">${rows.length ? rows.map(row => { const classes = rowThemeClasses(row, top, snapshot); const title = rowThemeTitle(row, top, snapshot); return `<tr class="${classes}"${title ? ` title="${escapeHTML(title)}"` : ''}>${tickerMarkup(row)}<td class="col-industry${isLeadingThemeRow(row, top) ? ' industry--lead' : ''}">${industryLink(row.industry || '—')}</td><td>${escapeHTML(rsSignalLabel(row.signal))}</td><td class="col-rs-d">${rsFlag(row.rs_new_high_d) === 'Y' ? 'Yes' : 'No'}</td><td class="col-rs-w">${rsFlag(row.rs_new_high_w) === 'Y' ? 'Yes' : 'No'}</td><td>${isTrue(row.is_rs_lead) ? 'Yes' : 'No'}</td><td class="col-below">${formatNumber(row.pct_below_price_high)}%</td>${noteMarkup(row)}</tr>`; }).join('') : `<tr><td colspan="8" class="empty">No stocks lead the market today.</td></tr>`}</tbody></table></div></section>`;
 }
 function renderEMA8(snapshot) {
   if (!ema8Sections) return;
@@ -1838,7 +1944,7 @@ function renderEMA8(snapshot) {
   const emaSummary = rows.length
     ? `${rows.length === 1 ? '1 liquid leader is' : rows.length + ' liquid leaders are'} within 3% of a rising 8-week average.`
     : 'No stock is near a rising 8-week average for this date.';
-  ema8Sections.innerHTML = `<section class="nel-window" data-frame="1m"><h3>8-week pullbacks</h3><div class="theme-card frame-1m"><span class="theme-line">${emaSummary}</span></div><div class="table-wrap scrollable-table"><table><thead><tr><th>Symbol</th><th class="col-industry">Industry</th><th>Distance</th><th class="col-ext">Slope</th><th class="col-vol">Below the high</th><th>Notes</th></tr></thead><tbody id="ema8-table">${rows.length ? rows.map(row => { const classes = rowThemeClasses(row, top, snapshot); const title = rowThemeTitle(row, top, snapshot); return `<tr class="${classes}"${title ? ` title="${escapeHTML(title)}"` : ''}>${tickerMarkup(row)}<td class="col-industry${isLeadingThemeRow(row, top) ? ' industry--lead' : ''}">${escapeHTML(row.industry || '—')}</td><td>${formatNumber(row.dist_to_ema8w_pct)}%</td><td class="col-ext">${formatNumber(row.ema8w_slope_pct)}%</td><td class="col-vol">${formatNumber(row.off_8w_high_pct)}%</td>${noteMarkup(row)}</tr>`; }).join('') : `<tr><td colspan="6" class="empty">No pullbacks for this date.</td></tr>`}</tbody></table></div></section>`;
+  ema8Sections.innerHTML = `<section class="nel-window" data-frame="1m"><h3>8-week pullbacks</h3><div class="theme-card frame-1m"><span class="theme-line">${emaSummary}</span></div><div class="table-wrap scrollable-table"><table class="sheet"><colgroup><col class="c-symbol"><col class="c-industry"><col class="c-perf"><col class="c-stretch"><col class="c-wide"><col class="c-note"></colgroup><thead><tr><th>Symbol</th><th class="col-industry">Industry</th><th>Distance</th><th class="col-ext">Slope</th><th class="col-vol">Below the high</th><th>Notes</th></tr></thead><tbody id="ema8-table">${rows.length ? rows.map(row => { const classes = rowThemeClasses(row, top, snapshot); const title = rowThemeTitle(row, top, snapshot); return `<tr class="${classes}"${title ? ` title="${escapeHTML(title)}"` : ''}>${tickerMarkup(row)}<td class="col-industry${isLeadingThemeRow(row, top) ? ' industry--lead' : ''}">${industryLink(row.industry || '—')}</td><td>${formatNumber(row.dist_to_ema8w_pct)}%</td><td class="col-ext">${formatNumber(row.ema8w_slope_pct)}%</td><td class="col-vol">${formatNumber(row.off_8w_high_pct)}%</td>${noteMarkup(row)}</tr>`; }).join('') : `<tr><td colspan="6" class="empty">No pullbacks for this date.</td></tr>`}</tbody></table></div></section>`;
 }
 function renderMaStack(snapshot) {
   if (!maStackSections) return;
@@ -1852,7 +1958,7 @@ function renderMaStack(snapshot) {
   const maSummary = rows.length
     ? `${rows.length === 1 ? '1 liquid leader has' : rows.length + ' liquid leaders have'} the 5-day average above the 10-day average. The 20-day average is crossing the 30-day average.`
     : 'No moving-average crosses for this date.';
-  maStackSections.innerHTML = `<section class="nel-window" data-frame="1m"><h3>Moving averages</h3><div class="theme-card frame-1m"><span class="theme-line">${maSummary}</span></div><div class="table-wrap scrollable-table"><table><thead><tr><th>Symbol</th><th class="col-industry">Industry</th><th>Status</th><th class="col-ext">Gap</th><th class="col-vol">When</th><th>Notes</th></tr></thead><tbody id="ma-stack-table">${rows.length ? rows.map(row => { const classes = rowThemeClasses(row, top, snapshot); const title = rowThemeTitle(row, top, snapshot); const days = row.cross_days_ago === '' || row.cross_days_ago == null ? '—' : (Number(row.cross_days_ago) === 0 ? 'This session' : Number(row.cross_days_ago) === 1 ? 'The session before' : `${row.cross_days_ago} sessions before`); return `<tr class="${classes}"${title ? ` title="${escapeHTML(title)}"` : ''}>${tickerMarkup(row)}<td class="col-industry${isLeadingThemeRow(row, top) ? ' industry--lead' : ''}">${escapeHTML(row.industry || '—')}</td><td>${escapeHTML(maSignalLabel(row.signal))}</td><td class="col-ext">${formatNumber(row.sma20_30_gap_pct)}%</td><td class="col-vol">${escapeHTML(days)}</td>${noteMarkup(row)}</tr>`; }).join('') : `<tr><td colspan="6" class="empty">No moving-average crosses for this date.</td></tr>`}</tbody></table></div></section>`;
+  maStackSections.innerHTML = `<section class="nel-window" data-frame="1m"><h3>Moving averages</h3><div class="theme-card frame-1m"><span class="theme-line">${maSummary}</span></div><div class="table-wrap scrollable-table"><table class="sheet"><colgroup><col class="c-symbol"><col class="c-industry"><col class="c-status"><col class="c-stretch"><col class="c-wide"><col class="c-note"></colgroup><thead><tr><th>Symbol</th><th class="col-industry">Industry</th><th>Status</th><th class="col-ext">Gap</th><th class="col-vol">When</th><th>Notes</th></tr></thead><tbody id="ma-stack-table">${rows.length ? rows.map(row => { const classes = rowThemeClasses(row, top, snapshot); const title = rowThemeTitle(row, top, snapshot); const days = row.cross_days_ago === '' || row.cross_days_ago == null ? '—' : (Number(row.cross_days_ago) === 0 ? 'This session' : Number(row.cross_days_ago) === 1 ? 'The session before' : `${row.cross_days_ago} sessions before`); return `<tr class="${classes}"${title ? ` title="${escapeHTML(title)}"` : ''}>${tickerMarkup(row)}<td class="col-industry${isLeadingThemeRow(row, top) ? ' industry--lead' : ''}">${industryLink(row.industry || '—')}</td><td>${escapeHTML(maSignalLabel(row.signal))}</td><td class="col-ext">${formatNumber(row.sma20_30_gap_pct)}%</td><td class="col-vol">${escapeHTML(days)}</td>${noteMarkup(row)}</tr>`; }).join('') : `<tr><td colspan="6" class="empty">No moving-average crosses for this date.</td></tr>`}</tbody></table></div></section>`;
 }
 function renderAPlusFlags(snapshot) {
   if (!aplusSections) return;
@@ -1870,7 +1976,7 @@ function renderAPlusFlags(snapshot) {
   const top = leadingTheme(snapshot, '1m');
   const coilLine = coils === 0 ? 'No stock is still coiled under the breakout price.' : coils === 1 ? '1 stock is still coiled under the breakout price.' : `${coils} stocks are still coiled under the breakout price.`;
   const breakLine = bos === 0 ? 'None broke out this session.' : bos === 1 ? '1 stock broke out this session.' : `${bos} stocks broke out this session.`;
-  aplusSections.innerHTML = `<section class="nel-window" data-frame="1m"><h3>Flag breakouts</h3><div class="theme-card frame-1m"><span class="theme-line">${rows.length ? `${coilLine} ${breakLine}` : 'No flag setups for this date.'}</span></div><div class="table-wrap scrollable-table"><table><thead><tr><th>Symbol</th><th class="col-industry">Industry</th><th>Status</th><th>Grade</th><th class="col-ext">Advance</th><th class="col-vol">Depth</th><th>Breakout price</th><th>Volume</th><th>Notes</th></tr></thead><tbody id="aplus-table">${rows.length ? rows.map(row => { const classes = rowThemeClasses(row, top, snapshot); const title = rowThemeTitle(row, top, snapshot); const sig = row.signal === 'APLUS_BREAKOUT' ? 'Broke out this session' : 'Still coiled'; return `<tr class="${classes}"${title ? ` title="${escapeHTML(title)}"` : ''}>${tickerMarkup(row)}<td class="col-industry${isLeadingThemeRow(row, top) ? ' industry--lead' : ''}">${escapeHTML(row.industry || '—')}</td><td>${sig}</td><td>${escapeHTML(row.grade || '—')}</td><td class="col-ext">${formatNumber(row.thrust_pct)}%</td><td class="col-vol">${formatNumber(row.flag_depth_pct)}%</td><td>${formatNumber(row.dist_to_pivot_pct)}%</td><td>${formatNumber(row.rvol)}</td>${noteMarkup(row)}</tr>`; }).join('') : `<tr><td colspan="9" class="empty">No flag setups for this date.</td></tr>`}</tbody></table></div></section>`;
+  aplusSections.innerHTML = `<section class="nel-window" data-frame="1m"><h3>Flag breakouts</h3><div class="theme-card frame-1m"><span class="theme-line">${rows.length ? `${coilLine} ${breakLine}` : 'No flag setups for this date.'}</span></div><div class="table-wrap scrollable-table"><table class="sheet"><colgroup><col class="c-symbol"><col class="c-industry"><col class="c-mid"><col class="c-flag"><col class="c-stretch"><col class="c-flag"><col class="c-wide"><col class="c-vol"><col class="c-note"></colgroup><thead><tr><th>Symbol</th><th class="col-industry">Industry</th><th>Status</th><th>Grade</th><th class="col-ext">Advance</th><th class="col-vol">Depth</th><th>Breakout price</th><th>Volume</th><th>Notes</th></tr></thead><tbody id="aplus-table">${rows.length ? rows.map(row => { const classes = rowThemeClasses(row, top, snapshot); const title = rowThemeTitle(row, top, snapshot); const sig = row.signal === 'APLUS_BREAKOUT' ? 'Broke out this session' : 'Still coiled'; return `<tr class="${classes}"${title ? ` title="${escapeHTML(title)}"` : ''}>${tickerMarkup(row)}<td class="col-industry${isLeadingThemeRow(row, top) ? ' industry--lead' : ''}">${industryLink(row.industry || '—')}</td><td>${sig}</td><td>${escapeHTML(row.grade || '—')}</td><td class="col-ext">${formatNumber(row.thrust_pct)}%</td><td class="col-vol">${formatNumber(row.flag_depth_pct)}%</td><td>${formatNumber(row.dist_to_pivot_pct)}%</td><td>${formatNumber(row.rvol)}</td>${noteMarkup(row)}</tr>`; }).join('') : `<tr><td colspan="9" class="empty">No flag setups for this date.</td></tr>`}</tbody></table></div></section>`;
 }
 function renderThemeScan(snapshot) {
   const host = document.getElementById('theme-scan');
@@ -1880,18 +1986,247 @@ function renderThemeScan(snapshot) {
   host.hidden = false;
   const themes = (snapshot.theme_scan_themes || []).filter(Boolean);
   const themeLine = !themes.length
-    ? 'The top industries for the month were checked.'
+    ? 'No themes to scan.'
     : themes.length === 1
-      ? `This theme was checked: ${escapeHTML(themes[0])}.`
-      : `These themes were checked: ${themes.map(name => escapeHTML(name)).join(', ')}.`;
-  const rules = 'A stock must cost more than $1. The daily move must stay between a loss of 5% and a gain of 5%. Volume must be above 1 million shares. The price must be above the 10-day average, the 20-day average, and the weekly 10-day average. The 10-day and 20-day averages must be rising. Earnings and sales must both be up at least 40% from a year ago. Only the strongest stock in each theme is kept.';
+      ? 'One stock from the top theme.'
+      : 'One stock from each top theme.';
   const body = rows.length ? rows.map(row => {
     const day = Number(row.change);
     const dayClass = Number.isFinite(day) && day > 0 ? ' tick-up' : Number.isFinite(day) && day < 0 ? ' tick-down' : '';
-    return `<tr>${tickerMarkup(row)}<td class="col-industry">${escapeHTML(row.industry)}</td><td>${formatNumber(row.close)}</td><td class="col-perf${dayClass}">${formatPct(row.change)}</td><td class="col-vol">${formatShares(row.volume)}</td><td class="col-perf">${formatPct(row.earn_yoy)}</td><td class="col-perf">${formatPct(row.sales_yoy)}</td>${noteMarkup(row)}</tr>`;
+    return `<tr>${tickerMarkup(row)}<td class="col-industry">${industryLink(row.industry)}</td><td>${formatNumber(row.close)}</td><td class="col-perf${dayClass}">${formatPct(row.change)}</td><td class="col-vol">${formatShares(row.volume)}</td><td class="col-perf">${formatPct(row.earn_yoy)}</td><td class="col-perf">${formatPct(row.sales_yoy)}</td>${noteMarkup(row)}</tr>`;
   }).join('') : '<tr><td class="empty" colspan="8">No stock in these themes passed every check.</td></tr>';
   const countLabel = rows.length ? stockCount(rows.length) : 'No stocks';
-  host.innerHTML = `<div class="section-heading"><h2>Theme scan</h2><span class="theme-scan__count">${countLabel}</span></div><p class="rs-lede">${themeLine} ${rules}</p><div class="table-wrap scrollable-table"><table><thead><tr><th>Symbol</th><th>Theme</th><th>Price</th><th>Day</th><th>Volume</th><th>Earnings</th><th>Sales</th><th>Notes</th></tr></thead><tbody>${body}</tbody></table></div>`;
+  host.innerHTML = `<div class="section-heading"><h2>Theme scan</h2><span class="theme-scan__count">${countLabel}</span></div><p class="rs-lede">${themeLine}</p><div class="table-wrap scrollable-table"><table class="sheet"><colgroup><col class="c-symbol"><col class="c-industry"><col class="c-flag"><col class="c-flag"><col class="c-vol"><col class="c-perf"><col class="c-perf"><col class="c-note"></colgroup><thead><tr><th>Symbol</th><th>Theme</th><th>Price</th><th>Day</th><th>Volume</th><th>Earnings</th><th>Sales</th><th>Notes</th></tr></thead><tbody>${body}</tbody></table></div>`;
+}
+function nameSet(rows) {
+  const names = new Set();
+  (Array.isArray(rows) ? rows : []).forEach(row => {
+    const name = String(row?.name || '').trim();
+    if (name) names.add(name);
+  });
+  return names;
+}
+function joinNames(names) {
+  const list = (names || []).filter(Boolean);
+  if (list.length <= 1) return list[0] || '';
+  if (list.length === 2) return `${list[0]} and ${list[1]}`;
+  return `${list.slice(0, -1).join(', ')}, and ${list[list.length - 1]}`;
+}
+function movementSentence(names, verb, label) {
+  const sorted = [...names].sort((a, b) => a.localeCompare(b));
+  const shown = sorted.slice(0, 6);
+  const rest = sorted.length - shown.length;
+  let sentence = `${stockCount(sorted.length)} ${verb} ${label}: ${joinNames(shown)}.`;
+  if (rest > 0) sentence += ` And ${rest} more.`;
+  return sentence;
+}
+function listMoves(label, nowRows, thenRows) {
+  const now = nameSet(nowRows);
+  const then = nameSet(thenRows);
+  const joined = [...now].filter(name => !then.has(name));
+  const left = [...then].filter(name => !now.has(name));
+  const sentences = [];
+  if (joined.length) sentences.push(movementSentence(joined, 'joined', label));
+  if (left.length) sentences.push(movementSentence(left, 'left', label));
+  return sentences;
+}
+function riseSignal(prior, current) {
+  const before = Number(prior) || 0;
+  const after = Number(current) || 0;
+  if (after - before < 1 || after < 2) return '';
+  if (before === 0 || (before <= 1 && after >= 3)) return 'KICKOFF';
+  return 'RISING';
+}
+function grewGroupRows(current, previous) {
+  const now = counts(current, '1m');
+  const then = counts(previous, '1m');
+  const rows = [];
+  new Set([...Object.keys(now), ...Object.keys(then)]).forEach(name => {
+    const prior = Number(then[name] || 0);
+    const currentCount = Number(now[name] || 0);
+    const signal = riseSignal(prior, currentCount);
+    if (!signal) return;
+    rows.push({ industry: name, prior_count: prior, current_count: currentCount, delta: currentCount - prior, signal });
+  });
+  rows.sort((a, b) => {
+    const kick = (a.signal === 'KICKOFF' ? 0 : 1) - (b.signal === 'KICKOFF' ? 0 : 1);
+    if (kick) return kick;
+    if (b.delta !== a.delta) return b.delta - a.delta;
+    if (b.current_count !== a.current_count) return b.current_count - a.current_count;
+    return String(a.industry).localeCompare(String(b.industry));
+  });
+  return rows;
+}
+function fadeSentence(row) {
+  return `${row.industry} has fewer stocks than last time. It had ${leaderPhrase(row.prior_count)}. Now it has ${countNow(row.current_count)}.`;
+}
+function fadedGroupRows(current, previous) {
+  const now = counts(current, '1m');
+  const then = counts(previous, '1m');
+  const rows = [];
+  Object.keys(then).forEach(name => {
+    const prior = Number(then[name] || 0);
+    const currentCount = Number(now[name] || 0);
+    if (prior < 2 || currentCount >= prior) return;
+    rows.push({ industry: name, prior_count: prior, current_count: currentCount, drop: prior - currentCount });
+  });
+  rows.sort((a, b) => b.drop - a.drop || String(a.industry).localeCompare(String(b.industry)));
+  return rows;
+}
+function capSentences(sentences, limit) {
+  const shown = sentences.slice(0, limit);
+  const rest = sentences.length - shown.length;
+  if (rest > 0) shown.push(`And ${rest} more.`);
+  return shown;
+}
+function setDeskNote(id, label, sentences) {
+  const host = document.getElementById(id);
+  if (!host) return;
+  const lines = (sentences || []).map(line => String(line || '').trim()).filter(Boolean);
+  if (!lines.length) {
+    host.hidden = true;
+    host.innerHTML = '';
+    return;
+  }
+  host.hidden = false;
+  host.innerHTML = `<span class="desk-note__label">${escapeHTML(label)}</span><span class="desk-note__text">${lines.map(line => escapeHTML(line)).join(' ')}</span>`;
+}
+function renderWhatChanged(current, previous) {
+  if (!current || !previous) {
+    setDeskNote('what-changed', 'What changed', []);
+    return;
+  }
+  const sentences = [
+    ...listMoves('liquid leaders', current.liquid, previous.liquid),
+    ...listMoves('focus', current.focus, previous.focus),
+    ...listMoves('relative strength', current.rs_leads || [], previous.rs_leads || [])
+  ];
+  if (Array.isArray(current.theme_scan) && Array.isArray(previous.theme_scan)) {
+    sentences.push(...listMoves('the theme scan', current.theme_scan, previous.theme_scan));
+  }
+  sentences.push(...capSentences(grewGroupRows(current, previous).map(riseSentence), 4));
+  sentences.push(...capSentences(fadedGroupRows(current, previous).map(fadeSentence), 4));
+  setDeskNote('what-changed', 'What changed', sentences);
+}
+function renderOverlap(snapshot) {
+  const membership = new Map();
+  function add(label, rows) {
+    if (rows == null) return;
+    nameSet(rows).forEach(name => {
+      if (!membership.has(name)) membership.set(name, []);
+      membership.get(name).push(label);
+    });
+  }
+  add('liquid leaders', snapshot?.liquid);
+  if (Array.isArray(snapshot?.theme_scan)) add('the theme scan', snapshot.theme_scan);
+  add('relative strength', snapshot?.rs_leads || []);
+  const rows = [...membership.entries()]
+    .filter(([, labels]) => labels.length >= 2)
+    .map(([symbol, labels]) => ({ symbol, labels }))
+    .sort((a, b) => b.labels.length - a.labels.length || a.symbol.localeCompare(b.symbol));
+  const shown = rows.slice(0, 12);
+  const rest = rows.length - shown.length;
+  const sentences = shown.map(row => `${row.symbol} is on ${listCount(row.labels.length)}: ${joinNames(row.labels)}.`);
+  if (rest > 0) sentences.push(`And ${rest} more.`);
+  setDeskNote('overlap-list', 'On more than one list', sentences);
+}
+const EARNINGS_WEEKDAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const EARNINGS_MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+function parseISODate(value) {
+  const match = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(value || '').trim());
+  if (!match) return null;
+  const year = Number(match[1]);
+  const month = Number(match[2]);
+  const day = Number(match[3]);
+  const date = new Date(Date.UTC(year, month - 1, day));
+  if (date.getUTCFullYear() !== year || date.getUTCMonth() !== month - 1 || date.getUTCDate() !== day) return null;
+  return date;
+}
+function formatEarningsDay(date) {
+  return `${EARNINGS_WEEKDAYS[date.getUTCDay()]}, ${date.getUTCDate()} ${EARNINGS_MONTHS[date.getUTCMonth()]}`;
+}
+function renderEarningsWeek(snapshot) {
+  const start = parseISODate(snapshot?.date);
+  if (!start) {
+    setDeskNote('earnings-week', 'Earnings this week', []);
+    return;
+  }
+  const byName = new Map();
+  function consider(rows) {
+    (Array.isArray(rows) ? rows : []).forEach(row => {
+      const name = String(row?.name || '').trim();
+      const when = parseISODate(row?.earnings_date);
+      if (!name || !when) return;
+      const span = Math.round((when.getTime() - start.getTime()) / 86400000);
+      if (span < 0 || span > 6) return;
+      const existing = byName.get(name);
+      if (!existing || when.getTime() < existing.getTime()) byName.set(name, when);
+    });
+  }
+  ['liquid', 'focus', 'nel', 'rs_leads', 'ema8_pullbacks', 'ma_stack'].forEach(key => consider(snapshot?.[key]));
+  if (Array.isArray(snapshot?.theme_scan)) consider(snapshot.theme_scan);
+  const rows = [...byName.entries()].sort((a, b) => a[1] - b[1] || a[0].localeCompare(b[0]));
+  const shown = rows.slice(0, 8);
+  const rest = rows.length - shown.length;
+  const sentences = shown.map(([name, when]) => `${name} reports on ${formatEarningsDay(when)}.`);
+  if (rest > 0) sentences.push(`And ${rest} more.`);
+  setDeskNote('earnings-week', 'Earnings this week', sentences);
+}
+function renderSessionNote(snapshot) {
+  const host = document.getElementById('session-note');
+  const field = document.getElementById('session-note-input');
+  if (!host || !field || !snapshot?.date) return;
+  if (host.dataset.date === snapshot.date) return;
+  host.dataset.date = snapshot.date;
+  let value = '';
+  try { value = localStorage.getItem(SESSION_NOTE_KEY + snapshot.date) || ''; } catch { value = ''; }
+  field.value = value;
+}
+function saveSessionNote(value) {
+  const snapshot = currentSnapshot();
+  if (!snapshot?.date) return;
+  try {
+    const key = SESSION_NOTE_KEY + snapshot.date;
+    if (value) localStorage.setItem(key, value);
+    else localStorage.removeItem(key);
+  } catch { /* private mode */ }
+}
+function renderBasketMatch(snapshot) {
+  const params = new URLSearchParams(window.location.search);
+  const id = (params.get('basket') || '').trim();
+  const basket = id && Array.isArray(BASKETS) ? BASKETS.find(item => item && item.id === id) : null;
+  if (!basket) {
+    setDeskNote('basket-match', 'From the tape', []);
+    return;
+  }
+  const onDesk = new Map();
+  function add(rows) {
+    nameSet(rows).forEach(name => {
+      const key = name.toUpperCase();
+      if (!onDesk.has(key)) onDesk.set(key, name);
+    });
+  }
+  add(snapshot?.liquid);
+  add(snapshot?.focus);
+  add(snapshot?.nel);
+  add(snapshot?.rs_leads);
+  if (Array.isArray(snapshot?.theme_scan)) add(snapshot.theme_scan);
+  const seen = new Set();
+  const hits = [];
+  (basket.tickers || []).forEach(ticker => {
+    const key = String(ticker || '').trim().toUpperCase();
+    if (!key || seen.has(key)) return;
+    const match = onDesk.get(key);
+    if (!match) return;
+    seen.add(key);
+    hits.push(match);
+  });
+  hits.sort((a, b) => a.localeCompare(b));
+  const name = String(basket.name || basket.id || 'This basket');
+  const sentence = hits.length
+    ? `The ${name} theme includes ${stockCount(hits.length)} on this desk: ${joinNames(hits)}.`
+    : `No stock from ${name} is on this desk.`;
+  setDeskNote('basket-match', 'From the tape', [sentence]);
 }
 function render() {
   const current = currentSnapshot(), index = Number(dateSelect.value), previous = history[index-1];
@@ -1903,6 +2238,11 @@ function render() {
   if (maStackTitle) maStackTitle.textContent = `Moving averages — ${stockCount((current.ma_stack || []).length)}`;
   if (aplusTitle) aplusTitle.textContent = `Flag breakouts — ${stockCount((current.a_plus_flags || []).length)}`;
   renderRisingAlert(current);
+  renderSessionNote(current);
+  renderWhatChanged(current, previous);
+  renderOverlap(current);
+  renderEarningsWeek(current);
+  renderBasketMatch(current);
   renderThemeScan(current);
   leadershipSections.innerHTML = Object.entries(flowMeta).map(([frame, meta]) => `<section class="panel" data-frame="${frame}"><h2>${meta.label} leadership</h2><div id="bars-${frame}" class="bars"></div><h2 class="trend-label">Leadership over time</h2><svg id="trend-${frame}" role="img" aria-label="How many leaders each industry had over ${meta.label}"></svg><div id="trend-legend-${frame}" class="trend-legend"></div></section>`).join('');
   liquidSections.innerHTML = windowTables('liquid', 'leaders', '', null, 'No liquid leaders.');
@@ -2021,6 +2361,11 @@ document.addEventListener('click', event => {
   window.open(href, '_blank', 'noopener,noreferrer');
 });
 document.addEventListener('input', event => {
+  const sessionField = event.target.closest('#session-note-input');
+  if (sessionField) {
+    saveSessionNote(sessionField.value);
+    return;
+  }
   const field = event.target.closest('.note-input');
   if (!field || !field.dataset.symbol) return;
   saveNote(field.dataset.symbol, field.value);
@@ -2054,7 +2399,7 @@ if (!history.length) { document.querySelector('main').innerHTML = '<p class="emp
 </script>
 </body>
 </html>'''
-    rendered = template.replace("__DATA__", payload).replace("__QUOTES__", quotes_payload)
+    rendered = template.replace("__DATA__", payload).replace("__QUOTES__", quotes_payload).replace("__BASKETS__", baskets_payload)
     dashboard.write_text(rendered, encoding="utf-8")
     pages_entrypoint.write_text(rendered, encoding="utf-8")
     return dashboard
