@@ -190,6 +190,20 @@ THEMES: list[dict] = [
         ["QCOM", "ARM", "AMBA", "LSCC", "SYNA", "CRUS", "NXPI", "STM", "INTC", "POWI"],
     ),
     theme(
+        "wearable_ai",
+        "Wearable AI",
+        "AI",
+        "AI glasses, watches, and the displays inside them.",
+        ["SNAP", "GRMN", "VUZI", "KOPN"],
+    ),
+    theme(
+        "wearable_platforms",
+        "Wearable Platforms",
+        "AI",
+        "The platforms and the chip behind the glasses and watches.",
+        ["META", "AAPL", "QCOM"],
+    ),
+    theme(
         "routers",
         "Routers",
         "AI",

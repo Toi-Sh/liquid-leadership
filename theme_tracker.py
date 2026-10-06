@@ -273,8 +273,29 @@ HTML_TEMPLATE = r"""<!doctype html>
   <link rel="preload" href="assets/fonts/newsreader-latin-400.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/source-sans-3-latin-400.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="tokens.css?v=20261006">
+  <script>
+    try { if (localStorage.getItem("lld-tape-theme") === "dark") document.documentElement.dataset.theme = "dark"; } catch (e) {}
+  </script>
   <style>
-    html { color-scheme: light; background: var(--color-paper); }
+    html { color-scheme: light; background: var(--color-paper); --color-bar: oklch(52% 0.16 255); --color-bar-down: oklch(48% 0.16 25); }
+    html[data-theme="dark"] {
+      color-scheme: dark;
+      --color-paper: oklch(17% 0.02 260);
+      --color-paper-2: oklch(22% 0.022 260);
+      --color-paper-3: oklch(25% 0.024 260);
+      --color-rule: oklch(32% 0.02 260);
+      --color-rule-2: oklch(40% 0.02 260);
+      --color-muted: oklch(74% 0.02 260);
+      --color-ink-2: oklch(90% 0.015 260);
+      --color-ink: oklch(96% 0.01 260);
+      --color-accent: oklch(78% 0.12 250);
+      --color-accent-ink: oklch(17% 0.02 260);
+      --color-focus: oklch(82% 0.12 250);
+      --color-up: oklch(78% 0.14 155);
+      --color-down: oklch(74% 0.15 25);
+      --color-bar: oklch(70% 0.15 255);
+      --color-bar-down: oklch(72% 0.15 25);
+    }
     html, body { overflow-x: clip; margin: 0; }
     body {
       background: var(--color-paper);
@@ -399,11 +420,30 @@ HTML_TEMPLATE = r"""<!doctype html>
     .lanes {
       grid-area: lanes;
       display: flex;
+      align-items: stretch;
       min-width: 0;
-      gap: var(--space-4);
+      gap: 0;
       overflow-x: auto;
-      scrollbar-width: thin;
+      scrollbar-width: none;
     }
+    .lanes::-webkit-scrollbar { display: none; }
+    #lanes .lane {
+      min-height: 2.25rem;
+      padding: 0 var(--space-sm);
+      border: 0;
+      border-bottom: 2px solid transparent;
+      background: transparent;
+      color: var(--color-muted);
+      font-family: var(--font-body);
+      letter-spacing: 0.01em;
+      text-transform: none;
+    }
+    #lanes .lane[aria-pressed="true"] {
+      background: transparent;
+      color: var(--color-accent);
+      border-bottom-color: var(--color-accent);
+    }
+    #lanes .lane[aria-pressed="true"]:hover { color: var(--color-accent); }
     .lane, .sort, .icon-btn {
       min-height: 45px;
       padding: 0 var(--space-xs);
@@ -530,6 +570,95 @@ HTML_TEMPLATE = r"""<!doctype html>
     .blurb { margin: 0 0 var(--space-sm); max-width: 46rem; color: var(--color-ink-2); }
     .miss { color: var(--color-muted); }
     .empty { padding: var(--space-lg) var(--page-gutter); }
+    .view-switch { display: flex; gap: var(--space-4); }
+    .view-switch .lane { padding: 0 var(--space-xs); }
+    .bars { padding: var(--space-xs) var(--page-gutter) var(--space-md); }
+    .bars[hidden], .table-scroll[hidden], #tape[hidden], .tape[hidden] { display: none; }
+    .bar-periods {
+      display: flex;
+      gap: var(--space-4);
+      margin-bottom: var(--space-sm);
+      overflow-x: auto;
+    }
+    #bar-periods .lane {
+      min-height: 2.25rem;
+      padding: 0 var(--space-sm);
+      border: 0;
+      border-bottom: 2px solid transparent;
+      background: transparent;
+      color: var(--color-muted);
+      font-family: var(--font-body);
+      letter-spacing: 0.01em;
+      text-transform: none;
+    }
+    #bar-periods .lane[aria-pressed="true"] {
+      background: transparent;
+      color: var(--color-accent);
+      border-bottom-color: var(--color-accent);
+    }
+    #bar-periods .lane[aria-pressed="true"]:hover { color: var(--color-accent); }
+    .bar-item + .bar-item { border-top: var(--rule) solid var(--color-rule); }
+    .bar-row {
+      display: grid;
+      grid-template-columns: minmax(7.5rem, 11.5rem) minmax(0, 1fr);
+      align-items: center;
+      gap: var(--space-sm);
+      width: 100%;
+      min-height: 2.15rem;
+      padding: 0.35rem 0;
+      border: 0;
+      background: transparent;
+      color: inherit;
+      font: inherit;
+      text-align: left;
+      cursor: pointer;
+    }
+    .bar-row:hover .bar-name { color: var(--color-accent); }
+    .bar-row:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 1px; }
+    .bar-row[aria-expanded="true"] { background: var(--color-paper-3); }
+    .bar-name {
+      font-family: var(--font-display);
+      font-size: var(--text-sm);
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+      color: var(--color-ink);
+    }
+    .bar-track {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1fr);
+      align-items: center;
+      min-width: 0;
+    }
+    .bar-side { display: flex; align-items: center; gap: 0.45rem; min-width: 0; }
+    .bar-side--neg { justify-content: flex-end; }
+    .bar-side--pos { justify-content: flex-start; }
+    .bar-axis { width: 1px; height: 1.35rem; background: var(--color-rule); }
+    .bar-item:first-child .bar-name { font-size: var(--text-lg); font-weight: 600; }
+    .bar-item:first-child .bar-pct { font-size: var(--text-md); font-weight: 600; }
+    .bar-fill {
+      flex: 0 0 auto;
+      height: 1.15rem;
+      width: max(0.35rem, calc(var(--share) * (100% - 5.5rem)));
+      background: var(--color-bar);
+      transform-origin: left center;
+      animation: bar-grow var(--dur-long) var(--ease-out) both;
+      animation-delay: calc(var(--i, 0) * 28ms);
+    }
+    .bar-fill.down { background: var(--color-bar-down); transform-origin: right center; }
+    .bar-fill.flat { background: var(--color-rule); }
+    @keyframes bar-grow {
+      from { transform: scaleX(0); }
+      to { transform: scaleX(1); }
+    }
+    .bar-pct {
+      flex: 0 0 auto;
+      color: var(--color-ink);
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+    .bar-detail { padding: 0 0 var(--space-sm); overflow-x: auto; }
     @media (max-width: 700px) {
       .nav-edge {
         grid-template-columns: minmax(0, 1fr) auto;
@@ -540,9 +669,11 @@ HTML_TEMPLATE = r"""<!doctype html>
       }
       .search { width: 6.5rem; }
       .tape-row { grid-template-columns: 1fr; row-gap: 2px; }
+      .bar-row { grid-template-columns: minmax(5.5rem, 8.5rem) minmax(0, 1fr); }
     }
     @media (prefers-reduced-motion: reduce) {
       .lane, .sort, .chip, .ticker { transition: none; }
+      .bar-fill { animation: none; }
     }
   </style>
 </head>
@@ -574,6 +705,11 @@ HTML_TEMPLATE = r"""<!doctype html>
     <a class="desk-tab" href="theme_tracker.html" aria-current="page">Tape</a>
   </nav>
   <div class="tools">
+    <div class="view-switch" role="group" aria-label="How to show the tape">
+      <button type="button" class="lane" data-tape-view="table" aria-pressed="true">Table</button>
+      <button type="button" class="lane" data-tape-view="bars" aria-pressed="false">Bars</button>
+    </div>
+    <button type="button" class="lane" id="theme-toggle" aria-pressed="false">Dark</button>
     <label class="visually-hidden" for="q" style="position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)">Filter themes</label>
     <input id="q" class="search" type="search" placeholder="Filter" autocomplete="off" enterkeyhint="search">
     <span id="clock" class="clock"></span>
@@ -590,6 +726,10 @@ HTML_TEMPLATE = r"""<!doctype html>
     <tbody id="body"></tbody>
   </table>
 </div>
+<div id="bars" class="bars" hidden>
+  <div class="bar-periods" id="bar-periods" role="toolbar" aria-label="Bar period"></div>
+  <div id="bar-list"></div>
+</div>
 <p class="foot" id="foot"></p>
 <script id="payload" type="application/json">__PAYLOAD__</script>
 <script>
@@ -599,6 +739,10 @@ const lanesEl = document.getElementById("lanes");
 const bodyEl = document.getElementById("body");
 const headEl = document.getElementById("head");
 const tapeEl = document.getElementById("tape");
+const tableScrollEl = document.querySelector(".table-scroll");
+const barsEl = document.getElementById("bars");
+const barPeriodsEl = document.getElementById("bar-periods");
+const barListEl = document.getElementById("bar-list");
 const ledeEl = document.getElementById("lede");
 const footEl = document.getElementById("foot");
 const searchEl = document.getElementById("q");
@@ -608,6 +752,8 @@ let sortDir = -1;
 let query = "";
 let symbolFilter = [];
 let openId = "";
+let view = "table";
+try { if (localStorage.getItem("lld-tape-view") === "bars") view = "bars"; } catch (e) {}
 
 function esc(value) {
   return String(value ?? "").replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
@@ -686,17 +832,43 @@ function paintTape(rows) {
   };
   tapeEl.innerHTML = chips("Leaders", leaders) + chips("Laggards", laggards);
 }
+function paintBars(rows) {
+  const period = PERIODS.some(([key]) => key === sortKey) ? sortKey : "today";
+  const values = rows.map(theme => theme[period]).filter(finite);
+  const maxAbs = values.reduce((peak, value) => Math.max(peak, Math.abs(value)), 0);
+  barPeriodsEl.innerHTML = PERIODS.map(([key, label]) => `<button type="button" class="lane" data-sort="${key}" aria-pressed="${key === period ? "true" : "false"}">${esc(label)}</button>`).join("");
+  barListEl.innerHTML = rows.map((theme, index) => {
+    const value = theme[period];
+    const share = finite(value) && maxAbs > 0 ? Math.abs(value) / maxAbs : 0;
+    const open = theme.id === openId;
+    const pct = `<span class="bar-pct">${fmt(value)}</span>`;
+    const fill = finite(value) && value !== 0 ? `<span class="bar-fill ${tone(value)}" style="--share:${share.toFixed(4)}"></span>` : "";
+    const neg = value < 0 ? `${pct}${fill}` : "";
+    const pos = value < 0 ? "" : `${fill}${pct}`;
+    const mark = `<span class="bar-side bar-side--neg">${neg}</span><span class="bar-axis"></span><span class="bar-side bar-side--pos">${pos}</span>`;
+    return `<div class="bar-item" style="--i:${Math.min(index, 12)}"><button type="button" class="bar-row" data-open="${esc(theme.id)}" aria-expanded="${open ? "true" : "false"}"><span class="bar-name">${esc(theme.name)}</span><span class="bar-track">${mark}</span></button>${open ? `<div class="bar-detail">${memberTable(theme)}</div>` : ""}</div>`;
+  }).join("") || `<p class="empty">No themes match this filter.</p>`;
+}
 function paint() {
   const rows = visible();
+  document.querySelectorAll("[data-tape-view]").forEach(button => {
+    button.setAttribute("aria-pressed", button.dataset.tapeView === view ? "true" : "false");
+  });
+  const themeBtn = document.getElementById("theme-toggle");
+  if (themeBtn) themeBtn.setAttribute("aria-pressed", document.documentElement.dataset.theme === "dark" ? "true" : "false");
+  tableScrollEl.hidden = view !== "table";
+  barsEl.hidden = view !== "bars";
+  tapeEl.hidden = view === "bars";
   paintLanes();
   paintHead();
   paintTape(lane === "All" && !query ? data.themes : rows);
+  paintBars(rows);
   const totalThemes = data.themes.length;
   const shownThemes = rows.length;
-  const showing = shownThemes === totalThemes
-    ? (totalThemes === 1 ? '1 theme is showing.' : `${totalThemes} themes are showing.`)
-    : `${shownThemes === 1 ? '1 theme is showing' : shownThemes + ' themes are showing'} out of ${totalThemes === 1 ? '1 theme' : totalThemes + ' themes'}.`;
-  ledeEl.textContent = `${showing} The date is ${data.as_of}. Each theme is the average of its stocks that have a price. Each stock has the same weight. A period stays blank until at least three stocks have a price.`;
+  const showing = shownThemes < totalThemes
+    ? (shownThemes === 1 ? "1 theme is showing. " : `${shownThemes} themes are showing. `)
+    : "";
+  ledeEl.textContent = `${showing}The date is ${data.as_of}. Each theme is an equal-weight average.`;
   footEl.textContent = "Select a theme to see its stocks. The numbers are the percent change. Stocks with no price are listed, and they are left out of the average.";
   bodyEl.innerHTML = rows.map(theme => {
     const cells = PERIODS.map(([key]) => `<td class="${tone(theme[key])}">${fmt(theme[key])}</td>`).join("");
@@ -717,6 +889,26 @@ function paint() {
   }).join("") || `<tr><td class="empty" colspan="10">No themes match this filter.</td></tr>`;
 }
 document.addEventListener("click", event => {
+  const themeBtn = event.target.closest("#theme-toggle");
+  if (themeBtn) {
+    const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+    if (next === "dark") document.documentElement.dataset.theme = "dark";
+    else delete document.documentElement.dataset.theme;
+    try { localStorage.setItem("lld-tape-theme", next); } catch (e) {}
+    themeBtn.setAttribute("aria-pressed", next === "dark" ? "true" : "false");
+    return;
+  }
+  const viewBtn = event.target.closest("[data-tape-view]");
+  if (viewBtn) {
+    view = viewBtn.dataset.tapeView === "bars" ? "bars" : "table";
+    try { localStorage.setItem("lld-tape-view", view); } catch (e) {}
+    if (view === "bars" && !PERIODS.some(([key]) => key === sortKey)) {
+      sortKey = "today";
+      sortDir = -1;
+    }
+    paint();
+    return;
+  }
   const laneBtn = event.target.closest("[data-lane]");
   if (laneBtn) {
     lane = laneBtn.dataset.lane;
@@ -735,7 +927,10 @@ document.addEventListener("click", event => {
   if (opener && opener.tagName !== "A") {
     openId = openId === opener.dataset.open ? "" : opener.dataset.open;
     paint();
-    if (openId) document.querySelector(`#body [data-open="${CSS.escape(openId)}"]`)?.scrollIntoView({ block: "nearest" });
+    if (openId) {
+      const scope = view === "bars" ? "#bar-list" : "#body";
+      document.querySelector(`${scope} [data-open="${CSS.escape(openId)}"]`)?.scrollIntoView({ block: "nearest" });
+    }
   }
 });
 searchEl.addEventListener("input", () => { query = searchEl.value; symbolFilter = []; paint(); });
