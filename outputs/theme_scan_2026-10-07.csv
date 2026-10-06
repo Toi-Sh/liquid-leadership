@@ -1,0 +1,4 @@
+name,description,exchange,industry,close,change,volume,earn_yoy,sales_yoy,Perf.1M,sma10_rising,sma20_rising,tradingview_url
+MXL,"MaxLinear, Inc",NASDAQ,Semiconductors,109.3,3.6117167504028838,2392952,51.948786299931335,55.17171661474273,81.51623349663703,True,True,https://www.tradingview.com/chart/?symbol=NASDAQ:MXL&interval=D
+CLS,"Celestica, Inc.",NYSE,Electronic Components,388.24,1.4502600015678517,1190497,67.05069924546675,55.605302965159765,22.74423016123933,True,True,https://www.tradingview.com/chart/?symbol=NYSE:CLS&interval=D
+SNPS,"Synopsys, Inc.",NASDAQ,Packaged Software,505.17,3.4188384138227503,2737860,89.21261417427829,42.21447177486842,20.819381995599354,True,True,https://www.tradingview.com/chart/?symbol=NASDAQ:SNPS&interval=D
