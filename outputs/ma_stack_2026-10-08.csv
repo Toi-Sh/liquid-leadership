@@ -1,0 +1,4 @@
+name,close,SMA5,SMA10,SMA20,SMA30,sma5_gt_sma10,sma20_gt_sma30,sma20_30_gap_pct,cross_days_ago,signal,tradingview_url,description,exchange,industry,Perf.1M,Perf.3M,Perf.6M
+HTFL,50.69,50.176,49.585,49.244,49.226,True,True,0.037,0,20x30_TODAY,https://www.tradingview.com/chart/?symbol=NASDAQ:HTFL&interval=D,"Heartflow, Inc.",NASDAQ,Packaged Software,-0.7639726578206726,88.4688812523864,84.73053892215569
+QLYS,199.93,193.248,185.858,179.9665,179.2627,True,True,0.393,0,20x30_TODAY,https://www.tradingview.com/chart/?symbol=NASDAQ:QLYS&interval=D,"Qualys, Inc.",NASDAQ,Packaged Software,12.892006260506644,29.74683544303798,151.5824828833484
+TEAM,193.98,189.544,187.765,187.8195,186.5235,True,True,0.695,,20x30_NEAR,https://www.tradingview.com/chart/?symbol=NASDAQ:TEAM&interval=D,Atlassian Corporation,NASDAQ,Packaged Software,3.204891676769798,140.64650934119962,230.89403413892174

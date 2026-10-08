@@ -1,0 +1,4 @@
+name,description,exchange,industry,close,change,volume,earn_yoy,sales_yoy,Perf.1M,sma10_rising,sma20_rising,tradingview_url
+MXL,"MaxLinear, Inc",NASDAQ,Semiconductors,107.36,-1.7749313815187537,2791177,51.948786299931335,55.17171661474273,78.29444490575437,True,True,https://www.tradingview.com/chart/?symbol=NASDAQ:MXL&interval=D
+CRDO,Credo Technology Group Holding Ltd,NASDAQ,Information Technology Services,220.01,-0.3713263596431742,7311172,93.82823871906838,114.72829643974644,35.724861196792105,True,True,https://www.tradingview.com/chart/?symbol=NASDAQ:CRDO&interval=D
+SNPS,"Synopsys, Inc.",NASDAQ,Packaged Software,502.67,-0.49488291070332757,1632803,89.21261417427829,42.21447177486842,20.22146752128576,True,True,https://www.tradingview.com/chart/?symbol=NASDAQ:SNPS&interval=D
