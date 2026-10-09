@@ -1,0 +1,6 @@
+date,frame,kind,industry,signal,prior_count,current_count,delta,members
+2026-10-09,1m,industry,Packaged Software,RISING,3,5,2,
+2026-10-09,3m,industry,Packaged Software,RISING,7,8,1,
+2026-10-09,6m,industry,Packaged Software,RISING,6,7,1,
+2026-10-09,6m,industry,Computer Peripherals,RISING,1,2,1,
+2026-10-09,3m,industry,Oil Refining/Marketing,RISING,1,2,1,

@@ -1,0 +1,4 @@
+name,description,exchange,industry,close,change,volume,earn_yoy,sales_yoy,Perf.1M,sma10_rising,sma20_rising,tradingview_url
+SNPS,"Synopsys, Inc.",NASDAQ,Packaged Software,497.75,-0.9787733503093513,3422226,89.21261417427829,42.21447177486842,25.434705912000403,True,True,https://www.tradingview.com/chart/?symbol=NASDAQ:SNPS&interval=D
+FN,Fabrinet,NYSE,Semiconductors,487.33,-2.140605233036813,1201025,58.482290632240996,44.64104334219282,18.011865843322436,True,True,https://www.tradingview.com/chart/?symbol=NYSE:FN&interval=D
+SMCI,"Super Micro Computer, Inc.",NASDAQ,Computer Processing Hardware,42.77,-4.82866043613706,38836944,445.48655569782323,93.1552702482286,7.828060002521124,True,True,https://www.tradingview.com/chart/?symbol=NASDAQ:SMCI&interval=D
