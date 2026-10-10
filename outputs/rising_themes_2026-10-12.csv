@@ -1,0 +1,4 @@
+date,frame,kind,industry,signal,prior_count,current_count,delta,members
+2026-10-12,1m,industry,Information Technology Services,KICKOFF,0,2,2,
+2026-10-12,1m,industry,Medical Specialties,RISING,1,2,1,
+2026-10-12,3m,industry,Medical Specialties,RISING,3,4,1,

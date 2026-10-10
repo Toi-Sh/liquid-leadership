@@ -1,0 +1,3 @@
+name,description,exchange,industry,close,change,volume,earn_yoy,sales_yoy,Perf.1M,sma10_rising,sma20_rising,tradingview_url
+CRDO,Credo Technology Group Holding Ltd,NASDAQ,Information Technology Services,216.55,2.2137260455017453,6304909,93.82823871906838,114.72829643974644,31.226517997818444,True,True,https://www.tradingview.com/chart/?symbol=NASDAQ:CRDO&interval=D
+SNPS,"Synopsys, Inc.",NASDAQ,Packaged Software,509.99,2.4590657960823723,2095007,89.21261417427829,42.21447177486842,30.312244480784955,True,True,https://www.tradingview.com/chart/?symbol=NASDAQ:SNPS&interval=D

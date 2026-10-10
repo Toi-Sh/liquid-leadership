@@ -1,0 +1,6 @@
+name,close,ema8w,dist_to_ema8w_pct,ema8w_slope_pct,off_8w_high_pct,tagged_ema8w,ema8w_rising,signal,tradingview_url,description,exchange,industry,Perf.1M,Perf.3M,Perf.6M
+GPRO,1.18,1.1765,0.3,0.086,42.44,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:GPRO&interval=D,"GoPro, Inc.",NASDAQ,Electronics/Appliances,-17.931034482758623,56.68202764976959,59.56020380799141
+ATRC,52.84,52.1429,1.34,0.383,14.36,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:ATRC&interval=D,"AtriCure, Inc.",NASDAQ,Medical Specialties,4.99482645094535,60.327492099971266,99.6065808297568
+CRDO,211.86,207.3102,2.19,0.631,25.99,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:CRDO&interval=D,Credo Technology Group Holding Ltd,NASDAQ,Information Technology Services,31.226517997818444,-17.889508209153302,100.17563320391939
+HTFL,47.63,46.5546,2.31,0.664,12.32,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:HTFL&interval=D,"Heartflow, Inc.",NASDAQ,Packaged Software,5.269841269841274,79.24324324324324,86.15269461077847
+PLSE,49.98,48.5844,2.87,0.828,15.14,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:PLSE&interval=D,"Pulse Biosciences, Inc",NASDAQ,Medical Specialties,8.139067524115765,98.85439763488546,177.3711340206186

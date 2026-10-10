@@ -1,0 +1,17 @@
+setting,value
+min_dollar_volume,30000000.0
+min_adr_pct,4.0
+min_avg_volume_10d,350000.0
+top_pct,0.05
+max_atr_extension,4.0
+focus_max_lod_atr_pct,60.0
+focus_max_day_range_atr,1.0
+focus_min_rvol,1.5
+focus_mega_cap,10000000000.0
+focus_near_sma20_pct,0.03
+focus_earnings_days,3.0
+focus_large_gap_pct,2.0
+focus_near_ema_atr,1.5
+focus_adr_tight_frac,0.75
+focus_max_bb_width,0.1
+focus_rvol_expand,1.2
