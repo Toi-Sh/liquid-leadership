@@ -1,0 +1,3 @@
+name,description,exchange,industry,close,change,volume,earn_yoy,sales_yoy,Perf.1M,sma10_rising,sma20_rising,tradingview_url
+CDNA,"CareDx, Inc.",NASDAQ,Medical Specialties,65.43,3.6596958174905097,1498250,103.17304867299974,52.22602937274312,30.494615077782225,True,True,https://www.tradingview.com/chart/?symbol=NASDAQ:CDNA&interval=D
+PLTR,Palantir Technologies Inc.,NASDAQ,Packaged Software,208.67,-0.15789473684211125,18524360,224.23529411764704,92.8334945705726,24.13444378346222,True,True,https://www.tradingview.com/chart/?symbol=NASDAQ:PLTR&interval=D

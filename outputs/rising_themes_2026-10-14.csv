@@ -1,0 +1,6 @@
+date,frame,kind,industry,signal,prior_count,current_count,delta,members
+2026-10-14,1m,industry,Medical Specialties,RISING,2,3,1,
+2026-10-14,1m,industry,Financial Conglomerates,RISING,1,2,1,
+2026-10-14,6m,cluster,Semis complex,RISING,5,6,1,Computer Peripherals|Computer Processing Hardware|Electronic Equipment/Instruments|Electronic Production Equipment|Electronics/Appliances|Semiconductors
+2026-10-14,6m,industry,Computer Processing Hardware,RISING,1,2,1,
+2026-10-14,3m,industry,Pharmaceuticals: Major,RISING,1,2,1,

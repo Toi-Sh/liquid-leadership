@@ -1,0 +1,6 @@
+name,close,ema8w,dist_to_ema8w_pct,ema8w_slope_pct,off_8w_high_pct,tagged_ema8w,ema8w_rising,signal,tradingview_url,description,exchange,industry,Perf.1M,Perf.3M,Perf.6M
+GPRO,1.18,1.179,0.09,0.025,42.44,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:GPRO&interval=D,"GoPro, Inc.",NASDAQ,Electronics/Appliances,-15.714285714285714,68.57142857142857,6.306306306306292
+MXL,88.64,87.3389,1.49,0.427,21.65,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:MXL&interval=D,"MaxLinear, Inc",NASDAQ,Semiconductors,24.924247762666482,-7.046979865771811,299.1893717631164
+CORT,117.8,114.8908,2.53,0.729,6.79,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:CORT&interval=D,Corcept Therapeutics Incorporated,NASDAQ,Pharmaceuticals: Major,2.2391945842735623,30.45404208194906,168.82701962574166
+SLS,12.41,12.0758,2.77,0.797,20.24,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:SLS&interval=D,"SELLAS Life Sciences Group, Inc.",NASDAQ,Pharmaceuticals: Major,-8.413284132841332,-6.410256410256408,153.78323108384458
+SDGR,25.89,25.149,2.95,0.849,23.36,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:SDGR&interval=D,"Schrodinger, Inc.",NASDAQ,Packaged Software,36.767036450079246,60.21039603960396,103.6978756884343
