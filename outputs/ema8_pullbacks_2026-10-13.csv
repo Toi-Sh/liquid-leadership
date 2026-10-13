@@ -1,0 +1,6 @@
+name,close,ema8w,dist_to_ema8w_pct,ema8w_slope_pct,off_8w_high_pct,tagged_ema8w,ema8w_rising,signal,tradingview_url,description,exchange,industry,Perf.1M,Perf.3M,Perf.6M
+GPRO,1.19,1.1812,0.74,0.213,41.95,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:GPRO&interval=D,"GoPro, Inc.",NASDAQ,Electronics/Appliances,-14.999999999999998,64.0248104755341,32.222222222222214
+QMCO,27.51,27.0903,1.55,0.445,22.83,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:QMCO&interval=D,Quantum Corporation,NASDAQ,Computer Peripherals,19.452887537993924,184.7826086956522,285.29411764705884
+MXL,88.99,87.4167,1.8,0.517,21.34,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:MXL&interval=D,"MaxLinear, Inc",NASDAQ,Semiconductors,25.417518145303355,-6.326315789473689,314.87179487179486
+TTAN,72.28,70.9345,1.9,0.545,29.79,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:TTAN&interval=D,"ServiceTitan, Inc.",NASDAQ,Packaged Software,29.279198712216072,-5.68893528183716,25.019458618005718
+VICR,259.4,252.8635,2.58,0.744,21.63,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:VICR&interval=D,Vicor Corporation,NASDAQ,Electronic Components,43.59258234154441,-3.3568048880444272,36.96604889381699
