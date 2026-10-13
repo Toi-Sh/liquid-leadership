@@ -551,9 +551,16 @@ def main() -> None:
         theme_summary = " | theme tape"
     except Exception as error:  # noqa: BLE001 — tape is additive; a quote outage must not drop the desk
         theme_summary = f" | theme tape failed ({error})"
+    try:
+        from regime import write_regime
+
+        paths.extend(write_regime(args.output_dir))
+        regime_summary = " | regime"
+    except Exception as error:  # noqa: BLE001 — regime is additive; a quote outage must not drop the desk
+        regime_summary = f" | regime failed ({error})"
     print(
         f"Scanned: {len(raw):,} | eligible: {len(universe):,} | leaders: {len(leaders):,} | "
-        f"NEL: {len(nel):,} | focus: {len(focus):,}{rs_summary}{ema_summary}{ma_summary}{ap_summary}{theme_scan_summary}{theme_summary}"
+        f"NEL: {len(nel):,} | focus: {len(focus):,}{rs_summary}{ema_summary}{ma_summary}{ap_summary}{theme_scan_summary}{theme_summary}{regime_summary}"
     )
     print("Saved:\n" + "\n".join(str(path) for path in paths))
 

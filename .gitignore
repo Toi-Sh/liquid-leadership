@@ -4,4 +4,5 @@ __pycache__/
 logs/
 .daily_scan.lock/
 outputs/.last_scheduled_run.txt
+outputs/.regime_closes.pkl
 .DS_Store

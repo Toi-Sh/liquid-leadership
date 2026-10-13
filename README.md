@@ -161,6 +161,26 @@ The procedure writes these files:
 - `outputs/theme_tracker_YYYY-MM-DD.csv`
 - `outputs/theme_members_YYYY-MM-DD.csv`
 
+## Market regime
+
+`regime.html` is a different page. In the navigation, select Regime. The page reads the cycle, T2108, the day's breadth, and the index tape.
+
+T2108 is the share of liquid NYSE names above the 40-day average. A 4% day is a close up or down 4% or more. The 5-day ratio is five sessions of 4% up days divided by five sessions of 4% down days. The same idea makes the 10-day ratio. The cycle calls a washout when T2108 closes at 29 or below, and extended when it closes at 70 or above. A bounce from a washout needs a 5-point lift off the low and either a 5-day ratio of 1.5 or a day with 500 names up 4%. Breadth improves only when T2108 rises at least 8 points in 3 sessions and that rise accelerates, with the 5-day ratio at least 1. A 10-day average still under 40 that is rising toward T2108 is catching up, not an improvement.
+
+The universe is US common stocks with a price above $5 and a 10-day average volume above 300,000. The page keeps the most active names. This page is not an instruction to trade.
+
+The daily procedure also makes this page new. You can run the procedure alone:
+
+```bash
+python regime.py
+```
+
+The procedure writes these files:
+
+- `regime.html`
+- `outputs/regime_history.csv`
+- `outputs/regime_YYYY-MM-DD.csv`
+
 ## RS leads
 
 After the scanner makes the stock group, it compares relative strength with SPY.

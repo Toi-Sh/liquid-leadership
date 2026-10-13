@@ -667,6 +667,7 @@ HTML_TEMPLATE = r"""<!doctype html>
           "keys keys"
           "lanes lanes";
       }
+      .bbg-keys { flex-wrap: wrap; }
       .search { width: 6.5rem; }
       .tape-row { grid-template-columns: 1fr; row-gap: 2px; }
       .bar-row { grid-template-columns: minmax(5.5rem, 8.5rem) minmax(0, 1fr); }
@@ -684,6 +685,7 @@ HTML_TEMPLATE = r"""<!doctype html>
     <span class="product">Theme Tape</span>
   </div>
   <nav class="bbg-keys" aria-label="Terminal panels">
+    <a class="desk-tab" href="regime.html">Regime</a>
     <a class="desk-tab" href="index.html#thematic-title">Themes</a>
     <div class="desk-menu">
       <button class="desk-tab" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="menu-leaders">Leaders <span class="desk-caret" aria-hidden="true"></span></button>

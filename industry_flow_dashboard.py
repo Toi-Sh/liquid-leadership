@@ -1347,6 +1347,7 @@ tbody tr:nth-child(even) { background: color-mix(in oklch, var(--color-paper-2) 
     border-top: var(--rule) solid var(--color-paper-2);
     padding: 0 max(var(--page-gutter), env(safe-area-inset-left)) 0 max(var(--page-gutter), env(safe-area-inset-right));
     overflow: visible;
+    flex-wrap: wrap;
   }
   .desk-tab {
     min-height: var(--mobile-nav-keys);
@@ -1437,6 +1438,7 @@ tbody tr:nth-child(even) { background: color-mix(in oklch, var(--color-paper-2) 
       <span class="bbg-product">Liquid Leadership</span>
     </a>
     <nav class="bbg-keys" aria-label="Terminal panels">
+      <a class="desk-tab" href="regime.html">Regime</a>
       <a class="desk-tab" data-panel="themes" href="#thematic-title">Themes</a>
       <div class="desk-menu">
         <button class="desk-tab" type="button" data-panel="leaders" aria-haspopup="menu" aria-expanded="false" aria-controls="menu-leaders">Leaders <span class="desk-caret" aria-hidden="true"></span></button>
