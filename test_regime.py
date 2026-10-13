@@ -70,6 +70,23 @@ class BreadthTests(unittest.TestCase):
         out = compute_breadth(closes, pd.Series({"A": True, "B": True, "C": False}))
         self.assertEqual(float(out["t2108"].iloc[-1]), 50.0)
         self.assertEqual(int(out["n_nyse"].iloc[-1]), 2)
+        self.assertTrue(pd.isna(out["nasdaq"].iloc[-1]))
+
+    def test_nasdaq_40_uses_only_nasdaq_names(self):
+        index = pd.bdate_range("2025-01-01", periods=50)
+        closes = pd.DataFrame({
+            "A": pd.Series(range(50), index=index, dtype=float) + 10,
+            "B": pd.Series(range(50, 0, -1), index=index, dtype=float),
+            "C": pd.Series(range(50), index=index, dtype=float) + 5,
+        })
+        out = compute_breadth(
+            closes,
+            pd.Series({"A": True, "B": True, "C": False}),
+            pd.Series({"A": False, "B": False, "C": True}),
+        )
+        self.assertEqual(float(out["t2108"].iloc[-1]), 50.0)
+        self.assertEqual(float(out["nasdaq"].iloc[-1]), 100.0)
+        self.assertEqual(int(out["n_nasdaq"].iloc[-1]), 1)
 
 
 class CycleTests(unittest.TestCase):
@@ -104,8 +121,29 @@ class CycleTests(unittest.TestCase):
         self.assertTrue(catching_up(stalled))
         self.assertFalse(breadth_improving(stalled))
 
-    def test_breadth_improves_when_the_gap_closes_fast_and_accelerates(self):
-        thrust = day(t2108=36.0, t2108_ema10=24.0, t2108_delta=5.0, ema_delta=1.0, rise_3=9.0, accel=2.0, ratio5=1.4)
+    def test_eight_points_in_three_sessions_is_not_the_thrust(self):
+        ordinary = day(t2108=36.0, t2108_ema10=24.0, t2108_delta=5.0, ema_delta=1.0, rise_2=9.0, start_2=27.0, ema_rise_2=2.0, ratio5=1.4)
+        self.assertFalse(breadth_improving(ordinary))
+
+    def test_a_rise_that_starts_above_30_is_not_the_thrust(self):
+        high = day(t2108=52.0, rise_2=16.0, start_2=36.0, ema_rise_2=3.0, ratio5=2.0)
+        self.assertFalse(breadth_improving(high))
+
+    def test_the_two_point_band_still_counts(self):
+        near = day(rise_2=13.0, start_2=32.0, ema_rise_2=2.0, ratio5=1.5)
+        self.assertTrue(breadth_improving(near))
+        short = day(rise_2=12.9, start_2=32.0, ema_rise_2=2.0, ratio5=1.5)
+        high = day(rise_2=13.0, start_2=32.1, ema_rise_2=2.0, ratio5=1.5)
+        self.assertFalse(breadth_improving(short))
+        self.assertFalse(breadth_improving(high))
+
+    def test_nasdaq_thrust_uses_the_nasdaq_rise(self):
+        tape = day(rise_2=4.0, start_2=40.0, ema_rise_2=1.0, nasdaq_rise_2=14.0, nasdaq_start_2=20.0, nasdaq_ema_rise_2=3.0, ratio5=1.8)
+        self.assertFalse(breadth_improving(tape))
+        self.assertTrue(breadth_improving(tape, "nasdaq_rise_2", "nasdaq_start_2", "nasdaq_ema_rise_2"))
+
+    def test_breadth_thrusts_off_a_depressed_reading(self):
+        thrust = day(t2108=34.0, t2108_ema10=22.0, t2108_delta=10.0, ema_delta=2.0, rise_2=16.0, start_2=18.0, ema_rise_2=4.0, ratio5=1.8)
         self.assertFalse(catching_up(thrust))
         self.assertTrue(breadth_improving(thrust))
 

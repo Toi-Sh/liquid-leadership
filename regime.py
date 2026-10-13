@@ -34,7 +34,11 @@ RATIO_VOTE = 1.5
 UP_VOTE = 500
 AT_HIGHS = -5.0
 EMA_LOW = 40.0
-FAST_CLOSE = 8.0
+FAST_WINDOW = 2
+FAST_CLOSE = 15.0
+FAST_RATIO = 1.5
+FAST_CAP = 30.0
+POINT_BAND = 2.0
 BATCH_SIZE = 80
 MIN_NAMES = 100
 
@@ -149,22 +153,19 @@ def catching_up(day: dict) -> bool:
     return not leads
 
 
-def breadth_improving(day: dict) -> bool:
-    """The gap closes fast, and the latest session accelerates."""
-    if catching_up(day):
-        return False
-    rise_3 = day.get("rise_3")
-    accel = day.get("accel")
+def breadth_improving(day: dict, rise_key: str = "rise_2", start_key: str = "start_2", ema_key: str = "ema_rise_2") -> bool:
+    """A thrust off a depressed reading, with a two-point band around the fit."""
+    rise = day.get(rise_key)
+    start = day.get(start_key)
     ratio = day.get("ratio5")
-    rise = day.get("t2108_delta")
-    ema_delta = day.get("ema_delta")
-    if not all(finite(value) for value in (rise_3, accel, ratio, rise, ema_delta)):
+    ema_rise = day.get(ema_key)
+    if not all(finite(value) for value in (rise, start, ratio, ema_rise)):
         return False
     return (
-        float(rise_3) >= FAST_CLOSE
-        and float(accel) > 0
-        and float(ratio) >= 1
-        and float(rise) > float(ema_delta)
+        float(start) <= FAST_CAP + POINT_BAND
+        and float(rise) >= FAST_CLOSE - POINT_BAND
+        and float(ratio) >= FAST_RATIO
+        and float(rise) > float(ema_rise)
     )
 
 
@@ -180,9 +181,30 @@ def annotate_breadth(days: list[dict]) -> None:
             day["t2108_delta"] = None
             day["ema_delta"] = None
             day["accel"] = None
+        if index >= FAST_WINDOW:
+            earlier = days[index - FAST_WINDOW]
+            day["rise_2"] = float(day["t2108"]) - float(earlier["t2108"])
+            day["start_2"] = float(earlier["t2108"])
+            day["ema_rise_2"] = float(day["t2108_ema10"]) - float(earlier["t2108_ema10"])
+            if finite(day.get("nasdaq")) and finite(earlier.get("nasdaq")) and finite(day.get("nasdaq_ema10")) and finite(earlier.get("nasdaq_ema10")):
+                day["nasdaq_rise_2"] = float(day["nasdaq"]) - float(earlier["nasdaq"])
+                day["nasdaq_start_2"] = float(earlier["nasdaq"])
+                day["nasdaq_ema_rise_2"] = float(day["nasdaq_ema10"]) - float(earlier["nasdaq_ema10"])
+            else:
+                day["nasdaq_rise_2"] = None
+                day["nasdaq_start_2"] = None
+                day["nasdaq_ema_rise_2"] = None
+        else:
+            day["rise_2"] = None
+            day["start_2"] = None
+            day["ema_rise_2"] = None
+            day["nasdaq_rise_2"] = None
+            day["nasdaq_start_2"] = None
+            day["nasdaq_ema_rise_2"] = None
         day["rise_3"] = float(day["t2108"]) - float(days[index - 3]["t2108"]) if index >= 3 else None
         day["catching_up"] = catching_up(day)
         day["improving"] = breadth_improving(day)
+        day["nasdaq_improving"] = breadth_improving(day, "nasdaq_rise_2", "nasdaq_start_2", "nasdaq_ema_rise_2")
 
 
 def infer_stage(day: dict) -> str:
@@ -292,11 +314,11 @@ def describe(memory: Memory, day: dict) -> dict:
     elif stage == "Bounce":
         progress = "The thrust is in. Breadth has not improved yet."
         rules = [
-            f"Recovery only if the gap closes fast and the move accelerates: T2108 up {FAST_CLOSE:.0f} points in 3 sessions, the latest day faster than the one before, and the 5-day ratio at least 1.",
+            f"Thrust, and recovery, when T2108 rises {FAST_CLOSE:.0f} points in {FAST_WINDOW} sessions, give or take {POINT_BAND:.0f}, from a reading at or under {FAST_CAP:.0f}, give or take {POINT_BAND:.0f}. The 5-day ratio is at least {FAST_RATIO:.1f}, and the rise beats the 10-day average.",
             "A low average catching up does not count. Weak if that is all that is left and the 5-day ratio falls under 1. Washout if T2108 undercuts the low.",
         ]
     elif stage == "Recovery":
-        progress = "The gap is closing fast, and breadth is accelerating."
+        progress = "Breadth has thrust off a depressed reading."
         rules = [
             "Strength once T2108 holds 50, the 5-day ratio stays at least 1, and the S&P 500 is above its 20-day EMA.",
             "Weak if the average is only catching up from a low base. Washout if T2108 undercuts the washout low.",
@@ -325,7 +347,7 @@ def describe(memory: Memory, day: dict) -> dict:
         else:
             progress = "The tape is damaged, and it is not washed out."
         rules = [
-            f"Breadth improves when T2108 rises {FAST_CLOSE:.0f} points in 3 sessions and that rise accelerates, with the 5-day ratio at least 1.",
+            f"Thrust when T2108 rises {FAST_CLOSE:.0f} points in {FAST_WINDOW} sessions, give or take {POINT_BAND:.0f}, from a reading at or under {FAST_CAP:.0f}, give or take {POINT_BAND:.0f}. The 5-day ratio is at least {FAST_RATIO:.1f}, and the rise beats the 10-day average. Nasdaq 40 uses the same band.",
             "Washout if T2108 closes at 29 or below. A 5-day ratio of 1.5, or a 500-name up day, can still mark a bounce.",
         ]
     return {"progress": progress, "rules": rules}
@@ -366,17 +388,26 @@ def walk_regime(days: list[dict]) -> list[dict]:
     return walked
 
 
-def compute_breadth(closes: pd.DataFrame, nyse: pd.Series) -> pd.DataFrame:
-    """Daily breadth for a close panel. `nyse` is a boolean series indexed by symbol."""
+def _above_share(panel: pd.DataFrame, sma40: pd.DataFrame, names: list[str]) -> tuple[pd.Series, pd.Series]:
+    """Share of `names` whose close is above the 40-day average, and how many have that average."""
+    if not names:
+        return pd.Series(float("nan"), index=panel.index), pd.Series(0, index=panel.index)
+    ready = sma40[names].notna().sum(axis=1)
+    share = (panel[names].gt(sma40[names]).sum(axis=1) / ready.where(ready > 0)) * 100
+    return share, ready
+
+
+def compute_breadth(closes: pd.DataFrame, nyse: pd.Series, nasdaq: pd.Series | None = None) -> pd.DataFrame:
+    """Daily breadth for a close panel. `nyse` and `nasdaq` are boolean series indexed by symbol."""
     panel = closes.sort_index().astype(float)
     coverage = panel.notna().sum(axis=1)
     floor = min(MIN_NAMES, max(1, panel.shape[1] // 2))
     panel = panel.loc[coverage >= floor]
-    nyse_names = [name for name in panel.columns if bool(nyse.get(name, False))]
     sma40 = panel.rolling(40, min_periods=40).mean()
-    above = panel[nyse_names].gt(sma40[nyse_names]) if nyse_names else panel.iloc[:, 0:0]
-    nyse_ready = sma40[nyse_names].notna().sum(axis=1) if nyse_names else coverage * 0
-    t2108 = (above.sum(axis=1) / nyse_ready.where(nyse_ready > 0)) * 100
+    nyse_names = [name for name in panel.columns if bool(nyse.get(name, False))]
+    nasdaq_names = [name for name in panel.columns if nasdaq is not None and bool(nasdaq.get(name, False))]
+    t2108, nyse_ready = _above_share(panel, sma40, nyse_names)
+    nasdaq_share, nasdaq_ready = _above_share(panel, sma40, nasdaq_names)
 
     pct = panel.pct_change() * 100
     up4 = pct.ge(4).sum(axis=1)
@@ -393,6 +424,7 @@ def compute_breadth(closes: pd.DataFrame, nyse: pd.Series) -> pd.DataFrame:
 
     frame = pd.DataFrame({
         "t2108": t2108,
+        "nasdaq": nasdaq_share,
         "up4": up4,
         "down4": down4,
         "ratio5": rolling_ratio(up4, down4, 5),
@@ -410,8 +442,10 @@ def compute_breadth(closes: pd.DataFrame, nyse: pd.Series) -> pd.DataFrame:
         "down50": ret40.le(-50).sum(axis=1),
         "n": coverage.reindex(panel.index),
         "n_nyse": nyse_ready,
+        "n_nasdaq": nasdaq_ready,
     })
     frame["t2108_ema10"] = ema(frame["t2108"], 10)
+    frame["nasdaq_ema10"] = ema(frame["nasdaq"], 10)
     return frame
 
 
@@ -479,6 +513,9 @@ def days_from_frames(breadth: pd.DataFrame, market: pd.DataFrame) -> list[dict]:
             "down50": int(row["down50"]),
             "n": int(row["n"]),
             "n_nyse": int(row["n_nyse"]) if finite(row.get("n_nyse")) else 0,
+            "nasdaq": float(row["nasdaq"]) if finite(row.get("nasdaq")) else None,
+            "nasdaq_ema10": float(row["nasdaq_ema10"]) if finite(row.get("nasdaq_ema10")) else None,
+            "n_nasdaq": int(row["n_nasdaq"]) if finite(row.get("n_nasdaq")) else 0,
             "drawdown": float(row["drawdown"]) if finite(row.get("drawdown")) else 0.0,
             "spy_above_20": bool(row["spy_above_20"]) if finite(row.get("spy_above_20")) else False,
             "health_passes": int(row["health_passes"]) if finite(row.get("health_passes")) else 0,
@@ -838,6 +875,14 @@ def build_snapshot(days: list[dict], tape: list[dict], vix: dict, yield_quote: d
         "ema10": _num(last["t2108_ema10"], 1),
         "ema_side": "above" if band > 0 else "below" if band < 0 else "on",
         "ema_note": "catching up from a low base" if last.get("catching_up") else ("above" if band > 0 else "below" if band < 0 else "on it"),
+        "thrust": "on" if last.get("improving") else "off",
+        "nasdaq": _num(last["nasdaq"], 1) if finite(last.get("nasdaq")) else "—",
+        "nasdaq_delta": _delta(_change([day.get("nasdaq") for day in window]), 1),
+        "nasdaq_ema10": _num(last["nasdaq_ema10"], 1) if finite(last.get("nasdaq_ema10")) else "—",
+        "nasdaq_note": _ema_note(last.get("nasdaq"), last.get("nasdaq_ema10")),
+        "nasdaq_thrust": "on" if last.get("nasdaq_improving") else "off",
+        "nasdaq_chart": _series([day.get("nasdaq") for day in window], 320, 96, floor=WASHOUT_LINE, ceiling=EXTENDED_LINE),
+        "n_nasdaq": int(last.get("n_nasdaq") or 0),
         "low6": _num(min(t2108_series), 1),
         "high6": _num(max(t2108_series), 1),
         "t2108_chart": _series(t2108_series, 320, 96, floor=WASHOUT_LINE, ceiling=EXTENDED_LINE),
@@ -850,6 +895,13 @@ def build_snapshot(days: list[dict], tape: list[dict], vix: dict, yield_quote: d
         "n": int(last["n"]),
         "n_nyse": int(last["n_nyse"]),
     }
+
+
+def _ema_note(level: object, average: object) -> str:
+    if not finite(level) or not finite(average):
+        return "unavailable"
+    band = float(level) - float(average)
+    return "above" if band > 0 else "below" if band < 0 else "on it"
 
 
 def _quote_card(name: str, price: float, change_pct: float | None, relation: str, series: list[float], url: str, stroke: str) -> str:
@@ -934,20 +986,37 @@ def render_html(snapshot: dict, health_rows: list[dict]) -> str:
       <h2 id="cycle-label" class="kicker">Market cycle</h2>
       <p class="stage"><span class="mark mark-{arrow_class}" aria-hidden="true">{arrow}</span> {stage}</p>
       <p class="since">since {html.escape(snapshot["since"])} · {snapshot["sessions"]} {session_word} · {html.escape(snapshot["progress"])}</p>
+      <p class="meta">Breadth thrust · {html.escape(snapshot["thrust"])} · Nasdaq 40 · {html.escape(snapshot["nasdaq_thrust"])}</p>
       {gauge_svg(snapshot["stage"], snapshot["posture"], snapshot["momentum"])}
       <p class="place">{html.escape(snapshot["place"])} <span class="muted">({html.escape(snapshot["distance"])})</span></p>
       <ul class="rules">{rules}</ul>
     </section>
     <section class="panel t2108" aria-labelledby="t2108-label">
-      <h2 id="t2108-label" class="kicker">T2108 · % NYSE above the 40-day average</h2>
-      <p class="figure figure-xl">{snapshot["t2108"]}</p>
-      <p class="sub">{snapshot["t2108_delta"]} <span class="muted">vs prior close</span></p>
-      <p class="meta">10-day EMA {snapshot["ema10"]} · {snapshot["ema_note"]}</p>
-      <p class="meta">6 months {snapshot["low6"]}–{snapshot["high6"]}</p>
+      <h2 id="t2108-label" class="kicker">Above the 40-day average</h2>
+      <div class="readings">
+        <div>
+          <p class="kicker">T2108 · NYSE</p>
+          <p class="figure figure-xl">{snapshot["t2108"]}</p>
+          <p class="sub">{snapshot["t2108_delta"]} <span class="muted">vs prior close</span></p>
+          <p class="meta">10-day EMA {snapshot["ema10"]} · {snapshot["ema_note"]}</p>
+          <p class="meta">6 months {snapshot["low6"]}–{snapshot["high6"]}</p>
+        </div>
+        <div>
+          <p class="kicker">Nasdaq 40</p>
+          <p class="figure figure-xl">{snapshot["nasdaq"]}</p>
+          <p class="sub">{snapshot["nasdaq_delta"]} <span class="muted">vs prior close</span></p>
+          <p class="meta">10-day EMA {snapshot["nasdaq_ema10"]} · {snapshot["nasdaq_note"]}</p>
+          <p class="meta">thrust · {html.escape(snapshot["nasdaq_thrust"])}</p>
+        </div>
+      </div>
       <div class="chart-row">
         <div class="chart chart-ink grow">
           {snapshot["t2108_chart"]}
-          <p class="axis"><span>{html.escape(snapshot["chart_start"])}</span><span>today</span></p>
+          <p class="axis"><span>NYSE · {html.escape(snapshot["chart_start"])}</span><span>today</span></p>
+        </div>
+        <div class="chart chart-ink grow">
+          {snapshot["nasdaq_chart"]}
+          <p class="axis"><span>Nasdaq</span><span>today</span></p>
         </div>
         {intraday}
       </div>
@@ -998,7 +1067,7 @@ def render_html(snapshot: dict, health_rows: list[dict]) -> str:
     </div>
   </section>
 </main>
-<p class="foot">T2108 is the share of liquid NYSE names above their 40-day average ({snapshot["n_nyse"]:,} names; {snapshot["n"]:,} names in the breadth counts). A 4% day is a close up or down 4% or more. The 5-day and 10-day ratios divide those up days by the down days. The 13/34 balance is names with the 13-day EMA above the 34-day EMA, minus the names below. A month is 21 sessions and a quarter is 63. The 50% count uses 40 sessions. Washout is a T2108 close at {WASHOUT_LINE:.0f} or below. Extended is a close at {EXTENDED_LINE:.0f} or above. A bounce needs a {BOUNCE_RISE:.0f}-point lift off the washout low and either a 5-day ratio of {RATIO_VOTE:.1f} or a {UP_VOTE:,}-name up day. Breadth improves only when T2108 rises at least {FAST_CLOSE:.0f} points in 3 sessions, the latest day is faster than the day before, and the 5-day ratio is at least 1. A 10-day average still under {EMA_LOW:.0f} that is rising toward T2108 is catching up, not an improvement. Posture is half T2108 and half the index-health checks. At the highs means the S&P 500 is within 5% of its 252-day high. Not an instruction to trade.</p>
+<p class="foot">T2108 is the share of liquid NYSE names above their 40-day average ({snapshot["n_nyse"]:,} names). Nasdaq 40 is that share for liquid Nasdaq names ({snapshot["n_nasdaq"]:,} names). The other breadth counts use {snapshot["n"]:,} names. A 4% day is a close up or down 4% or more. The 5-day and 10-day ratios divide those up days by the down days. The 13/34 balance is names with the 13-day EMA above the 34-day EMA, minus the names below. A month is 21 sessions and a quarter is 63. The 50% count uses 40 sessions. Washout is a T2108 close at {WASHOUT_LINE:.0f} or below. Extended is a close at {EXTENDED_LINE:.0f} or above. A bounce needs a {BOUNCE_RISE:.0f}-point lift off the washout low and either a 5-day ratio of {RATIO_VOTE:.1f} or a {UP_VOTE:,}-name up day. The breadth thrust, fitted to S&P lows that held, fires when T2108 rises at least {FAST_CLOSE:.0f} points in {FAST_WINDOW} sessions, give or take {POINT_BAND:.0f}, from a reading at or under {FAST_CAP:.0f}, give or take {POINT_BAND:.0f}. The 5-day ratio is at least {FAST_RATIO:.1f}, and that rise beats the 10-day average. Nasdaq 40 is the same share for liquid Nasdaq names, and it uses that same band. A 10-day average still under {EMA_LOW:.0f} that is rising toward T2108 is catching up, not an improvement. Posture is half T2108 and half the index-health checks. At the highs means the S&P 500 is within 5% of its 252-day high. Not an instruction to trade.</p>
 <script>
 function closeDeskMenus() {{
   document.querySelectorAll(".desk-menu__panel").forEach(panel => {{
@@ -1117,6 +1186,7 @@ def write_csvs(days: list[dict], output_dir: Path) -> list[Path]:
         "date", "stage", "since", "sessions", "posture", "momentum", "t2108", "t2108_ema10",
         "up4", "down4", "ratio5", "ratio10", "balance", "bull13", "bear13", "bull20", "bear20",
         "up25q", "down25q", "up25m", "down25m", "up50", "down50", "drawdown", "n", "n_nyse",
+        "nasdaq", "nasdaq_ema10", "n_nasdaq",
     ]
     history = output_dir / "regime_history.csv"
     frame.loc[:, keep].to_csv(history, index=False)
@@ -1129,11 +1199,14 @@ def write_csvs(days: list[dict], output_dir: Path) -> list[Path]:
 def write_regime(output_dir: Path, max_names: int = 1400, refresh: bool = False) -> list[Path]:
     """Fetch the tape, write the CSVs, and refresh regime.html."""
     universe = fetch_universe(max_names)
-    nyse = pd.Series({name: exchange.upper() == "NYSE" for name, exchange in zip(universe["name"], universe["exchange"])})
+    exchange = universe["exchange"].str.upper()
+    nyse = pd.Series({name: flag for name, flag in zip(universe["name"], exchange == "NYSE")})
+    nasdaq = pd.Series({name: flag for name, flag in zip(universe["name"], exchange == "NASDAQ")})
     closes = load_closes(universe, refresh)
     nyse = nyse.reindex(closes.columns).fillna(False)
-    print(f"Breadth panel: {closes.shape[1]} names, {int(nyse.sum())} NYSE", flush=True)
-    breadth = compute_breadth(closes, nyse)
+    nasdaq = nasdaq.reindex(closes.columns).fillna(False)
+    print(f"Breadth panel: {closes.shape[1]} names, {int(nyse.sum())} NYSE, {int(nasdaq.sum())} Nasdaq", flush=True)
+    breadth = compute_breadth(closes, nyse, nasdaq)
     index_closes, vix_range, intraday = download_indexes()
     market = market_frame(index_closes)
     days = days_from_frames(breadth, market)
@@ -1156,7 +1229,7 @@ def write_regime(output_dir: Path, max_names: int = 1400, refresh: bool = False)
     paths.append(HTML_PATH)
     last = days[-1]
     print(
-        f"Regime: {last['stage']} | T2108 {last['t2108']:.1f} | 5-day ratio {last['ratio5']:.2f} | posture {last['posture']}",
+        f"Regime: {last['stage']} | T2108 {last['t2108']:.1f} | Nasdaq 40 {float(last['nasdaq']):.1f} | 5-day ratio {last['ratio5']:.2f} | posture {last['posture']}",
         flush=True,
     )
     return paths
@@ -1325,7 +1398,8 @@ HTML_PAGE = r"""<!doctype html>
     .guide { stroke: var(--color-rule-2); stroke-dasharray: 2 3; stroke-width: 1; }
     .bar-up { fill: var(--color-up); }
     .bar-down { fill: var(--color-down); }
-    .chart-row { display: grid; grid-template-columns: minmax(0, 1fr) 7.5rem; gap: var(--space-sm); align-items: end; }
+    .readings { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-sm); }
+    .chart-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 7.5rem; gap: var(--space-sm); align-items: end; }
     .chart-row .chart svg { height: 6rem; }
     .axis { display: flex; justify-content: space-between; margin: var(--space-4) 0 0; color: var(--color-muted); font-size: var(--text-xs); }
     .gauge { display: block; width: 100%; height: auto; margin-top: var(--space-4); }
@@ -1357,7 +1431,7 @@ HTML_PAGE = r"""<!doctype html>
     @media (max-width: 40rem) {
       :root { --page-gutter: var(--space-12); }
       .cards, .cards-tape { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .chart-row { grid-template-columns: minmax(0, 1fr); }
+      .readings, .chart-row { grid-template-columns: minmax(0, 1fr); }
       .desk-tab { padding: 0 var(--space-8); min-height: 2.75rem; }
     }
     @media (max-width: 22.5rem) {

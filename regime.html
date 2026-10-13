@@ -147,7 +147,8 @@
     .guide { stroke: var(--color-rule-2); stroke-dasharray: 2 3; stroke-width: 1; }
     .bar-up { fill: var(--color-up); }
     .bar-down { fill: var(--color-down); }
-    .chart-row { display: grid; grid-template-columns: minmax(0, 1fr) 7.5rem; gap: var(--space-sm); align-items: end; }
+    .readings { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-sm); }
+    .chart-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 7.5rem; gap: var(--space-sm); align-items: end; }
     .chart-row .chart svg { height: 6rem; }
     .axis { display: flex; justify-content: space-between; margin: var(--space-4) 0 0; color: var(--color-muted); font-size: var(--text-xs); }
     .gauge { display: block; width: 100%; height: auto; margin-top: var(--space-4); }
@@ -179,7 +180,7 @@
     @media (max-width: 40rem) {
       :root { --page-gutter: var(--space-12); }
       .cards, .cards-tape { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .chart-row { grid-template-columns: minmax(0, 1fr); }
+      .readings, .chart-row { grid-template-columns: minmax(0, 1fr); }
       .desk-tab { padding: 0 var(--space-8); min-height: 2.75rem; }
     }
     @media (max-width: 22.5rem) {
@@ -226,20 +227,37 @@
       <h2 id="cycle-label" class="kicker">Market cycle</h2>
       <p class="stage"><span class="mark mark-down" aria-hidden="true">▼</span> Weak</p>
       <p class="since">since 12 Oct · 1 session · The averages are catching up because they are low. Breadth is not improving.</p>
+      <p class="meta">Breadth thrust · off · Nasdaq 40 · off</p>
       <svg class="gauge" viewBox="0 0 360 250" role="img" aria-label="Market cycle is Weak. Posture 48. Momentum −1."><circle class="gauge-ring" cx="180" cy="118" r="70"/><text class="gauge-ink " x="159.6" y="22.1" text-anchor="middle">Strength</text><text class="gauge-down " x="243.6" y="43.5" text-anchor="start">Rolling over</text><text class="gauge-down gauge-live" x="277.7" y="125.7" text-anchor="start">Weak</text><text class="gauge-ink " x="180.0" y="216.0" text-anchor="middle">Washout</text><text class="gauge-ink " x="103.8" y="179.7" text-anchor="end">Bounce</text><text class="gauge-up " x="82.0" y="115.4" text-anchor="end">Recovery</text><text class="gauge-up " x="108.9" y="50.5" text-anchor="end">Extended</text><circle class="gauge-dot" cx="249.8" cy="123.5" r="5"/><text class="gauge-score" x="180" y="116" text-anchor="middle">48</text><text class="gauge-move" x="180" y="136" text-anchor="middle">momentum −1</text></svg>
       <p class="place">At highs <span class="muted">(−0.1% from the high)</span></p>
-      <ul class="rules"><li>Breadth improves when T2108 rises 8 points in 3 sessions and that rise accelerates, with the 5-day ratio at least 1.</li><li>Washout if T2108 closes at 29 or below. A 5-day ratio of 1.5, or a 500-name up day, can still mark a bounce.</li></ul>
+      <ul class="rules"><li>Thrust when T2108 rises 15 points in 2 sessions, give or take 2, from a reading at or under 30, give or take 2. The 5-day ratio is at least 1.5, and the rise beats the 10-day average. Nasdaq 40 uses the same band.</li><li>Washout if T2108 closes at 29 or below. A 5-day ratio of 1.5, or a 500-name up day, can still mark a bounce.</li></ul>
     </section>
     <section class="panel t2108" aria-labelledby="t2108-label">
-      <h2 id="t2108-label" class="kicker">T2108 · % NYSE above the 40-day average</h2>
-      <p class="figure figure-xl">33.5</p>
-      <p class="sub"><span class="delta delta-up"><span aria-hidden="true">▲</span><span class="visually-hidden">up </span>2.7</span> <span class="muted">vs prior close</span></p>
-      <p class="meta">10-day EMA 26.9 · catching up from a low base</p>
-      <p class="meta">6 months 17.1–70.3</p>
+      <h2 id="t2108-label" class="kicker">Above the 40-day average</h2>
+      <div class="readings">
+        <div>
+          <p class="kicker">T2108 · NYSE</p>
+          <p class="figure figure-xl">33.5</p>
+          <p class="sub"><span class="delta delta-up"><span aria-hidden="true">▲</span><span class="visually-hidden">up </span>2.7</span> <span class="muted">vs prior close</span></p>
+          <p class="meta">10-day EMA 26.9 · catching up from a low base</p>
+          <p class="meta">6 months 17.1–70.3</p>
+        </div>
+        <div>
+          <p class="kicker">Nasdaq 40</p>
+          <p class="figure figure-xl">36.0</p>
+          <p class="sub"><span class="delta delta-down"><span aria-hidden="true">▼</span><span class="visually-hidden">down </span>1.8</span> <span class="muted">vs prior close</span></p>
+          <p class="meta">10-day EMA 35.0 · above</p>
+          <p class="meta">thrust · off</p>
+        </div>
+      </div>
       <div class="chart-row">
         <div class="chart chart-ink grow">
           <svg class="spark" viewBox="0 0 320 96" preserveAspectRatio="none" aria-hidden="true"><line class="guide" x1="0" y1="69.9" x2="320" y2="69.9"/><line class="guide" x1="0" y1="8.8" x2="320" y2="8.8"/><polyline points="2.0,21.0 4.5,21.4 7.1,16.1 9.6,8.3 12.1,9.1 14.6,16.1 17.2,17.5 19.7,19.2 22.2,19.2 24.8,18.4 27.3,20.1 29.8,26.4 32.3,14.9 34.9,17.8 37.4,24.8 39.9,22.1 42.4,15.3 45.0,20.6 47.5,24.3 50.0,30.7 52.6,31.5 55.1,42.2 57.6,38.9 60.1,50.2 62.7,43.0 65.2,47.1 67.7,38.0 70.3,36.8 72.8,31.0 75.3,30.1 77.8,31.8 80.4,33.9 82.9,35.5 85.4,39.9 88.0,35.3 90.5,44.4 93.0,35.7 95.5,41.5 98.1,43.2 100.6,33.0 103.1,41.9 105.6,31.3 108.2,22.7 110.7,21.0 113.2,19.7 115.8,36.3 118.3,34.1 120.8,34.9 123.3,32.0 125.9,26.8 128.4,25.8 130.9,18.9 133.5,21.2 136.0,23.1 138.5,23.1 141.0,17.9 143.6,17.7 146.1,18.2 148.6,25.2 151.2,23.4 153.7,18.4 156.2,18.7 158.7,21.4 161.3,19.6 163.8,12.3 166.3,18.7 168.8,26.0 171.4,26.0 173.9,23.7 176.4,30.3 179.0,23.4 181.5,18.6 184.0,17.6 186.5,24.4 189.1,28.1 191.6,32.2 194.1,22.9 196.7,14.1 199.2,16.4 201.7,25.9 204.2,19.4 206.8,25.6 209.3,25.6 211.8,23.6 214.4,17.7 216.9,16.2 219.4,26.7 221.9,32.5 224.5,28.8 227.0,34.5 229.5,33.0 232.0,30.6 234.6,31.7 237.1,31.5 239.6,37.7 242.2,39.8 244.7,47.7 247.2,51.1 249.7,44.2 252.3,39.8 254.8,40.4 257.3,49.0 259.9,58.9 262.4,64.3 264.9,59.8 267.4,64.3 270.0,67.0 272.5,72.7 275.0,69.9 277.6,73.3 280.1,74.6 282.6,74.8 285.1,80.9 287.7,81.6 290.2,80.4 292.7,85.2 295.2,85.9 297.8,87.7 300.3,84.2 302.8,81.7 305.4,77.4 307.9,73.7 310.4,76.8 312.9,70.5 315.5,67.3 318.0,63.3"/><circle cx="318.0" cy="63.3" r="2.2"/></svg>
-          <p class="axis"><span>14 Apr</span><span>today</span></p>
+          <p class="axis"><span>NYSE · 14 Apr</span><span>today</span></p>
+        </div>
+        <div class="chart chart-ink grow">
+          <svg class="spark" viewBox="0 0 320 96" preserveAspectRatio="none" aria-hidden="true"><line class="guide" x1="0" y1="87.7" x2="320" y2="87.7"/><line class="guide" x1="0" y1="22.3" x2="320" y2="22.3"/><polyline points="2.0,30.4 4.5,22.4 7.1,17.8 9.6,9.4 12.1,8.3 14.6,14.9 17.2,14.0 19.7,21.6 22.2,19.7 24.8,20.8 27.3,24.9 29.8,31.1 32.3,20.3 34.9,16.1 37.4,16.1 39.9,14.0 42.4,13.7 45.0,17.8 47.5,22.1 50.0,27.5 52.6,29.4 55.1,34.0 57.6,34.0 60.1,43.7 62.7,42.7 65.2,47.0 67.7,38.9 70.3,36.2 72.8,33.7 75.3,32.9 77.8,33.7 80.4,29.1 82.9,30.8 85.4,31.2 88.0,39.8 90.5,49.6 93.0,35.5 95.5,53.1 98.1,51.2 100.6,50.9 103.1,60.7 105.6,44.1 108.2,42.3 110.7,34.8 113.2,38.3 115.8,46.4 118.3,42.6 120.8,42.2 123.3,43.3 125.9,39.0 128.4,40.9 130.9,34.7 133.5,31.7 136.0,30.1 138.5,29.0 141.0,28.5 143.6,28.2 146.1,33.9 148.6,37.0 151.2,32.2 153.7,32.6 156.2,37.1 158.7,38.1 161.3,39.2 163.8,36.8 166.3,42.7 168.8,49.0 171.4,42.8 173.9,53.2 176.4,59.9 179.0,61.0 181.5,50.3 184.0,47.6 186.5,53.2 189.1,51.2 191.6,53.5 194.1,45.5 196.7,36.1 199.2,39.8 201.7,44.1 204.2,38.2 206.8,42.6 209.3,42.8 211.8,34.8 214.4,34.8 216.9,30.6 219.4,34.6 221.9,43.3 224.5,41.7 227.0,51.3 229.5,42.1 232.0,47.2 234.6,40.8 237.1,43.6 239.6,40.2 242.2,49.9 244.7,54.7 247.2,60.5 249.7,54.7 252.3,48.9 254.8,50.5 257.3,60.0 259.9,71.1 262.4,79.5 264.9,77.4 267.4,71.9 270.0,79.0 272.5,84.3 275.0,77.1 277.6,78.7 280.1,70.3 282.6,67.1 285.1,77.7 287.7,80.8 290.2,81.4 292.7,82.9 295.2,84.3 297.8,85.3 300.3,84.3 302.8,80.0 305.4,76.6 307.9,78.5 310.4,78.5 312.9,80.6 315.5,73.7 318.0,76.5"/><circle cx="318.0" cy="76.5" r="2.2"/></svg>
+          <p class="axis"><span>Nasdaq</span><span>today</span></p>
         </div>
         <div class="chart chart-ink intra"><p class="axis">SPY · today</p><svg class="spark" viewBox="0 0 120 96" preserveAspectRatio="none" aria-hidden="true"><polyline points="2.0,22.7 3.5,8.3 5.0,21.9 6.5,40.2 8.0,28.1 9.5,35.9 11.0,40.2 12.5,67.1 14.1,65.2 15.6,48.9 17.1,63.6 18.6,59.7 20.1,61.5 21.6,62.0 23.1,65.9 24.6,60.1 26.1,49.2 27.6,50.3 29.1,44.5 30.6,46.5 32.1,46.5 33.6,43.3 35.1,56.6 36.6,55.4 38.2,51.9 39.7,44.1 41.2,35.6 42.7,29.3 44.2,22.7 45.7,27.0 47.2,18.0 48.7,24.8 50.2,28.5 51.7,25.0 53.2,53.1 54.7,52.7 56.2,44.9 57.7,41.8 59.2,54.4 60.8,62.6 62.3,68.2 63.8,74.7 65.3,67.9 66.8,64.4 68.3,63.2 69.8,63.4 71.3,70.7 72.8,69.1 74.3,77.1 75.8,68.7 77.3,68.3 78.8,64.0 80.3,60.5 81.8,67.9 83.4,72.6 84.9,78.4 86.4,74.1 87.9,81.9 89.4,81.5 90.9,81.1 92.4,82.7 93.9,78.8 95.4,74.9 96.9,80.8 98.4,85.8 99.9,84.7 101.4,84.2 102.9,87.7 104.4,86.2 105.9,81.0 107.5,83.9 109.0,83.1 110.5,67.8 112.0,65.6 113.5,65.9 115.0,59.3 116.5,60.9 118.0,54.2"/><circle cx="118.0" cy="54.2" r="2.2"/></svg></div>
       </div>
@@ -340,7 +358,7 @@
     </div>
   </section>
 </main>
-<p class="foot">T2108 is the share of liquid NYSE names above their 40-day average (783 names; 1,398 names in the breadth counts). A 4% day is a close up or down 4% or more. The 5-day and 10-day ratios divide those up days by the down days. The 13/34 balance is names with the 13-day EMA above the 34-day EMA, minus the names below. A month is 21 sessions and a quarter is 63. The 50% count uses 40 sessions. Washout is a T2108 close at 29 or below. Extended is a close at 70 or above. A bounce needs a 5-point lift off the washout low and either a 5-day ratio of 1.5 or a 500-name up day. Breadth improves only when T2108 rises at least 8 points in 3 sessions, the latest day is faster than the day before, and the 5-day ratio is at least 1. A 10-day average still under 40 that is rising toward T2108 is catching up, not an improvement. Posture is half T2108 and half the index-health checks. At the highs means the S&P 500 is within 5% of its 252-day high. Not an instruction to trade.</p>
+<p class="foot">T2108 is the share of liquid NYSE names above their 40-day average (783 names). Nasdaq 40 is that share for liquid Nasdaq names (603 names). The other breadth counts use 1,398 names. A 4% day is a close up or down 4% or more. The 5-day and 10-day ratios divide those up days by the down days. The 13/34 balance is names with the 13-day EMA above the 34-day EMA, minus the names below. A month is 21 sessions and a quarter is 63. The 50% count uses 40 sessions. Washout is a T2108 close at 29 or below. Extended is a close at 70 or above. A bounce needs a 5-point lift off the washout low and either a 5-day ratio of 1.5 or a 500-name up day. The breadth thrust, fitted to S&P lows that held, fires when T2108 rises at least 15 points in 2 sessions, give or take 2, from a reading at or under 30, give or take 2. The 5-day ratio is at least 1.5, and that rise beats the 10-day average. Nasdaq 40 is the same share for liquid Nasdaq names, and it uses that same band. A 10-day average still under 40 that is rising toward T2108 is catching up, not an improvement. Posture is half T2108 and half the index-health checks. At the highs means the S&P 500 is within 5% of its 252-day high. Not an instruction to trade.</p>
 <script>
 function closeDeskMenus() {
   document.querySelectorAll(".desk-menu__panel").forEach(panel => {
