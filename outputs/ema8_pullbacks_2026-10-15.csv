@@ -1,0 +1,6 @@
+name,close,ema8w,dist_to_ema8w_pct,ema8w_slope_pct,off_8w_high_pct,tagged_ema8w,ema8w_rising,signal,tradingview_url,description,exchange,industry,Perf.1M,Perf.3M,Perf.6M
+SDGR,25.05,24.9624,0.35,0.1,25.84,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:SDGR&interval=D,"Schrodinger, Inc.",NASDAQ,Packaged Software,31.63426169206516,54.43896424167696,102.99837925445705
+HPE,63.11,62.7748,0.53,0.153,14.21,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NYSE:HPE&interval=D,Hewlett Packard Enterprise Company,NYSE,Computer Processing Hardware,13.496987680963947,33.56613756613756,141.8007662835249
+CORT,116.23,114.5419,1.47,0.423,8.03,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:CORT&interval=D,Corcept Therapeutics Incorporated,NASDAQ,Pharmaceuticals: Major,2.5136708414182474,29.59081279964322,160.95644364616075
+TTAN,72.69,71.0256,2.34,0.674,29.39,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:TTAN&interval=D,"ServiceTitan, Inc.",NASDAQ,Packaged Software,32.71864159211246,-7.812301838934682,12.505804055099826
+CRWD,249.29,242.9387,2.61,0.753,13.14,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:CRWD&interval=D,"CrowdStrike Holdings, Inc.",NASDAQ,Packaged Software,13.831050228310499,20.331129024472656,132.45990302126074

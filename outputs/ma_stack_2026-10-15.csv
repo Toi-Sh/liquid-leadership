@@ -1,0 +1,3 @@
+name,close,SMA5,SMA10,SMA20,SMA30,sma5_gt_sma10,sma20_gt_sma30,sma20_30_gap_pct,cross_days_ago,signal,tradingview_url,description,exchange,industry,Perf.1M,Perf.3M,Perf.6M
+FIGS,18.63,17.026,15.452,14.307,14.1387,True,True,1.191,0,20x30_TODAY,https://www.tradingview.com/chart/?symbol=NYSE:FIGS&interval=D,"FIGS, Inc.",NYSE,Apparel/Footwear,40.92284417549167,85.18886679920476,12.704174228675122
+PRGO,15.95,15.266,14.76,14.594,14.416,True,True,1.235,2,20x30_2D,https://www.tradingview.com/chart/?symbol=NYSE:PRGO&interval=D,Perrigo Company plc,NYSE,Pharmaceuticals: Major,16.423357664233578,55.00485908649174,37.027491408934694
