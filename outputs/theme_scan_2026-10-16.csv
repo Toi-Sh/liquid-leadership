@@ -1,0 +1,4 @@
+name,description,exchange,industry,close,change,volume,earn_yoy,sales_yoy,Perf.1M,sma10_rising,sma20_rising,tradingview_url
+EVH,"Evolent Health, Inc",NYSE,Miscellaneous Commercial Services,4.925,4.122621564482016,1693754,42.84418235427535,46.855476134747306,19.538834951456302,True,True,https://www.tradingview.com/chart/?symbol=NYSE:EVH&interval=D
+MPC,Marathon Petroleum Corporation,NYSE,Oil Refining/Marketing,473.36,-2.3838983749896894,1001877,347.24075197089144,53.101604278074866,19.027383137619758,True,True,https://www.tradingview.com/chart/?symbol=NYSE:MPC&interval=D
+PLTR,Palantir Technologies Inc.,NASDAQ,Packaged Software,199.425,-0.7687714584266246,15030181,224.23529411764704,92.8334945705726,16.964809384164226,True,True,https://www.tradingview.com/chart/?symbol=NASDAQ:PLTR&interval=D
