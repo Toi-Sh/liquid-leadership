@@ -1106,13 +1106,16 @@ def quote_side(closes: pd.DataFrame, symbol: str, vix_range: pd.Series) -> tuple
     yld = float(bond.iloc[-1])
     if yld > 20:
         yld = yld / 10
-        prior = float(bond.iloc[-2]) / 10
+    gap = yld - 5
+    if gap > 0.005:
+        side = "above 5.0"
+    elif gap < -0.005:
+        side = "below 5.0"
     else:
-        prior = float(bond.iloc[-2])
-    side = "above 5.0" if yld > 5 else "at 5.0" if abs(yld - 5) < 0.005 else "below 5.0"
+        side = "at 5.0"
     return (
         {"price": f"{level:.2f}", "delta": _delta(level - float(vix.iloc[-2]), 2, invert=True), "band": band, "day": f"{low:.2f}–{high:.2f}"},
-        {"price": f"{yld:.2f}", "delta": _delta(yld - prior, 2), "side": side},
+        {"price": f"{yld:.2f}", "delta": _delta(gap, 2), "side": side},
     )
 
 

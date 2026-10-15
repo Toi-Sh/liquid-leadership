@@ -10,6 +10,7 @@ from regime import (
     compute_breadth,
     has_thrust,
     posture_score,
+    quote_side,
     render_html,
     rolling_ratio,
     transition,
@@ -177,6 +178,20 @@ class CycleTests(unittest.TestCase):
         self.assertIn("votes 1 of 2", walked[-1]["progress"])
         self.assertEqual(walked[-1]["posture"], posture_score(24.0, 18, 24))
         self.assertIsInstance(walked[-1]["momentum"], int)
+
+
+class YieldTests(unittest.TestCase):
+    def test_yield_line_is_the_gap_from_5(self):
+        closes = pd.DataFrame({"^VIX": [15.0, 15.21], "^TNX": [52.4, 52.4]})
+        _, bond = quote_side(closes, "^VIX", pd.Series({"high": 15.53, "low": 15.11}))
+        self.assertEqual(bond["price"], "5.24")
+        self.assertIn(">0.24<", bond["delta"])
+        self.assertEqual(bond["side"], "above 5.0")
+        low = pd.DataFrame({"^VIX": [15.0, 15.0], "^TNX": [4.70, 4.80]})
+        _, under = quote_side(low, "^VIX", pd.Series({"high": 15.0, "low": 15.0}))
+        self.assertEqual(under["price"], "4.80")
+        self.assertIn(">0.20<", under["delta"])
+        self.assertEqual(under["side"], "below 5.0")
 
 
 class PageTests(unittest.TestCase):
