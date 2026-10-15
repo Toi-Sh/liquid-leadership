@@ -23,7 +23,7 @@
   <link rel="apple-touch-icon" href="assets/nel-favicon.png">
   <link rel="preload" href="assets/fonts/newsreader-latin-400.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/source-sans-3-latin-400.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="tokens.css?v=20261015i">
+  <link rel="stylesheet" href="tokens.css?v=20261015j">
   <style>
 html { color-scheme: dark; }
 html, body { overflow-x: clip; overflow-anchor: none; }
@@ -31,7 +31,11 @@ html, body { overflow-x: clip; overflow-anchor: none; }
 html { background: var(--color-paper); }
 body {
   margin: 0;
-  background: var(--color-paper);
+  background:
+    radial-gradient(72rem 34rem at 55% 0%, oklch(38% 0.06 245 / 0.55), transparent 62%),
+    radial-gradient(80rem 46rem at 72% 108%, oklch(48% 0.1 215 / 0.42), transparent 56%),
+    radial-gradient(36rem 28rem at 0% 46%, oklch(28% 0.05 270 / 0.35), transparent 54%),
+    #0e1116;
   color: var(--color-ink-2);
   font-family: var(--font-body);
   font-weight: 400;
@@ -41,6 +45,13 @@ body {
   text-size-adjust: 100%;
   overscroll-behavior-y: contain;
 }
+body::before {
+  content: "";
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  opacity: 0.28;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.lede, main, .foot { position: relative; z-index: 1; }
 main { min-height: 100dvh; }
 img, svg, table { max-width: 100%; }
 h1, h2, h3 {
@@ -193,19 +204,6 @@ a { color: inherit; }
   white-space: nowrap;
 }
 .desk-menu__panel a[aria-current="true"] { color: var(--color-accent); }
-.nav-edge__controls {
-  display: flex;
-  align-items: center;
-  gap: var(--space-8);
-  min-width: 0;
-}
-.bbg-clock {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  font-weight: 400;
-  color: var(--color-muted);
-  white-space: nowrap;
-}
 select,
 .btn,
 .note-input {
@@ -228,7 +226,6 @@ select,
   padding: 0 var(--space-sm);
   white-space: nowrap;
 }
-select { width: 9.5rem; max-width: 100%; min-width: 0; background: var(--color-paper); }
 .btn { cursor: pointer; }
 .btn--primary {
   background: var(--color-ink);
@@ -294,17 +291,20 @@ main {
 }
 .desk-block {
   margin-top: var(--space-md);
-  border: var(--rule) solid var(--color-rule);
+  border: var(--rule) solid color-mix(in oklch, white 28%, transparent);
   padding: var(--space-xs);
-  background: var(--color-paper);
-  border-radius: var(--radius-card);
+  background: color-mix(in oklch, var(--color-paper-3) 46%, transparent);
+  border-radius: 12px;
+  box-shadow: inset 0 1px 0 color-mix(in oklch, white 32%, transparent);
+  backdrop-filter: blur(14px) saturate(1.35);
+  -webkit-backdrop-filter: blur(14px) saturate(1.35);
 }
 .desk-block--graphite {
   margin-inline: 0;
   padding: var(--space-xs);
-  background: var(--color-paper-2);
+  background: color-mix(in oklch, var(--color-paper-3) 46%, transparent);
   color: var(--color-ink);
-  border-color: var(--color-rule);
+  border-color: color-mix(in oklch, white 28%, transparent);
 }
 .desk-block--graphite h1,
 .desk-block--graphite h2,
@@ -416,8 +416,12 @@ main {
 .nel-window {
   min-width: 0;
   padding: 0;
-  border: var(--rule) solid var(--color-rule);
-  background: var(--color-paper);
+  border: var(--rule) solid color-mix(in oklch, white 28%, transparent);
+  border-radius: 12px;
+  background: color-mix(in oklch, var(--color-paper-3) 46%, transparent);
+  box-shadow: inset 0 1px 0 color-mix(in oklch, white 32%, transparent);
+  backdrop-filter: blur(14px) saturate(1.35);
+  -webkit-backdrop-filter: blur(14px) saturate(1.35);
 }
 .panel h2,
 .nel-window h3 {
@@ -425,7 +429,7 @@ main {
   padding: var(--space-2xs) var(--space-xs);
   font-size: var(--text-lg);
   letter-spacing: -0.02em;
-  background: var(--color-paper-3);
+  background: transparent;
 }
 .trend-label { margin-top: 0; border-top: var(--rule) solid var(--color-rule); }
 .trend-legend {
@@ -454,7 +458,7 @@ main {
 .panel[data-frame="3m"] h2, .nel-window[data-frame="3m"] h3 { color: var(--color-frame-3m); }
 .panel[data-frame="6m"] h2, .nel-window[data-frame="6m"] h3 { color: var(--color-frame-6m); }
 .desk-block--graphite .panel,
-.desk-block--graphite .nel-window { border-color: var(--color-graphite-rule); }
+.desk-block--graphite .nel-window { border-color: color-mix(in oklch, white 28%, transparent); }
 .bars { display: grid; gap: var(--space-2xs); padding: var(--space-xs); }
 .bar-row {
   display: grid;
@@ -507,49 +511,37 @@ tbody tr.row--theme-lead.row--theme-rising {
   outline: 1px solid var(--color-up);
   background: color-mix(in oklch, var(--color-up) 10%, color-mix(in oklch, var(--color-frame-1m) 8%, var(--color-paper)));
 }
-.rising-alert {
-  margin: 0 0 var(--space-md);
-  padding: var(--space-sm) var(--space-md);
-  border: 1px solid var(--color-frame-1m);
-  background: color-mix(in oklch, var(--color-frame-1m) 12%, var(--color-paper));
-  font-family: var(--font-body);
-  font-size: var(--text-sm);
-  line-height: 1.5;
-  color: var(--color-ink-2);
-}
-.rising-alert[hidden] { display: none; }
-.rising-alert__label {
-  display: block;
-  width: fit-content;
-  margin: 0 0 var(--space-xs);
-  padding: 0.1rem 0.4rem;
-  border: 1px solid var(--color-frame-1m);
-  color: var(--color-frame-1m);
-  font-family: var(--font-body);
-  font-size: var(--text-xs);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-.rising-alert strong {
-  color: var(--color-frame-1m);
-  font-family: var(--font-body);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
 .desk-note,
-.session-note {
+.rising-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
   margin: 0 0 var(--space-sm);
-  padding: var(--space-sm) var(--space-md);
-  border: var(--rule) solid var(--color-rule);
-  background: var(--color-paper);
+  padding: var(--space-8) var(--space-md);
+  border: var(--rule) solid color-mix(in oklch, var(--color-up) 42%, var(--color-rule));
+  border-radius: 8px;
+  background: color-mix(in oklch, var(--color-up) 12%, var(--color-paper-3));
+  color: var(--color-ink-2);
   font-family: var(--font-body);
   font-size: var(--text-sm);
-  line-height: 1.5;
-  color: var(--color-ink-2);
+  line-height: 1.4;
 }
 .desk-note[hidden],
-.session-note[hidden] { display: none; }
-.desk-note--behind { border-color: var(--color-warn); }
+.rising-alert[hidden] { display: none; }
+.lede-mark {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1rem;
+  height: 1rem;
+  margin-top: 0.15em;
+  border: var(--rule) solid var(--color-up);
+  border-radius: 50%;
+  color: var(--color-up);
+  font-size: 11px;
+  line-height: 1;
+}
 .pin {
   display: block;
   margin-top: 0.15rem;
@@ -566,22 +558,6 @@ tbody tr.row--theme-lead.row--theme-rising {
 .pin--chip {
   display: inline;
   margin: 0 0.45rem 0 0;
-}
-.desk-note__label,
-.session-note__label {
-  display: block;
-  width: fit-content;
-  margin: 0 0 var(--space-xs);
-  color: var(--color-muted);
-  font-family: var(--font-body);
-  font-size: var(--text-xs);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-.session-note__input {
-  min-height: 2.25rem;
-  font-size: var(--text-sm);
-  line-height: 1.5;
 }
 .industry-link {
   color: inherit;
@@ -652,10 +628,11 @@ table {
 .scrollable-table th {
   position: sticky;
   top: 0;
-  background: var(--color-paper-3);
+  background: color-mix(in oklch, #0e1116 82%, var(--color-paper-3));
+  backdrop-filter: blur(12px);
   z-index: var(--z-raised);
 }
-.desk-block--graphite .scrollable-table th { background: var(--color-paper-3); }
+.desk-block--graphite .scrollable-table th { background: color-mix(in oklch, #0e1116 82%, var(--color-paper-3)); }
 th, td {
   padding: var(--space-xs) var(--space-sm);
   border-bottom: var(--rule) solid var(--color-rule);
@@ -672,7 +649,7 @@ th {
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  background: var(--color-paper-3);
+  background: transparent;
 }
 .desk-block--graphite th { color: var(--color-accent); }
 table.sheet {
@@ -740,12 +717,6 @@ tbody tr:nth-child(even) { background: color-mix(in oklch, var(--color-paper-2) 
   font-family: var(--font-mono);
 }
 .desk-block--graphite .empty { color: var(--color-graphite-muted); }
-.snapshot-date {
-  font-family: var(--font-outlier);
-  font-size: var(--text-sm);
-  font-weight: 500;
-  color: var(--color-accent-ink);
-}
 .dashboard-title { margin: 0; }
 .foot-line {
   border-top: var(--rule) solid var(--color-rule);
@@ -771,9 +742,6 @@ tbody tr:nth-child(even) { background: color-mix(in oklch, var(--color-paper-2) 
   .section-heading .btn,
   .section-heading .theme-scan__count { justify-self: end; }
   .bar-row { grid-template-columns: minmax(0, 11rem) minmax(0, 1fr) 2.5rem; }
-}
-@media (max-width: 60rem) {
-  .bbg-clock { display: none; }
 }
 @media (max-width: 47.99rem) {
   :root {
@@ -804,12 +772,6 @@ tbody tr:nth-child(even) { background: color-mix(in oklch, var(--color-paper-2) 
     min-height: var(--banner-height);
     padding-left: max(var(--page-gutter), env(safe-area-inset-left));
   }
-  .nav-edge__controls {
-    grid-area: controls;
-    gap: var(--space-4);
-    flex-shrink: 0;
-    padding-right: max(var(--page-gutter), env(safe-area-inset-right));
-  }
   .bbg-keys {
     grid-area: keys;
     flex: 0 0 auto;
@@ -837,7 +799,6 @@ tbody tr:nth-child(even) { background: color-mix(in oklch, var(--color-paper-2) 
     font-size: 0.625rem;
     touch-action: manipulation;
   }
-  select { width: auto; min-width: 6.5rem; }
   .lede,
   .qotd-strip {
     margin-left: 0;
@@ -888,7 +849,6 @@ tbody tr:nth-child(even) { background: color-mix(in oklch, var(--color-paper-2) 
 }
 @media (max-width: 22.5rem) {
   .desk-tab { padding: 0 var(--space-8); }
-  select { min-width: 5.5rem; }
   .btn--primary { padding: 0 var(--space-8); }
 }
 @media (pointer: coarse) {
@@ -901,8 +861,19 @@ tbody tr:nth-child(even) { background: color-mix(in oklch, var(--color-paper-2) 
   }
   select:active, .btn:active { transform: none; }
 }
+@media (prefers-reduced-transparency: reduce) {
+  body { background: var(--color-paper); }
+  body::before { display: none; }
+  .desk-block, .panel, .nel-window {
+    background: var(--color-paper-3);
+    border-color: var(--color-rule);
+    box-shadow: none;
+    backdrop-filter: none;
+  }
+  .panel h2, .nel-window h3, th, .scrollable-table th { background: var(--color-paper-3); }
+}
   </style>
-  <link rel="stylesheet" href="nav.css?v=20261015j">
+  <link rel="stylesheet" href="nav.css?v=20261015k">
   <link rel="stylesheet" href="shadcn-chart.css?v=20261015g">
 </head>
 <body>
@@ -920,11 +891,6 @@ tbody tr:nth-child(even) { background: color-mix(in oklch, var(--color-paper-2) 
       <a class="desk-tab" data-panel="setups" href="rs.html">Setups</a>
       <a class="desk-tab" data-panel="tape" href="tape.html">Tape</a>
     </nav>
-    <div class="nav-edge__controls">
-      <span id="bbg-clock" class="bbg-clock" aria-live="off"></span>
-      <label class="visually-hidden" for="date">Snapshot date</label>
-      <select id="date" aria-label="Snapshot date"></select>
-    </div>
   </header>
   <p class="lede"><span id="bbg-session">US equity session</span></p>
   <p class="qotd-strip" id="qotd">
@@ -936,18 +902,14 @@ tbody tr:nth-child(even) { background: color-mix(in oklch, var(--color-paper-2) 
   <div id="view-themes" class="desk-view" data-view="themes">
   <section class="desk-block" aria-labelledby="thematic-title">
     <div class="section-heading"><h1 id="thematic-title" class="dashboard-title">Thematic Leadership</h1></div>
-    <div id="rising-theme-alert" class="rising-alert" hidden role="status" aria-live="polite"></div>
-    <div id="scan-freshness" class="desk-note" hidden></div>
-    <div id="chart-list" class="desk-note" hidden></div>
-    <div id="session-note" class="session-note">
-      <label class="session-note__label" for="session-note-input">Note for this session</label>
-      <input id="session-note-input" class="note-input session-note__input" type="text" placeholder="What stood out?" maxlength="500" autocomplete="off" spellcheck="true">
-    </div>
-    <div id="tape-brief" class="desk-note" hidden></div>
-    <div id="what-changed" class="desk-note" hidden></div>
-    <div id="overlap-list" class="desk-note" hidden></div>
-    <div id="earnings-week" class="desk-note" hidden></div>
-    <div id="basket-match" class="desk-note" hidden></div>
+    <div id="rising-theme-alert" class="rising-alert" hidden role="note"></div>
+    <div id="scan-freshness" class="desk-note" role="note" hidden></div>
+    <div id="chart-list" class="desk-note" role="note" hidden></div>
+    <div id="tape-brief" class="desk-note" role="note" hidden></div>
+    <div id="what-changed" class="desk-note" role="note" hidden></div>
+    <div id="overlap-list" class="desk-note" role="note" hidden></div>
+    <div id="earnings-week" class="desk-note" role="note" hidden></div>
+    <div id="basket-match" class="desk-note" role="note" hidden></div>
     <div id="theme-scan" class="theme-scan" hidden></div>
     <div id="leadership-sections" class="window-sections"></div>
   </section>
@@ -1072,7 +1034,6 @@ const TAPE = {"date":"2026-10-13","strongest":{"name":"Marine Shipping","today":
     save(next);
   });
 })();
-const dateSelect = document.getElementById('date');
 const thematicTitle = document.getElementById('thematic-title');
 const liquidTitle = document.getElementById('liquid-title');
 const nelTitle = document.getElementById('nel-title');
@@ -1100,7 +1061,6 @@ const downloadAplusButton = document.getElementById('download-aplus');
 const flowMeta = { '1m': { label:'1 month', color:'var(--color-frame-1m)' }, '3m': { label:'3 months', color:'var(--color-frame-3m)' }, '6m': { label:'6 months', color:'var(--color-frame-6m)' } };
 const rankColors = ['var(--color-rank-1)', 'var(--color-rank-2)', 'var(--color-rank-3)', 'var(--color-rank-4)', 'var(--color-rank-5)'];
 const NOTE_KEY = 'nel-note:';
-const SESSION_NOTE_KEY = 'lld-session-note:';
 const PIN_KEY = 'lld-pins';
 const PIN_CAP = 10;
 
@@ -1165,7 +1125,7 @@ function renderRisingAlert(snapshot) {
     ? 'That group has a dashed line in the lists.'
     : 'These groups have a dashed line in the lists.';
   risingThemeAlert.hidden = false;
-  risingThemeAlert.innerHTML = `<span class="rising-alert__label">Since last time</span><span class="rising-alert__text">${sentences} ${mark}</span>`;
+  risingThemeAlert.innerHTML = noteBanner(`${sentences} ${escapeHTML(mark)}`);
 }
 function counts(snapshot, frame) { return snapshot?.groups?.[frame] || {}; }
 function total(map) { return Object.values(map).reduce((a,b) => a + b, 0); }
@@ -1256,18 +1216,7 @@ function focusExtras(row) {
   const text = [passedLine, ...phrases(row.hard_rule_fails), ...phrases(row.tightness_flags)].filter(Boolean).join(' ');
   return `<td class="col-score">${escapeHTML(score)}</td><td class="col-rules">${escapeHTML(text || '—')}</td>`;
 }
-function updateDates() {
-  dateSelect.innerHTML = history.map((d,i) => `<option value="${i}">${d.date}</option>`).join('');
-  dateSelect.value = Math.max(0, history.length - 1);
-}
-function tickClock() {
-  const clock = document.getElementById('bbg-clock');
-  if (!clock) return;
-  clock.textContent = new Date().toLocaleString('en-US', {
-    timeZone: 'America/New_York', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
-  }) + ' NY';
-}
-function currentSnapshot() { return history[Number(dateSelect.value)] || null; }
+function currentSnapshot() { return history[history.length - 1] || null; }
 function renderBars(current, previous, frame, container) {
   const now = counts(current, frame), then = counts(previous, frame);
   const rising = new Set((risingThemes(current) || []).filter(row => row.frame === frame).map(row => row.industry));
@@ -1575,7 +1524,10 @@ function capSentences(sentences, limit) {
   if (rest > 0) shown.push(`And ${rest} more.`);
   return shown;
 }
-function setDeskNote(id, label, sentences) {
+function noteBanner(body) {
+  return `<span class="lede-mark" aria-hidden="true">i</span><span class="visually-hidden">Information. </span><span class="lede-text">${body}</span>`;
+}
+function setDeskNote(id, sentences) {
   const host = document.getElementById(id);
   if (!host) return;
   const lines = (sentences || []).map(line => String(line || '').trim()).filter(Boolean);
@@ -1585,11 +1537,11 @@ function setDeskNote(id, label, sentences) {
     return;
   }
   host.hidden = false;
-  host.innerHTML = `<span class="desk-note__label">${escapeHTML(label)}</span><span class="desk-note__text">${lines.map(line => escapeHTML(line)).join(' ')}</span>`;
+  host.innerHTML = noteBanner(lines.map(line => escapeHTML(line)).join(' '));
 }
 function renderWhatChanged(current, previous) {
   if (!current || !previous) {
-    setDeskNote('what-changed', 'What changed', []);
+    setDeskNote('what-changed',  []);
     return;
   }
   const sentences = [
@@ -1602,7 +1554,7 @@ function renderWhatChanged(current, previous) {
   }
   sentences.push(...capSentences(grewGroupRows(current, previous).map(riseSentence), 4));
   sentences.push(...capSentences(fadedGroupRows(current, previous).map(fadeSentence), 4));
-  setDeskNote('what-changed', 'What changed', sentences);
+  setDeskNote('what-changed',  sentences);
 }
 function renderOverlap(snapshot) {
   const membership = new Map();
@@ -1624,7 +1576,7 @@ function renderOverlap(snapshot) {
   const rest = rows.length - shown.length;
   const sentences = shown.map(row => `${row.symbol} is on ${listCount(row.labels.length)}: ${joinNames(row.labels)}.`);
   if (rest > 0) sentences.push(`And ${rest} more.`);
-  setDeskNote('overlap-list', 'On more than one list', sentences);
+  setDeskNote('overlap-list',  sentences);
 }
 const EARNINGS_WEEKDAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 const EARNINGS_MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -1644,7 +1596,7 @@ function formatEarningsDay(date) {
 function renderEarningsWeek(snapshot) {
   const start = parseISODate(snapshot?.date);
   if (!start) {
-    setDeskNote('earnings-week', 'Earnings this week', []);
+    setDeskNote('earnings-week',  []);
     return;
   }
   const byName = new Map();
@@ -1666,33 +1618,14 @@ function renderEarningsWeek(snapshot) {
   const rest = rows.length - shown.length;
   const sentences = shown.map(([name, when]) => `${name} reports on ${formatEarningsDay(when)}.`);
   if (rest > 0) sentences.push(`And ${rest} more.`);
-  setDeskNote('earnings-week', 'Earnings this week', sentences);
-}
-function renderSessionNote(snapshot) {
-  const host = document.getElementById('session-note');
-  const field = document.getElementById('session-note-input');
-  if (!host || !field || !snapshot?.date) return;
-  if (host.dataset.date === snapshot.date) return;
-  host.dataset.date = snapshot.date;
-  let value = '';
-  try { value = localStorage.getItem(SESSION_NOTE_KEY + snapshot.date) || ''; } catch { value = ''; }
-  field.value = value;
-}
-function saveSessionNote(value) {
-  const snapshot = currentSnapshot();
-  if (!snapshot?.date) return;
-  try {
-    const key = SESSION_NOTE_KEY + snapshot.date;
-    if (value) localStorage.setItem(key, value);
-    else localStorage.removeItem(key);
-  } catch { /* private mode */ }
+  setDeskNote('earnings-week',  sentences);
 }
 function renderBasketMatch(snapshot) {
   const params = new URLSearchParams(window.location.search);
   const id = (params.get('basket') || '').trim();
   const basket = id && Array.isArray(BASKETS) ? BASKETS.find(item => item && item.id === id) : null;
   if (!basket) {
-    setDeskNote('basket-match', 'From the tape', []);
+    setDeskNote('basket-match',  []);
     return;
   }
   const onDesk = new Map();
@@ -1722,7 +1655,7 @@ function renderBasketMatch(snapshot) {
   const sentence = hits.length
     ? `The ${name} theme includes ${stockCount(hits.length)} on this desk: ${joinNames(hits)}.`
     : `No stock from ${name} is on this desk.`;
-  setDeskNote('basket-match', 'From the tape', [sentence]);
+  setDeskNote('basket-match',  [sentence]);
 }
 function readPins() {
   try {
@@ -1750,14 +1683,13 @@ function paintPins() {
   const host = document.getElementById('chart-list');
   if (host) {
     if (!pins.length) {
-      host.hidden = false;
-      host.classList.remove('desk-note--behind');
-      host.innerHTML = `<span class="desk-note__label">Look at tomorrow</span><span class="desk-note__text">Pin a stock on any list. It stays here for the next session.</span>`;
+      host.hidden = true;
+      host.innerHTML = '';
     } else {
       const count = pins.length === 1 ? '1 stock' : `${pins.length} stocks`;
       const chips = pins.map(symbol => `<button type="button" class="pin pin--chip" data-pin="${escapeHTML(symbol)}" aria-pressed="true">${escapeHTML(symbol)}</button>`).join(' ');
       host.hidden = false;
-      host.innerHTML = `<span class="desk-note__label">Look at tomorrow</span><span class="desk-note__text">${count}. ${chips}</span>`;
+      host.innerHTML = noteBanner(`${count}. ${chips}`);
     }
   }
   const held = new Set(pins);
@@ -1789,11 +1721,7 @@ function renderFreshness() {
   const expected = typeof expectedSnapshotDate === 'function' ? expectedSnapshotDate(new Date()) : '';
   const behind = Boolean(expected && latest < expected);
   const sentence = `This desk covers ${formatCover(latest)}.${behind ? ' Later closes have not been scanned.' : ''}`;
-  if (host) {
-    host.hidden = false;
-    host.classList.toggle('desk-note--behind', behind);
-    host.innerHTML = `<span class="desk-note__label">Scan</span><span class="desk-note__text">${escapeHTML(sentence)}</span>`;
-  }
+  if (host) host.hidden = true;
   if (session) session.textContent = sentence;
 }
 function movePhrase(value) {
@@ -1810,7 +1738,7 @@ function themeSentence(row, role, dated) {
 function renderTapeBrief() {
   const tape = (typeof TAPE === 'object' && TAPE) ? TAPE : {};
   if (!tape.strongest) {
-    setDeskNote('tape-brief', 'Themes', []);
+    setDeskNote('tape-brief',  []);
     return;
   }
   const snapshot = currentSnapshot();
@@ -1819,10 +1747,10 @@ function renderTapeBrief() {
   if (tape.weakest && tape.weakest.name !== tape.strongest.name) {
     sentences.push(themeSentence(tape.weakest, 'weakest', ''));
   }
-  setDeskNote('tape-brief', 'Themes', sentences.filter(Boolean));
+  setDeskNote('tape-brief',  sentences.filter(Boolean));
 }
 function render() {
-  const current = currentSnapshot(), index = Number(dateSelect.value), previous = history[index-1];
+  const index = history.length - 1, current = history[index] || null, previous = history[index - 1];
   liquidTitle.textContent = `Liquid leaders — ${stockCount((current.liquid || []).length)}`;
   nelTitle.textContent = `Non-extended leaders — ${stockCount((current.nel || []).length)}`;
   if (focusTitle) focusTitle.textContent = `Focus — ${stockCount((current.focus || []).length)}`;
@@ -1832,11 +1760,7 @@ function render() {
   if (aplusTitle) aplusTitle.textContent = `Flag breakouts — ${stockCount((current.a_plus_flags || []).length)}`;
   renderRisingAlert(current);
   renderFreshness();
-  renderSessionNote(current);
   renderTapeBrief();
-  renderWhatChanged(current, previous);
-  renderOverlap(current);
-  renderEarningsWeek(current);
   renderBasketMatch(current);
   renderThemeScan(current);
   leadershipSections.innerHTML = Object.entries(flowMeta).map(([frame, meta]) => `<section class="panel" data-frame="${frame}"><h2>${meta.label} leadership</h2><div id="bars-${frame}" class="bars"></div><h2 class="trend-label">Leadership over time</h2><svg id="trend-${frame}" role="img" aria-label="How many leaders each industry had over ${meta.label}"></svg><div id="trend-legend-${frame}" class="trend-legend"></div></section>`).join('');
@@ -1854,7 +1778,7 @@ function render() {
   paintPins();
 }
 function redrawChartsOnly() {
-  const current = currentSnapshot(), index = Number(dateSelect.value), previous = history[index-1];
+  const index = history.length - 1, current = history[index] || null, previous = history[index - 1];
   if (!current) return;
   Object.keys(flowMeta).forEach(frame => {
     const bars = document.getElementById(`bars-${frame}`);
@@ -2000,11 +1924,6 @@ document.addEventListener('click', event => {
   window.open(href, '_blank', 'noopener,noreferrer');
 });
 document.addEventListener('input', event => {
-  const sessionField = event.target.closest('#session-note-input');
-  if (sessionField) {
-    saveSessionNote(sessionField.value);
-    return;
-  }
   const field = event.target.closest('.note-input');
   if (!field || !field.dataset.symbol) return;
   saveNote(field.dataset.symbol, field.value);
@@ -2034,7 +1953,7 @@ function onViewportChange() {
   clearTimeout(resizeTimer);
   resizeTimer = window.setTimeout(redrawChartsOnly, 180);
 }
-if (!history.length) { document.querySelector('main').innerHTML = '<p class="empty">Run the scanner once to create a momentum-leader snapshot.</p>'; } else { updateDates(); tickClock(); setInterval(tickClock, 1000); dateSelect.addEventListener('change', render); downloadLiquidButton.addEventListener('click', () => downloadSymbols('liquid', 'liquid_leaders')); downloadNelButton.addEventListener('click', () => downloadSymbols('nel', 'nel')); if (downloadFocusButton) downloadFocusButton.addEventListener('click', () => downloadSymbols('focus', 'focus')); if (downloadRsButton) downloadRsButton.addEventListener('click', () => downloadSymbols('rs_leads', 'rs_leads')); if (downloadEma8Button) downloadEma8Button.addEventListener('click', () => downloadSymbols('ema8_pullbacks', 'ema8_pullbacks')); if (downloadMaStackButton) downloadMaStackButton.addEventListener('click', () => downloadSymbols('ma_stack', 'ma_stack')); if (downloadAplusButton) downloadAplusButton.addEventListener('click', () => downloadSymbols('a_plus_flags', 'a_plus_flags')); window.addEventListener('resize', onViewportChange, { passive: true }); render(); showPanel(hashForLocation(), 'replace'); window.addEventListener('popstate', () => showPanel(hashForLocation(), 'stay')); }
+if (!history.length) { document.querySelector('main').innerHTML = '<p class="empty">Run the scanner once to create a momentum-leader snapshot.</p>'; } else { downloadLiquidButton.addEventListener('click', () => downloadSymbols('liquid', 'liquid_leaders')); downloadNelButton.addEventListener('click', () => downloadSymbols('nel', 'nel')); if (downloadFocusButton) downloadFocusButton.addEventListener('click', () => downloadSymbols('focus', 'focus')); if (downloadRsButton) downloadRsButton.addEventListener('click', () => downloadSymbols('rs_leads', 'rs_leads')); if (downloadEma8Button) downloadEma8Button.addEventListener('click', () => downloadSymbols('ema8_pullbacks', 'ema8_pullbacks')); if (downloadMaStackButton) downloadMaStackButton.addEventListener('click', () => downloadSymbols('ma_stack', 'ma_stack')); if (downloadAplusButton) downloadAplusButton.addEventListener('click', () => downloadSymbols('a_plus_flags', 'a_plus_flags')); window.addEventListener('resize', onViewportChange, { passive: true }); render(); showPanel(hashForLocation(), 'replace'); window.addEventListener('popstate', () => showPanel(hashForLocation(), 'stay')); }
 </script>
 </body>
 </html>

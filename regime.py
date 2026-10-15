@@ -877,6 +877,9 @@ def _quote_card(name: str, price: float, change_pct: float | None, relation: str
 def render_html(snapshot: dict, health_rows: list[dict]) -> str:
     stage = html.escape(str(snapshot["stage"]))
     arrow_class = "up" if snapshot["arrow"] == "up" else "down"
+    note_kind = "down" if arrow_class == "down" else "up"
+    note_word = "Warning" if note_kind == "down" else "Success"
+    note_mark = "!" if note_kind == "down" else "✓"
     session_word = "Session" if snapshot["sessions"] == 1 else "Sessions"
     rules = "".join(f"<li>{html.escape(rule)}</li>" for rule in snapshot["rules"])
     breadth = "".join(
@@ -922,7 +925,6 @@ def render_html(snapshot: dict, health_rows: list[dict]) -> str:
     <a class="desk-tab" href="rs.html">Setups</a>
     <a class="desk-tab" href="tape.html">Tape</a>
   </nav>
-  <p class="clock">{html.escape(snapshot["as_of"])}</p>
 </header>
 <p class="lede" role="note"><span class="lede-mark" aria-hidden="true">i</span><span class="visually-hidden">Information. </span>Measured regime, T2108, the day’s breadth and the tape. Every delta is against the prior session.</p>
 <main id="regime">
@@ -931,7 +933,7 @@ def render_html(snapshot: dict, health_rows: list[dict]) -> str:
       <p class="kicker">Market cycle</p>
       <h2 id="stage-label" class="stage-name stage-{arrow_class}">{stage}</h2>
       <dl class="stage-meta"><div><dt>Since</dt><dd>{html.escape(snapshot["since"])}</dd></div><div><dt>{session_word}</dt><dd>{snapshot["sessions"]}</dd></div></dl>
-      <p class="cycle-note">{html.escape(snapshot["progress"])}</p>
+      <p class="cycle-note cycle-note-{note_kind}" role="note"><span class="lede-mark" aria-hidden="true">{note_mark}</span><span class="visually-hidden">{note_word}. </span>{html.escape(snapshot["progress"])}</p>
     </section>
     <section class="panel cycle" aria-labelledby="cycle-label">
       <h2 id="cycle-label" class="kicker">Stages</h2>
@@ -1219,7 +1221,7 @@ HTML_PAGE = r"""<!doctype html>
   <link rel="icon" type="image/png" href="assets/nel-favicon.png">
   <link rel="preload" href="assets/fonts/newsreader-latin-400.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/source-sans-3-latin-400.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="tokens.css?v=20261015i">
+  <link rel="stylesheet" href="tokens.css?v=20261015j">
   <style>
     /* Hallmark · pre-emit critique: P5 H4 E4 S5 R4 V4
      * macrostructure: existing desk · tone: austere · anchor hue: cool
@@ -1228,13 +1230,24 @@ HTML_PAGE = r"""<!doctype html>
     html { color-scheme: dark; background: var(--color-paper); }
     html, body { overflow-x: clip; margin: 0; }
     body {
-      background: var(--color-paper);
+      background:
+        radial-gradient(72rem 34rem at 55% 0%, oklch(38% 0.06 245 / 0.55), transparent 62%),
+        radial-gradient(80rem 46rem at 72% 108%, oklch(48% 0.1 215 / 0.42), transparent 56%),
+        radial-gradient(36rem 28rem at 0% 46%, oklch(28% 0.05 270 / 0.35), transparent 54%),
+        #0e1116;
       color: var(--color-ink-2);
       font-family: var(--font-body);
       font-size: var(--text-base);
       line-height: 1.35;
       font-variant-numeric: tabular-nums;
     }
+    body::before {
+      content: "";
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      opacity: 0.28;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+    .lede, main, .foot { position: relative; z-index: 1; }
     h1, h2, h3, button, a { font-style: normal; }
     h1, h2, h3 { overflow-wrap: anywhere; min-width: 0; }
     .visually-hidden {
@@ -1296,7 +1309,6 @@ HTML_PAGE = r"""<!doctype html>
       display: flex; align-items: center; min-height: 2.75rem; padding: 0 var(--space-sm);
       color: var(--color-ink); font-size: var(--text-xs); text-decoration: none; white-space: nowrap;
     }
-    .clock { margin: 0; color: var(--color-muted); font-size: var(--text-xs); white-space: nowrap; }
     .lede, .foot {
       margin: 0; padding: var(--space-sm) var(--page-gutter) 0;
       padding-left: max(var(--page-gutter), env(safe-area-inset-left));
@@ -1305,9 +1317,13 @@ HTML_PAGE = r"""<!doctype html>
     }
     .lede {
       display: flex; align-items: center; gap: var(--space-sm);
-      padding-top: var(--space-8); padding-bottom: var(--space-8);
-      background: color-mix(in oklch, var(--color-up) 12%, var(--color-paper));
-      border-bottom: var(--rule) solid color-mix(in oklch, var(--color-up) 42%, var(--color-rule));
+      margin: var(--space-8) var(--page-gutter) 0;
+      margin-left: max(var(--page-gutter), env(safe-area-inset-left));
+      margin-right: max(var(--page-gutter), env(safe-area-inset-right));
+      padding: var(--space-8) var(--space-md);
+      background: color-mix(in oklch, var(--color-up) 12%, var(--color-paper-3));
+      border: var(--rule) solid color-mix(in oklch, var(--color-up) 42%, var(--color-rule));
+      border-radius: 12px;
       color: var(--color-ink-2); line-height: 1.4;
     }
     .lede-mark {
@@ -1333,9 +1349,24 @@ HTML_PAGE = r"""<!doctype html>
     .cards { grid-template-columns: repeat(6, minmax(0, 1fr)); }
     .cards-tape { grid-template-columns: repeat(6, minmax(0, 1fr)); }
     .panel {
-      min-width: 0; background: var(--color-paper-3);
-      border: var(--rule) solid var(--color-rule);
+      min-width: 0;
+      background: color-mix(in oklch, var(--color-paper-3) 46%, transparent);
+      border: var(--rule) solid color-mix(in oklch, white 28%, transparent);
+      border-radius: 12px;
+      box-shadow: inset 0 1px 0 color-mix(in oklch, white 32%, transparent);
+      backdrop-filter: blur(14px) saturate(1.35);
+      -webkit-backdrop-filter: blur(14px) saturate(1.35);
       padding: var(--space-sm) var(--space-md) var(--space-md);
+    }
+    @media (prefers-reduced-transparency: reduce) {
+      body { background: var(--color-paper); }
+      body::before { display: none; }
+      .panel {
+        background: var(--color-paper-3);
+        border-color: var(--color-rule);
+        box-shadow: none;
+        backdrop-filter: none;
+      }
     }
     .kicker {
       margin: 0 0 var(--space-8); font-family: var(--font-body); font-size: var(--text-xs);
@@ -1379,7 +1410,21 @@ HTML_PAGE = r"""<!doctype html>
     }
     .badge-down { color: var(--color-down); border-color: var(--color-down); --arrow: var(--color-down); }
     .badge-up { color: var(--color-up); border-color: var(--color-up); --arrow: var(--color-up); }
-    .cycle-note { margin: var(--space-8) 0 0; font-size: var(--text-xs); line-height: 1.45; color: var(--color-ink-2); }
+    .cycle-note {
+      display: flex; align-items: center; gap: var(--space-sm);
+      margin: var(--space-8) 0 0; padding: var(--space-8) var(--space-md);
+      border-radius: 8px; font-size: var(--text-xs); line-height: 1.45; color: var(--color-ink-2);
+    }
+    .cycle-note-down {
+      background: color-mix(in oklch, var(--color-warn) 16%, var(--color-paper-3));
+      border: var(--rule) solid color-mix(in oklch, var(--color-warn) 48%, var(--color-rule));
+    }
+    .cycle-note-up {
+      background: color-mix(in oklch, var(--color-series-1) 16%, var(--color-paper-3));
+      border: var(--rule) solid color-mix(in oklch, var(--color-series-1) 48%, var(--color-rule));
+    }
+    .cycle-note-down .lede-mark { border-color: var(--color-warn); color: var(--color-warn); }
+    .cycle-note-up .lede-mark { border-color: var(--color-series-1); color: var(--color-series-1); }
     .cycle-stats { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-sm); margin-top: var(--space-md); }
     .cycle-stats .figure { margin: 0; }
     .cycle-stats .meta { margin: var(--space-4) 0 0; }
@@ -1428,8 +1473,8 @@ HTML_PAGE = r"""<!doctype html>
     }
     .figure-xl { font-size: var(--text-display); }
     .readings .kicker {
-      font-family: var(--font-display); font-size: var(--text-display); font-weight: 400;
-      letter-spacing: -0.02em; text-transform: none; color: var(--color-ink); line-height: 1.1;
+      font-family: var(--font-body); font-size: var(--text-display); font-weight: 400;
+      letter-spacing: -0.01em; text-transform: none; color: var(--color-ink); line-height: 1.1;
     }
     .readings .figure-xl { font-size: var(--text-md); }
     .readings .sub, .readings .meta { font-size: var(--text-xs); }
@@ -1491,7 +1536,7 @@ HTML_PAGE = r"""<!doctype html>
     table { width: 100%; border-collapse: collapse; font-size: var(--text-xs); }
     th, td { padding: var(--space-8) var(--space-sm); text-align: center; border-bottom: var(--rule) solid var(--color-rule); white-space: nowrap; font-weight: 400; }
     th { color: var(--color-muted); }
-    th:first-child, td:first-child { text-align: left; position: sticky; left: 0; background: var(--color-paper-3); }
+    th:first-child, td:first-child { text-align: left; position: sticky; left: 0; background: transparent; }
     td.yes, td.up { color: var(--color-up); }
     td.no, td.down { color: var(--color-down); }
     td.num, td.asof { color: var(--color-ink); }
@@ -1502,7 +1547,6 @@ HTML_PAGE = r"""<!doctype html>
       .top { grid-template-columns: minmax(0, 1fr); }
       .top > .stage, .top > .cycle, .rail > .t2108, .rail > .group { grid-column: 1; grid-row: auto; }
       .nav-edge { flex-wrap: wrap; padding-top: var(--space-8); padding-bottom: var(--space-8); }
-      .clock { margin-left: auto; }
     }
     @media (max-width: 40rem) {
       :root { --page-gutter: var(--space-12); }
@@ -1522,7 +1566,7 @@ HTML_PAGE = r"""<!doctype html>
       .desk-tab, .skip-link { transition: none; }
     }
   </style>
-  <link rel="stylesheet" href="nav.css?v=20261015j">
+  <link rel="stylesheet" href="nav.css?v=20261015k">
   <link rel="stylesheet" href="charts.css?v=20261015d">
   <link rel="stylesheet" href="shadcn-chart.css?v=20261015g">
 </head>

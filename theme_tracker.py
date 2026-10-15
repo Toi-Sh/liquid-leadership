@@ -321,17 +321,28 @@ HTML_TEMPLATE = r"""<!doctype html>
   <link rel="icon" type="image/png" href="assets/nel-favicon.png">
   <link rel="preload" href="assets/fonts/newsreader-latin-400.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/source-sans-3-latin-400.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="tokens.css?v=20261015i">
+  <link rel="stylesheet" href="tokens.css?v=20261015j">
   <style>
     html { color-scheme: dark; background: var(--color-paper); --color-bar: var(--color-up); --color-bar-down: var(--color-down); }
     html, body { overflow-x: clip; margin: 0; }
     body {
-      background: var(--color-paper);
+      background:
+        radial-gradient(72rem 34rem at 55% 0%, oklch(38% 0.06 245 / 0.55), transparent 62%),
+        radial-gradient(80rem 46rem at 72% 108%, oklch(48% 0.1 215 / 0.42), transparent 56%),
+        radial-gradient(36rem 28rem at 0% 46%, oklch(28% 0.05 270 / 0.35), transparent 54%),
+        #0e1116;
       color: var(--color-ink-2);
       font-family: var(--font-body);
       font-size: var(--text-base);
       line-height: 1.35;
     }
+    body::before {
+      content: "";
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      opacity: 0.28;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+    .lede, .tape-bar, #tape, .table-scroll, .bars, .foot { position: relative; z-index: 1; }
     h1, h2, button, a { font-style: normal; }
     .skip-link {
       position: absolute;
@@ -501,30 +512,56 @@ HTML_TEMPLATE = r"""<!doctype html>
       flex-wrap: wrap;
       align-items: center;
       gap: var(--space-xs) var(--space-sm);
-      padding: var(--space-xs) var(--page-gutter);
-      padding-left: max(var(--page-gutter), env(safe-area-inset-left));
-      padding-right: max(var(--page-gutter), env(safe-area-inset-right));
-      background: var(--color-paper);
-      border-bottom: var(--rule) solid var(--color-rule);
+      margin: var(--space-8) var(--page-gutter) 0;
+      margin-left: max(var(--page-gutter), env(safe-area-inset-left));
+      margin-right: max(var(--page-gutter), env(safe-area-inset-right));
+      padding: var(--space-xs) var(--space-md);
+      background: color-mix(in oklch, var(--color-paper-3) 46%, transparent);
+      border: var(--rule) solid color-mix(in oklch, white 28%, transparent);
+      border-radius: 12px;
+      box-shadow: inset 0 1px 0 color-mix(in oklch, white 32%, transparent);
+      backdrop-filter: blur(14px) saturate(1.35);
+      -webkit-backdrop-filter: blur(14px) saturate(1.35);
     }
     .tools { display: flex; align-items: center; gap: var(--space-xs); }
     .search {
       width: 9rem;
       min-height: 45px;
       padding: 0 var(--space-sm);
-      border: var(--rule) solid var(--color-rule);
-      background: var(--color-paper);
+      border: var(--rule) solid color-mix(in oklch, white 28%, transparent);
+      border-radius: 8px;
+      background: color-mix(in oklch, white 8%, transparent);
       color: var(--color-ink);
       font-family: var(--font-mono);
       font-size: var(--text-xs);
       letter-spacing: 0.06em;
+      backdrop-filter: blur(14px) saturate(1.35);
+      -webkit-backdrop-filter: blur(14px) saturate(1.35);
     }
-    .clock { color: var(--color-muted); font-family: var(--font-mono); font-size: var(--text-xs); white-space: nowrap; }
     .lede, .foot {
       margin: 0;
       padding: var(--space-xs) var(--page-gutter);
       color: var(--color-muted);
       font-size: var(--text-xs);
+    }
+    .lede {
+      display: flex; align-items: center; gap: var(--space-sm);
+      margin: var(--space-8) var(--page-gutter) 0;
+      margin-left: max(var(--page-gutter), env(safe-area-inset-left));
+      margin-right: max(var(--page-gutter), env(safe-area-inset-right));
+      padding: var(--space-8) var(--space-md);
+      background: color-mix(in oklch, var(--color-up) 12%, var(--color-paper-3));
+      border: var(--rule) solid color-mix(in oklch, var(--color-up) 42%, var(--color-rule));
+      border-radius: 12px;
+      color: var(--color-ink-2); line-height: 1.4;
+    }
+    .lede-mark {
+      flex: none; display: inline-flex; align-items: center; justify-content: center;
+      width: 1rem; height: 1rem; border: var(--rule) solid var(--color-up); border-radius: 50%;
+      color: var(--color-up); font-size: 11px; line-height: 1;
+    }
+    .visually-hidden {
+      position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%);
     }
     .tape {
       display: flex;
@@ -569,7 +606,7 @@ HTML_TEMPLATE = r"""<!doctype html>
     .up { color: var(--color-up); }
     .down { color: var(--color-down); }
     .flat { color: var(--color-muted); }
-    .table-scroll { overflow-x: auto; max-width: 100%; }
+    .table-scroll { overflow-x: auto; margin: var(--space-sm) var(--page-gutter) var(--space-md); background: color-mix(in oklch, var(--color-paper-3) 46%, transparent); border: var(--rule) solid color-mix(in oklch, white 28%, transparent); border-radius: 12px; box-shadow: inset 0 1px 0 color-mix(in oklch, white 32%, transparent); backdrop-filter: blur(14px) saturate(1.35); -webkit-backdrop-filter: blur(14px) saturate(1.35); }
     table { width: 100%; min-width: 52rem; border-collapse: separate; border-spacing: 0; }
     th, td {
       padding: var(--space-xs) var(--space-sm);
@@ -579,7 +616,7 @@ HTML_TEMPLATE = r"""<!doctype html>
       font-variant-numeric: tabular-nums;
     }
     th:first-child, td:first-child, th:nth-child(2), td:nth-child(2) { text-align: left; }
-    thead th { background: var(--color-paper); }
+    thead th { background: transparent; }
     .sort {
       display: inline-flex; align-items: center; gap: 0.35em;
       min-height: 32px;
@@ -610,7 +647,7 @@ HTML_TEMPLATE = r"""<!doctype html>
       width: var(--fill);
       background: var(--color-up);
     }
-    tr.detail td { background: var(--color-paper-3); text-align: left; }
+    tr.detail td { background: color-mix(in oklch, var(--color-paper-3) 65%, transparent); text-align: left; }
     .members { width: 100%; min-width: 40rem; }
     .members th, .members td { border-bottom-color: var(--color-paper-2); }
     .blurb { margin: 0 0 var(--space-sm); max-width: 46rem; color: var(--color-ink-2); }
@@ -618,7 +655,7 @@ HTML_TEMPLATE = r"""<!doctype html>
     .empty { padding: var(--space-lg) var(--page-gutter); }
     .view-switch { display: flex; gap: var(--space-4); }
     .view-switch .lane { padding: 0 var(--space-xs); }
-    .bars { padding: var(--space-xs) var(--page-gutter) var(--space-md); }
+    .bars { margin: var(--space-sm) var(--page-gutter) var(--space-md); padding: var(--space-sm) var(--space-md) var(--space-md); background: color-mix(in oklch, var(--color-paper-3) 46%, transparent); border: var(--rule) solid color-mix(in oklch, white 28%, transparent); border-radius: 12px; box-shadow: inset 0 1px 0 color-mix(in oklch, white 32%, transparent); backdrop-filter: blur(14px) saturate(1.35); -webkit-backdrop-filter: blur(14px) saturate(1.35); }
     .bars[hidden], .table-scroll[hidden], #tape[hidden], .tape[hidden] { display: none; }
     .bar-periods {
       display: flex;
@@ -661,7 +698,7 @@ HTML_TEMPLATE = r"""<!doctype html>
     }
     .bar-row:hover .bar-name { color: var(--color-accent); }
     .bar-row:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 1px; }
-    .bar-row[aria-expanded="true"] { background: var(--color-paper-3); }
+    .bar-row[aria-expanded="true"] { background: color-mix(in oklch, white 8%, transparent); }
     .bar-name {
       font-family: var(--font-display);
       font-size: var(--text-md);
@@ -756,8 +793,20 @@ HTML_TEMPLATE = r"""<!doctype html>
       .lane, .sort, .chip, .ticker { transition: none; }
       .bar-fill { animation: none; }
     }
+    @media (prefers-reduced-transparency: reduce) {
+      body { background: var(--color-paper); }
+      body::before { display: none; }
+      .table-scroll, .bars, .tape-bar {
+        background: var(--color-paper-3);
+        border-color: var(--color-rule);
+        box-shadow: none;
+        backdrop-filter: none;
+      }
+      .search { background: var(--color-paper); border-color: var(--color-rule); backdrop-filter: none; }
+      thead th, tr.detail td { background: var(--color-paper-3); }
+    }
   </style>
-  <link rel="stylesheet" href="nav.css?v=20261015j">
+  <link rel="stylesheet" href="nav.css?v=20261015k">
 </head>
 <body>
 <a class="skip-link" href="#tape">Skip to tape</a>
@@ -774,6 +823,7 @@ HTML_TEMPLATE = r"""<!doctype html>
     <a class="desk-tab" href="tape.html" aria-current="page">Tape</a>
   </nav>
 </header>
+<p class="lede" id="lede" role="note"><span class="lede-mark" aria-hidden="true">i</span><span class="visually-hidden">Information. </span><span class="lede-text"></span></p>
 <div class="tape-bar">
   <div class="tools">
     <div class="view-switch" role="group" aria-label="How to show the tape">
@@ -782,11 +832,9 @@ HTML_TEMPLATE = r"""<!doctype html>
     </div>
     <label class="visually-hidden" for="q" style="position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)">Filter themes</label>
     <input id="q" class="search" type="search" placeholder="Filter" autocomplete="off" enterkeyhint="search">
-    <span id="clock" class="clock"></span>
   </div>
   <div class="lanes" id="lanes" role="toolbar" aria-label="Theme lanes"></div>
 </div>
-<p class="lede" id="lede"></p>
 <div id="chart-list" class="chart-list" hidden></div>
 <div id="tape" class="tape"></div>
 <div class="table-scroll">
@@ -839,13 +887,6 @@ function fmt(value) {
   if (!finite(value)) return "—";
   const sign = value > 0 ? "+" : "";
   return sign + value.toFixed(2) + "%";
-}
-function tick() {
-  const text = new Intl.DateTimeFormat("en-GB", {
-    timeZone: "America/New_York",
-    hour: "2-digit", minute: "2-digit", second: "2-digit", hourCycle: "h23"
-  }).format(new Date());
-  document.getElementById("clock").textContent = text + " NY";
 }
 function visible() {
   const needle = query.trim().toLowerCase();
@@ -1031,7 +1072,7 @@ function paint() {
     : "";
   const expected = typeof expectedSnapshotDate === "function" ? expectedSnapshotDate(new Date()) : "";
   const behind = expected && data.as_of < expected ? " Later closes have not been scanned." : "";
-  ledeEl.textContent = `${showing}The date is ${data.as_of}.${behind} Each theme is an equal-weight average.`;
+  ledeEl.querySelector(".lede-text").textContent = `${showing}The date is ${data.as_of}.${behind} Each theme is an equal-weight average.`;
   paintPins();
   footEl.textContent = "Select a theme to see its stocks. The numbers are the percent change. Stocks with no price are listed, and they are left out of the average.";
   bodyEl.innerHTML = rows.map(theme => {
@@ -1142,8 +1183,6 @@ document.addEventListener("keydown", event => {
     paint();
   }
 });
-tick();
-setInterval(tick, 1000);
 const params = new URLSearchParams(window.location.search);
 const industry = params.get("industry");
 if (industry) {

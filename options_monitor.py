@@ -388,18 +388,29 @@ HTML_TEMPLATE = r"""<!doctype html>
   <link rel="icon" type="image/png" href="assets/nel-favicon.png">
   <link rel="preload" href="assets/fonts/newsreader-latin-400.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/source-sans-3-latin-400.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="tokens.css?v=20261015i">
+  <link rel="stylesheet" href="tokens.css?v=20261015j">
   <style>
     /* Hallmark · monitor board · terminal tokens */
     html { color-scheme: dark; }
     html, body { overflow-x: clip; margin: 0; }
     body {
-      background: var(--color-paper);
+      background:
+        radial-gradient(72rem 34rem at 55% 0%, oklch(38% 0.06 245 / 0.55), transparent 62%),
+        radial-gradient(80rem 46rem at 72% 108%, oklch(48% 0.1 215 / 0.42), transparent 56%),
+        radial-gradient(36rem 28rem at 0% 46%, oklch(28% 0.05 270 / 0.35), transparent 54%),
+        #0e1116;
       color: var(--color-ink-2);
       font-family: var(--font-body);
       font-size: var(--text-sm);
       line-height: 1.4;
     }
+    body::before {
+      content: "";
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      opacity: 0.28;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+    .lede, main { position: relative; z-index: 1; }
     h1, h2, button, a { font-style: normal; }
     .skip-link {
       position: absolute;
@@ -479,8 +490,12 @@ HTML_TEMPLATE = r"""<!doctype html>
     .quote, .panel {
       min-width: 0;
       padding: var(--space-sm) var(--space-md);
-      border: var(--rule) solid var(--color-rule);
-      background: var(--color-paper);
+      border: var(--rule) solid color-mix(in oklch, white 28%, transparent);
+      border-radius: 12px;
+      background: color-mix(in oklch, var(--color-paper-3) 46%, transparent);
+      box-shadow: inset 0 1px 0 color-mix(in oklch, white 32%, transparent);
+      backdrop-filter: blur(14px) saturate(1.35);
+      -webkit-backdrop-filter: blur(14px) saturate(1.35);
       color: inherit;
       font: inherit;
       text-align: left;
@@ -537,8 +552,18 @@ HTML_TEMPLATE = r"""<!doctype html>
     @media (max-width: 800px) {
       .quotes, .split { grid-template-columns: minmax(0, 1fr); }
     }
+    @media (prefers-reduced-transparency: reduce) {
+      body { background: var(--color-paper); }
+      body::before { display: none; }
+      .quote, .panel {
+        background: var(--color-paper-3);
+        border-color: var(--color-rule);
+        box-shadow: none;
+        backdrop-filter: none;
+      }
+    }
   </style>
-  <link rel="stylesheet" href="nav.css?v=20261015j">
+  <link rel="stylesheet" href="nav.css?v=20261015k">
   <link rel="stylesheet" href="charts.css?v=20261015d">
   <link rel="stylesheet" href="shadcn-chart.css?v=20261015g">
 </head>

@@ -1,24 +1,21 @@
 /* Hallmark · terminal
  * paper #121212 · accent oklch(74% 0.17 52)
- * display: Butler · body: Source Sans 3
- * Butler by Fabian De Smet, free for personal and commercial use.
- * https://www.fabiandesmet.com/portfolio/butler-font/
- * License: assets/fonts/Butler-EULA-v2-00.pdf
+ * display: Newsreader · body: Source Sans 3
  * theme_axes: dark / roman-serif / warm
  */
 @font-face {
-  font-family: "Butler";
+  font-family: "Newsreader";
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url("assets/fonts/Butler-Free-Rmn.woff2") format("woff2");
+  src: url("assets/fonts/newsreader-latin-400.woff2") format("woff2");
 }
 @font-face {
-  font-family: "Butler";
+  font-family: "Newsreader";
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url("assets/fonts/Butler-Free-SBd.woff2") format("woff2");
+  src: url("assets/fonts/newsreader-latin-600.woff2") format("woff2");
 }
 @font-face {
   font-family: "Source Sans 3";
@@ -78,7 +75,7 @@
   --color-series-4: oklch(68% 0.16 38);
   --color-series-5: oklch(68% 0.16 15);
 
-  --font-serif: "Butler", "Iowan Old Style", Palatino, serif;
+  --font-serif: "Newsreader", "Iowan Old Style", Palatino, serif;
   --font-sans: "Source Sans 3", "Helvetica Neue", sans-serif;
   --font-display: var(--font-serif);
   --font-body: var(--font-sans);
