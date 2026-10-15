@@ -1,284 +1,197 @@
-# Non-Extended Leaders (NEL)
+# GB Market Terminal
 
-This scanner makes a list of US common stocks each day. The list name is Non-Extended Leaders (NEL). The scanner writes the results to CSV files.
+GB Market Terminal is a daily US equity desk. After the close it builds the lists, theme tape, and regime page, then writes them as static HTML you can open in a browser. The lists are a review desk. They are not an instruction to trade.
 
-NEL uses the original rules. A second list has the name Focus Candidates. This list shows NEL names that also agree with the structure filters. You must examine the charts. Focus Candidates is not an instruction to trade.
+The short version is this file. Panel rules, thresholds, and output files are on the [wiki](https://github.com/Toi-Sh/liquid-leadership/wiki).
 
-The scanner keeps stocks on NASDAQ, NYSE, and AMEX. A stock must agree with all of these conditions:
+The bar has seven panels:
 
-- The 30-day average dollar volume is more than $30 million.
-- The 14-period ADR% is more than 4%.
-- The 10-day average volume is more than 350,000 shares.
-- The industry name does not include "Biotech".
+| Panel | Page | What it shows |
+| --- | --- | --- |
+| Regime | `regime.html` | Market cycle, T2108, Nasdaq 40, the day’s breadth, the index tape, and index health |
+| Monitor | `monitor.html` | SPY, QQQ, and IWM implied volatility, open interest, and gamma walls |
+| Themes | `themes.html` | Industry leadership, rising groups, and one leader from each top theme |
+| Leaders | `liquid.html` | Liquid Leaders, Focus, and Non-extended Leaders |
+| Setups | `rs.html` | Relative strength, 8-week pullbacks, moving-average stack, and flag breakouts |
+| Tape | `tape.html` | Equal-weight theme baskets (GPUs, nuclear, banks, and the rest of the catalog) |
+| Crowding | `crowding.html` | CFTC futures positioning in the S&P 500, Nasdaq 100, Russell 2000, and Dow |
 
-The scanner ranks the stocks by TradingView performance. It uses three periods: 1 month, 3 months, and 6 months. It keeps the top 5% for each period. It makes one group from the three lists. It removes duplicate tickers. It removes a name if the price is more than 4 ATR% above the 50-day SMA. The result is the NEL list. NEL is not a discretionary list.
+`index.html` is the Themes, Leaders, and Setups desk. `themes.html`, `liquid.html`, `focus.html`, `nel.html`, `rs.html`, `ema8.html`, `ma.html`, and `aplus.html` open that same desk on the matching list. `tape.html` opens the theme tape.
 
 ## Setup
 
-Do these steps:
-
-1. Make a virtual environment:
-
 ```bash
 python3 -m venv .venv
-```
-
-2. Start the virtual environment:
-
-```bash
 source .venv/bin/activate
-```
-
-3. Install the necessary packages:
-
-```bash
 pip install -r requirements.txt
 ```
 
 ## Daily procedure
 
-1. Run the scanner:
+One command builds the leader lists, the setup scans, the theme scan, the dashboard, the theme tape, and the regime page:
 
 ```bash
 python focus_list.py
 ```
 
-To keep the top 2% in each performance rank, run this command:
+To keep the top 2% of each performance rank instead of the default 5%:
 
 ```bash
 python focus_list.py --top-pct 0.02
 ```
 
-## Automatic daily procedure (macOS)
+Monitor and Crowding are separate pages. Run them on their own:
 
-The scheduler does a check one time each minute. It runs the scanner one time after 4:10 PM New York time. It runs the scanner only on a regular US market day. The scheduler uses New York time. It uses this time for the market close and for holidays.
+```bash
+python options_monitor.py
+python crowding.py
+```
 
-The output files show the date of the next NYSE session. A Friday procedure after the close uses the Monday date. If the computer starts later that night, the scheduler does the missed procedure. The scheduler adjusts for daylight saving time. Each procedure writes a log file: `logs/daily_scan_YYYY-MM-DD.log`.
+You can also rebuild one piece:
 
-The CSV files are in `outputs/`:
+```bash
+python theme_scan.py
+python theme_tracker.py
+python regime.py
+python rs_lead_scan.py
+python ema8_pullback_scan.py
+python ma_stack_scan.py
+python a_plus_flag_scan.py
+```
 
-- `Non-Extended Leaders`: leaders below the 4× ATR% limit.
-- `NEL Symbols`: a list of NEL tickers in one column.
-- `Focus Candidates`: NEL names that also agree with the structure filters.
-- `Focus Symbols`: a list of Focus tickers in one column.
-- `Momentum Leaders`: names that pass the momentum test before the extension filter.
-- `Filtered Universe`: names that pass the liquidity test, the ADR% test, and the industry test.
-- `Settings`: the rules for that procedure, with the Focus limits.
+### Automatic daily procedure (macOS)
 
-## Definitions of the metrics
+`scripts/run_after_close.py` checks once a minute and runs the scanner once after 4:10 PM New York time, only on a regular US market day. It uses New York time for the close and for holidays.
 
-The TradingView screener gives two different values. `ADRP` is the ADR%. `ATRP` is the ATR%. ADR% is only a filter for activity. ATR% stays a percentage. Use this formula for the extension:
+Output files use the date of the next NYSE session. A Friday run after the close uses Monday. If the computer starts later that night, the scheduler does the missed run. Each run writes `logs/daily_scan_YYYY-MM-DD.log`.
+
+## Leaders
+
+The scanner keeps NASDAQ, NYSE, and AMEX common stocks that pass all of these tests:
+
+- 30-day average dollar volume above $30 million
+- 14-period ADR% above 4%
+- 10-day average volume above 350,000 shares
+- Industry name does not include Biotech
+
+That set is the filtered universe. The scanner ranks it by TradingView performance over 1 month, 3 months, and 6 months, keeps the top 5% of each rank, and merges the three lists. The merged list is Liquid Leaders.
+
+Non-extended Leaders (NEL) is Liquid Leaders with the extension filter applied. A name drops when price is more than 4 ATR% above the 50-day SMA:
 
 `ATR extension from the 50-day SMA = (Price − SMA50) / (SMA50 × ATR%)`
 
-Focus Candidates is a part of NEL. A name stays in Focus Candidates only if all of these conditions are true:
+`ADRP` is the ADR% activity filter. `ATRP` is the ATR% used in that formula.
 
-- The name is not extended from the 50-day SMA.
-- The price is above the 10-day, 20-day, 50-day, and 200-day moving averages.
-- The earnings date is not in the next 3 days.
-- The range of the day is not more than 1 ATR.
+Focus is the part of NEL that also passes the structure filters. A name stays in Focus only when all of these are true:
+
+- It is not extended from the 50-day SMA.
+- Price is above the 10-day, 20-day, 50-day, and 200-day moving averages.
+- Earnings are not in the next 3 days.
+- The day’s range is not more than 1 ATR.
 - The low of the day is not more than 60% of the ATR.
+- The close is at or above EMA10, and EMA10 is at or above EMA21.
+- One tightness test passes: distance from EMA21 is not more than 1.5 ATR, the day’s range is not more than 75% of ADR%, or Bollinger bandwidth is not more than 10%.
 
-The name must also agree with the tightness conditions:
+An RVOL of 1.2 or more is a flag. An RVOL of 1.5 or more is a pass or fail column, and a stock of $10 billion or more skips that column. RVOL is not required for Focus. Each ticker links to a daily TradingView chart.
 
-- The close is above or equal to EMA10.
-- EMA10 is above or equal to EMA21.
-- One of these conditions is true:
-  - The distance from EMA21 is not more than 1.5 ATR.
-  - The range of the day is not more than 75% of the ADR%.
-  - The Bollinger bandwidth is not more than 10%.
+The scanner cannot score these session rules after the close: wait 30 minutes after the open, add no more than 3 new names, do not chase, use caution after consecutive up days, add to winners, use caution on a gap-up, and use inverse ETFs for a short. It also does not test consecutive tight closes, because the TradingView screener does not give that history.
 
-An RVOL of 1.2 or more is a flag. The scanner shows this flag. An RVOL of 1.5 or more is a pass or fail column. A stock with a value of $10 billion or more does not use this column. RVOL is not necessary for Focus Candidates. Each ticker has a link to a daily TradingView chart.
+Daily files in `outputs/`:
 
-Some session rules are manual. The scanner cannot score them after the market closes. These rules are:
+- `non_extended_leaders_YYYY-MM-DD.csv` and `EXPORT/nel_symbols_YYYY-MM-DD.csv`
+- `focus_candidates_YYYY-MM-DD.csv` and `EXPORT/focus_symbols_YYYY-MM-DD.csv`
+- `momentum_leaders_YYYY-MM-DD.csv` for Liquid Leaders, before the extension filter
+- `filtered_universe_YYYY-MM-DD.csv`
+- `settings_YYYY-MM-DD.csv` for the rules used that day
 
-- Wait 30 minutes after the open.
-- Do not add more than 3 new names.
-- Do not chase a name.
-- Use caution after consecutive up days.
-- Add to winners.
-- Use caution with a gap-up.
-- Use inverse ETFs for a short position.
+## Themes
 
-This procedure does not test consecutive tight closes. That test needs the price for each day. The TradingView screener does not give that history.
+The Themes panel reads every saved snapshot in `outputs/` and shows industry leadership for 1 month, 3 months, and 6 months. Theme cards use the full Liquid Leaders file. An extended name still counts toward the industry.
 
-## Industry leadership dashboard
+When an industry’s 1-month count rises versus the prior day, the panel marks a “Do not miss” alert and draws a dashed line on those names. The same rule applies to the Semis group. `KICKOFF` is a theme that just reached the minimum count. `RISING` is a theme that was already on the list and now has more names.
 
-Each procedure also makes `industry_flow_dashboard.html` new. Open this file in a browser. You can also open `index.html`. The page title is "State of the Markets".
+The panel also keeps a note, a pin list, a Livermore quote, and the session line in the browser. Across the latest two snapshots it reports names that entered or left Liquid Leaders, Focus, relative strength, and the theme scan, plus industries that grew or faded, names that sit on more than one list, earnings in the next seven days, and the strongest and weakest theme-tape baskets.
 
-The page shows industry leadership for the saved snapshots. It shows the 1-month view, the 3-month view, and the 6-month view. It also shows Focus Candidates. You can write a note for each symbol. The browser keeps the notes.
+The theme scan picks one leader from each top theme. Top themes are the five strongest 1-month industries, plus any 1-month industry with a `KICKOFF` or `RISING` signal. A name must pass all of these:
 
-Theme cards use the full momentum-leader file. They do not use the NEL list or the Focus Candidates list. An extended name does not change the industry signal.
+- Price above $1
+- Day change from −5% to +5%
+- Volume above 1 million shares
+- Price above the 10-day average, the 20-day average, and the weekly 10-day average
+- The 10-day and 20-day averages are higher than five sessions ago
+- Quarterly earnings and revenue are each up 40% or more
+- Best 1-month performance in its industry
 
-Keep the older CSV files in `outputs/`. The dashboard reads all of these files when you make the page again.
-
-The scanner compares each snapshot with the previous day. If the 1-month count for an industry increases, the Themes view shows a "Do not miss" alert. The lists show a dash on those names. The same rule applies to the Semis group. The scanner writes these files:
+Files:
 
 - `outputs/rising_themes_YYYY-MM-DD.csv`
 - `outputs/EXPORT/rising_theme_symbols_YYYY-MM-DD.csv`
-
-`KICKOFF` means a new theme that now has enough names. `RISING` means a theme that was already in the list and now has more names.
-
-## Theme scan
-
-The Themes view also shows one leader for each top theme. The scanner uses the top five 1-month industries. It also uses the 1-month themes with a `KICKOFF` or `RISING` signal. A name must agree with all of these conditions:
-
-- The price is above $1.
-- The change for the day is from −5% to +5%.
-- The volume is more than 1 million shares.
-- The price is above the 10-day average, the 20-day average, and the weekly 10-day average.
-- The 10-day average and the 20-day average are higher than 5 sessions before.
-- Earnings and revenue are each up 40% or more.
-- The name has the best 1-month performance in its industry.
-
-The scanner keeps one name for each industry. It writes these files:
-
 - `outputs/theme_scan_YYYY-MM-DD.csv`
 - `outputs/theme_scan_themes_YYYY-MM-DD.csv`
 - `outputs/EXPORT/theme_scan_symbols_YYYY-MM-DD.csv`
 
-You can run this procedure alone:
+## Setups
 
-```bash
-python theme_scan.py
-```
+These scans run inside `focus_list.py`. On the desk, open Setups.
 
-## Theme tape
+**Relative strength.** After the stock group is built, the scanner compares the filtered universe with SPY. RS is the close divided by the SPY close. An RS new high is the highest RS in 252 days, or in 52 weeks. An RS lead is an RS new high while price is still at least 0.5% under its own high for that period.
 
-`theme_tracker.html` is a different page. In the navigation, select Tape. This page shows themes that are not the same as TradingView industries. The groups are in `themes_catalog.py`. Examples are GPUs, CPUs, and Memory.
+- `outputs/rs_new_highs_YYYY-MM-DD.csv` for every RS new high, daily and weekly
+- `outputs/rs_leads_YYYY-MM-DD.csv`
+- `outputs/EXPORT/rs_lead_symbols_YYYY-MM-DD.csv`
 
-Each row is the equal-weight average of the listed common stocks and the primary ADRs. These names trade on NYSE, NASDAQ, or AMEX. A period stays empty until a minimum of three names have a price. A proxy ETF is a label only. Select a theme to see the members.
+**8-week EMA pullbacks.** Liquid Leaders only. The weekly EMA(8) slope is positive, the daily close is within 3% above the EMA and 1.5% below it, and price is at least 1% under the high of the last 8 weeks.
 
-The daily procedure also makes this page new. You can run the procedure alone:
+- `outputs/ema8_pullbacks_YYYY-MM-DD.csv`
+- `outputs/EXPORT/ema8_pullback_symbols_YYYY-MM-DD.csv`
 
-```bash
-python theme_tracker.py
-```
+**Moving averages.** Liquid Leaders only. SMA5 is above SMA10, and SMA20 crossed above SMA30 in the last 3 sessions or the gap between them is not more than 0.75%.
 
-The procedure writes these files:
+- `outputs/ma_stack_YYYY-MM-DD.csv`
+- `outputs/EXPORT/ma_stack_symbols_YYYY-MM-DD.csv`
+
+**Flag breakouts.** Liquid Leaders only. The scan looks for a coil before the break and drops a late continuation. A name needs an 18% or larger advance into the base, then a coil of 20 sessions or more with depth of 35% or less and a smaller range. The 50-day average is flat or rising, the 20-day and 50-day averages are close, and the close is not more than 10% above the 20-day average. `APLUS_COIL` means price is within 6% of the flag high and volume dried up versus the advance. `APLUS_BREAKOUT` means the close went through the pivot that day. MACD is a soft check.
+
+- `outputs/a_plus_flags_YYYY-MM-DD.csv`
+- `outputs/EXPORT/a_plus_flag_coil_symbols_YYYY-MM-DD.csv`
+- `outputs/EXPORT/a_plus_flag_breakout_symbols_YYYY-MM-DD.csv`
+- `outputs/EXPORT/a_plus_flag_symbols_YYYY-MM-DD.csv`
+
+## Tape
+
+The Tape panel is a different page from TradingView industries. Baskets live in `themes_catalog.py` and are grouped into Semis, AI, Health, Power, Materials, and Macro. Each row is the equal-weight average of the listed common stocks and primary ADRs on NYSE, NASDAQ, or AMEX. A period stays blank until at least three names have a price. A proxy ETF is a label only. Select a theme to see its members. A basket link on the Themes desk shows which of those names are already on the lists.
 
 - `theme_tracker.html`
 - `outputs/theme_tracker_YYYY-MM-DD.csv`
 - `outputs/theme_members_YYYY-MM-DD.csv`
 
-## Market regime
+## Regime
 
-`regime.html` is a different page. In the navigation, select Regime. The page reads the cycle, T2108, the day's breadth, and the index tape.
+Regime reads the cycle, T2108, the day’s breadth, and the index tape. T2108 is the share of liquid NYSE names above the 40-day average. A 4% day is a close up or down 4% or more. The 5-day ratio is five sessions of 4% up days divided by five sessions of 4% down days. The 10-day ratio uses the same idea.
 
-T2108 is the share of liquid NYSE names above the 40-day average. A 4% day is a close up or down 4% or more. The 5-day ratio is five sessions of 4% up days divided by five sessions of 4% down days. The same idea makes the 10-day ratio. The cycle calls a washout when T2108 closes at 29 or below, and extended when it closes at 70 or above. A bounce from a washout needs a 5-point lift off the low and either a 5-day ratio of 1.5 or a day with 500 names up 4%. The breadth thrust fires when T2108 rises at least 15 points in 2 sessions, give or take 2, from a reading at or under 30, give or take 2. The 5-day ratio is at least 1.5, and that rise beats the 10-day average. Those levels were fit to S&P lows of 15% or more that went on to a new high. Nasdaq 40 is the same share for liquid Nasdaq names, and it uses that same band. A 10-day average still under 40 that is rising toward T2108 is catching up, not an improvement.
+The cycle calls a washout when T2108 closes at 29 or below, and extended when it closes at 70 or above. A bounce from a washout needs a 5-point lift off the low and either a 5-day ratio of 1.5 or a day with 500 names up 4%. The breadth thrust fires when T2108 rises at least 15 points in 2 sessions, give or take 2, from a reading at or under 30, give or take 2, the 5-day ratio is at least 1.5, and that rise beats the 10-day average. Those levels were fit to S&P lows of 15% or more that later made a new high. Nasdaq 40 is the same share for liquid Nasdaq names and uses the same band. A 10-day average still under 40 that is rising toward T2108 is catching up.
 
-The universe is US common stocks with a price above $5 and a 10-day average volume above 300,000. The page keeps the most active names. This page is not an instruction to trade.
-
-The daily procedure also makes this page new. You can run the procedure alone:
-
-```bash
-python regime.py
-```
-
-The procedure writes these files:
+The universe is US common stocks with a price above $5 and a 10-day average volume above 300,000. The page also shows SPY, QQQ, DIA, and IWM, VIX, the 10-year yield, and a daily EMA health table for those four indexes.
 
 - `regime.html`
 - `outputs/regime_history.csv`
 - `outputs/regime_YYYY-MM-DD.csv`
 
-## RS leads
+## Monitor
 
-After the scanner makes the stock group, it compares relative strength with SPY.
+Monitor reads delayed CBOE option chains for SPY, QQQ, and IWM. It charts the implied-volatility term, VIX and Nasdaq volatility, call and put open interest, and gamma by strike, including the call wall, put wall, and gamma flip. Gamma uses CBOE’s gamma, signed so calls are positive and puts are negative, for a 1% move. VIX and Nasdaq volatility history comes from Yahoo.
 
-- RS is the close divided by the SPY close.
-- An RS new high is the highest RS in 252 days, or in 52 weeks.
-- An RS lead is an RS new high. At the same time, the price is a minimum of 0.5% below its high for that period.
+- `monitor.html`
+- `outputs/options_monitor.json`
 
-The relative strength can make a new high before the price makes a new high. The procedure writes these files:
+## Crowding
 
-- `outputs/rs_new_highs_YYYY-MM-DD.csv` for each RS new high. The file shows daily and weekly results.
-- `outputs/rs_leads_YYYY-MM-DD.csv` for the RS lead setups only.
-- `outputs/EXPORT/rs_lead_symbols_YYYY-MM-DD.csv`
+Crowding reads the CFTC Traders in Financial Futures report, futures only, for the S&P 500, Nasdaq 100, Russell 2000, and Dow. It charts dealers, asset managers, leveraged funds, other reportables, and small traders. Net is contracts as a share of that week’s open interest. Range runs from 0, the most net short in 156 reports, to 100, the most net long. An extreme is 10 or below, or 90 or above.
 
-You can run this procedure alone:
-
-```bash
-python rs_lead_scan.py
-```
-
-The NEL rules do not change. RS is an additional list. On the dashboard, select Setups, then select RS leads.
-
-## 8-week EMA pullbacks
-
-This scan uses the Liquid Leaders list only. It finds names near an 8-week EMA when all of these conditions are true:
-
-- The slope of the weekly EMA(8) is positive.
-- The daily close is not more than 3% above the EMA.
-- The daily close is not more than 1.5% below the EMA.
-- The price is a minimum of 1% below the high of the last 8 weeks.
-
-The procedure writes these files:
-
-- `outputs/ema8_pullbacks_YYYY-MM-DD.csv`
-- `outputs/EXPORT/ema8_pullback_symbols_YYYY-MM-DD.csv`
-
-You can run this procedure alone:
-
-```bash
-python ema8_pullback_scan.py
-```
-
-The daily `focus_list.py` procedure includes this scan. On the dashboard, select Setups, then select 8-week.
-
-## MA stack
-
-This scan uses the Liquid Leaders list only. A name must agree with these conditions:
-
-- SMA5 is above SMA10.
-- SMA20 moved above SMA30 in the last 3 sessions, or the gap between them is not more than 0.75%.
-
-The procedure writes these files:
-
-- `outputs/ma_stack_YYYY-MM-DD.csv`
-- `outputs/EXPORT/ma_stack_symbols_YYYY-MM-DD.csv`
-
-You can run this procedure alone:
-
-```bash
-python ma_stack_scan.py
-```
-
-The daily `focus_list.py` procedure includes this scan. On the dashboard, select Setups, then select MA stack.
-
-## A++ flag breakouts
-
-This scan finds a coil before the price break. It does not keep a late continuation. The pattern examples are NVDA, MU, SNDK, INTC, and TSLA. The scanner rejects a late move. An example is ASST after the base break on 19 August.
-
-A name must agree with these conditions:
-
-1. The price increases 18% or more into the base.
-2. After the peak, the coil continues for 20 sessions or more. The depth is not more than 35%. The range becomes smaller.
-3. The 50-day moving average is flat or has a positive slope. The 20-day and 50-day averages are close. The close is not more than 10% above the 20-day average.
-4. `APLUS_COIL` means the price is not more than 6% below the flag high or the peak. The volume is lower than the volume in the advance.
-5. `APLUS_BREAKOUT` means the close goes through the pivot on that day only.
-6. MACD is a soft confirmation. It is not a required condition.
-
-The procedure writes these files:
-
-- `outputs/a_plus_flags_YYYY-MM-DD.csv`
-- `outputs/EXPORT/a_plus_flag_coil_symbols_YYYY-MM-DD.csv` for the coil list
-- `outputs/EXPORT/a_plus_flag_breakout_symbols_YYYY-MM-DD.csv` for the day of the break only
-- `outputs/EXPORT/a_plus_flag_symbols_YYYY-MM-DD.csv`
-
-You can run this procedure alone:
-
-```bash
-python a_plus_flag_scan.py
-```
-
-The daily `focus_list.py` procedure includes this scan. On the dashboard, select Setups, then select A++ flags. The coil names are first.
+- `crowding.html`
 
 ## GitHub Pages
 
-`index.html` is the same file as the dashboard. GitHub Pages uses this file. The workflow is `.github/workflows/daily-scan.yml`. This workflow starts the scanner after the US market closes. It saves the new CSV files and the dashboard. The Mac can be off.
+`index.html` is the same file as `industry_flow_dashboard.html`. GitHub Pages serves the repository root. The workflow `.github/workflows/daily-scan.yml` starts the scanner after the US close and commits the new CSV files, `index.html`, `industry_flow_dashboard.html`, `theme_tracker.html`, and `regime.html`. The Mac can be off. Monitor and Crowding stay local until you run those two scripts and commit the pages yourself.
 
-Do these steps to publish the page:
-
-1. Open the GitHub Pages settings for the repository.
-2. Select the `main` branch.
-3. Select the root folder as the source.
+To publish: open the repository’s GitHub Pages settings, choose the `main` branch, and set the source to the root folder.

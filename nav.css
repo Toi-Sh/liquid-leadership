@@ -54,6 +54,7 @@
 .nav-edge .brand:hover,
 .nav-edge .bbg-brand:hover { color: var(--color-accent); }
 
+.nav-edge .brand,
 .nav-edge .product,
 .nav-edge .bbg-product {
   margin: 0;

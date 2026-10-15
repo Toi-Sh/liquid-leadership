@@ -802,7 +802,7 @@ HTML_TEMPLATE = r"""<!doctype html>
       thead th, tr.detail td { background: var(--color-paper-3); }
     }
   </style>
-  <link rel="stylesheet" href="nav.css?v=20261015m">
+  <link rel="stylesheet" href="nav.css?v=20261015n">
 </head>
 <body>
 <a class="skip-link" href="#tape">Skip to tape</a>

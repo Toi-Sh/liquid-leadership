@@ -436,7 +436,7 @@ HTML_TEMPLATE = r"""<!doctype html>
       background: var(--color-paper);
       border-bottom: var(--rule) solid var(--color-rule);
     }
-    .brand { font-family: var(--font-display); color: var(--color-ink); text-decoration: none; }
+    .brand { font-family: var(--font-display); color: var(--color-accent); text-decoration: none; }
     .bbg-keys { display: flex; flex-wrap: wrap; min-width: 0; }
     .desk-menu { position: relative; display: flex; }
     .desk-tab {
@@ -563,7 +563,7 @@ HTML_TEMPLATE = r"""<!doctype html>
       }
     }
   </style>
-  <link rel="stylesheet" href="nav.css?v=20261015m">
+  <link rel="stylesheet" href="nav.css?v=20261015n">
   <link rel="stylesheet" href="charts.css?v=20261015d">
   <link rel="stylesheet" href="shadcn-chart.css?v=20261015g">
 </head>

@@ -454,7 +454,7 @@ def render(markets: list[dict]) -> str:
       }}
     }}
   </style>
-  <link rel="stylesheet" href="nav.css?v=20261015m">
+  <link rel="stylesheet" href="nav.css?v=20261015n">
   <link rel="stylesheet" href="shadcn-chart.css?v=20261015g">
 </head>
 <body>
