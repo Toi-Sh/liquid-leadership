@@ -1,4 +1,5 @@
 name,description,exchange,industry,close,change,volume,earn_yoy,sales_yoy,Perf.1M,sma10_rising,sma20_rising,tradingview_url
-EVH,"Evolent Health, Inc",NYSE,Miscellaneous Commercial Services,4.925,4.122621564482016,1693754,42.84418235427535,46.855476134747306,19.538834951456302,True,True,https://www.tradingview.com/chart/?symbol=NYSE:EVH&interval=D
-MPC,Marathon Petroleum Corporation,NYSE,Oil Refining/Marketing,473.36,-2.3838983749896894,1001877,347.24075197089144,53.101604278074866,19.027383137619758,True,True,https://www.tradingview.com/chart/?symbol=NYSE:MPC&interval=D
-PLTR,Palantir Technologies Inc.,NASDAQ,Packaged Software,199.425,-0.7687714584266246,15030181,224.23529411764704,92.8334945705726,16.964809384164226,True,True,https://www.tradingview.com/chart/?symbol=NASDAQ:PLTR&interval=D
+CDNA,"CareDx, Inc.",NASDAQ,Medical Specialties,66.675,3.068480445200185,1302474,103.17304867299974,52.22602937274312,27.729885057471254,True,True,https://www.tradingview.com/chart/?symbol=NASDAQ:CDNA&interval=D
+MPC,Marathon Petroleum Corporation,NYSE,Oil Refining/Marketing,476.92,-1.6497566608925183,2081505,347.24075197089144,53.101604278074866,19.92255274208555,True,True,https://www.tradingview.com/chart/?symbol=NYSE:MPC&interval=D
+EVH,"Evolent Health, Inc",NYSE,Miscellaneous Commercial Services,4.87,2.959830866807604,3836116,42.84418235427535,46.855476134747306,18.203883495145632,True,True,https://www.tradingview.com/chart/?symbol=NYSE:EVH&interval=D
+PLTR,Palantir Technologies Inc.,NASDAQ,Packaged Software,200.5,-0.23386575110712987,24757943,224.23529411764704,92.8334945705726,17.59530791788856,True,True,https://www.tradingview.com/chart/?symbol=NASDAQ:PLTR&interval=D
