@@ -616,7 +616,7 @@ svg {
 .desk-block--graphite .theme-line strong { color: var(--color-accent); }
 .rs-lede { margin: 0 0 var(--space-sm); max-width: 46rem; color: var(--color-ink-2); font-family: var(--font-body); font-size: var(--text-sm); line-height: 1.5; }
 .table-wrap { overflow-x: auto; max-width: 100%; -webkit-overflow-scrolling: touch; }
-.scrollable-table { max-height: 16rem; overflow-y: auto; }
+.scrollable-table { max-height: 16rem; overflow-y: auto; contain: paint; } /* table overflow was lengthening the page */
 table {
   width: max-content;
   min-width: 100%;
@@ -873,7 +873,7 @@ tbody tr:nth-child(even) { background: color-mix(in oklch, var(--color-paper-2) 
   .panel h2, .nel-window h3, th, .scrollable-table th { background: var(--color-paper-3); }
 }
   </style>
-  <link rel="stylesheet" href="nav.css?v=20261015k">
+  <link rel="stylesheet" href="nav.css?v=20261015m">
   <link rel="stylesheet" href="shadcn-chart.css?v=20261015g">
 </head>
 <body>
@@ -890,6 +890,7 @@ tbody tr:nth-child(even) { background: color-mix(in oklch, var(--color-paper-2) 
       <a class="desk-tab" data-panel="leaders" href="liquid.html">Leaders</a>
       <a class="desk-tab" data-panel="setups" href="rs.html">Setups</a>
       <a class="desk-tab" data-panel="tape" href="tape.html">Tape</a>
+      <a class="desk-tab" href="crowding.html">Crowding</a>
     </nav>
   </header>
   <p class="lede"><span id="bbg-session">US equity session</span></p>

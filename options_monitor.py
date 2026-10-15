@@ -563,7 +563,7 @@ HTML_TEMPLATE = r"""<!doctype html>
       }
     }
   </style>
-  <link rel="stylesheet" href="nav.css?v=20261015k">
+  <link rel="stylesheet" href="nav.css?v=20261015m">
   <link rel="stylesheet" href="charts.css?v=20261015d">
   <link rel="stylesheet" href="shadcn-chart.css?v=20261015g">
 </head>
@@ -578,6 +578,7 @@ HTML_TEMPLATE = r"""<!doctype html>
     <a class="desk-tab" href="liquid.html">Leaders</a>
     <a class="desk-tab" href="rs.html">Setups</a>
     <a class="desk-tab" href="tape.html">Tape</a>
+    <a class="desk-tab" href="crowding.html">Crowding</a>
   </nav>
 </header>
 <main id="monitor">
@@ -691,7 +692,88 @@ function signedCompact(value) {
   const text = compact(value).replace(/\.0([kmb])$/, "$1");
   return value < 0 ? "-" + text : text;
 }
-function strikeChart(host, rows, mode) {
+function priceX(marks, spot) {
+  const price = Number(spot);
+  if (!marks.length || !Number.isFinite(price)) return null;
+  if (price <= marks[0].strike) return marks[0].x;
+  const last = marks[marks.length - 1];
+  if (price >= last.strike) return last.x;
+  for (let i = 0; i < marks.length - 1; i++) {
+    const left = marks[i], right = marks[i + 1];
+    if (price < left.strike || price > right.strike) continue;
+    const span = right.strike - left.strike;
+    return span ? left.x + (right.x - left.x) * ((price - left.strike) / span) : left.x;
+  }
+  return null;
+}
+function placePrice(host, spot) {
+  const svg = host.querySelector(".recharts-wrapper svg");
+  if (!svg) return;
+  const groups = [...svg.querySelectorAll(".recharts-bar")];
+  if (!groups.length) return;
+  const series = groups.map(group => [...group.querySelectorAll(".recharts-bar-rectangle")]);
+  const count = series[0].length;
+  if (!count || series.some(list => list.length !== count)) return;
+  const rows = host.__strikes || [];
+  if (rows.length !== count) return;
+  const marks = rows.map((row, index) => {
+    const boxes = series.map(list => list[index].getBBox());
+    const left = Math.min(...boxes.map(box => box.x));
+    const right = Math.max(...boxes.map(box => box.x + box.width));
+    return { strike: Number(row.strike), x: (left + right) / 2 };
+  });
+  const x = priceX(marks, spot);
+  const grid = svg.querySelector(".recharts-cartesian-grid");
+  if (x == null || !grid) return;
+  const box = grid.getBBox();
+  const label = Number(spot).toFixed(2);
+  const ns = "http://www.w3.org/2000/svg";
+  let line = svg.querySelector(".price-line");
+  let tag = svg.querySelector(".price-tag");
+  const prev = line ? Number(line.getAttribute("x1")) : NaN;
+  if (line && tag && tag.textContent === label && Math.abs(prev - x) < 0.5) return;
+  if (!line) {
+    line = document.createElementNS(ns, "line");
+    line.setAttribute("class", "price-line");
+    line.setAttribute("stroke", "var(--color-accent)");
+    line.setAttribute("stroke-width", "1.5");
+    line.setAttribute("pointer-events", "none");
+    svg.appendChild(line);
+  }
+  line.setAttribute("x1", x);
+  line.setAttribute("x2", x);
+  line.setAttribute("y1", box.y);
+  line.setAttribute("y2", box.y + box.height);
+  if (!tag) {
+    tag = document.createElementNS(ns, "text");
+    tag.setAttribute("class", "price-tag");
+    tag.setAttribute("fill", "var(--color-accent)");
+    tag.setAttribute("font-size", "11");
+    tag.setAttribute("text-anchor", "middle");
+    tag.setAttribute("pointer-events", "none");
+    svg.appendChild(tag);
+  }
+  if (tag.textContent !== label) tag.textContent = label;
+  tag.setAttribute("x", x);
+  tag.setAttribute("y", box.y + 12);
+}
+function watchPrice(host, rows, spot) {
+  host.__strikes = rows;
+  if (host.__priceWatch) host.__priceWatch.disconnect();
+  const draw = () => {
+    watch.disconnect();
+    placePrice(host, spot);
+    watch.observe(host, { childList: true, subtree: true });
+  };
+  const watch = new MutationObserver(records => {
+    const own = records.every(record => record.target.closest && record.target.closest(".price-line, .price-tag"));
+    if (!own) draw();
+  });
+  host.__priceWatch = watch;
+  watch.observe(host, { childList: true, subtree: true });
+  draw();
+}
+function strikeChart(host, rows, mode, spot) {
   if (!host || !rows.length || !window.GBCharts) {
     if (host) host.innerHTML = "<p class='muted'>No open interest in this window.</p>";
     return;
@@ -710,16 +792,17 @@ function strikeChart(host, rows, mode) {
       decimals: false,
       height: "15rem"
     });
-    return;
+  } else {
+    GBCharts.mount(host, {
+      type: "bar",
+      data: rows.map(row => ({ label: strikeLabel(row.strike), gamma: row.gamma })),
+      xKey: "label",
+      series: [{ key: "gamma", label: "Gamma", color: "var(--color-up)", signed: true }],
+      yFormat: signedCompact,
+      height: "15rem"
+    });
   }
-  GBCharts.mount(host, {
-    type: "bar",
-    data: rows.map(row => ({ label: strikeLabel(row.strike), gamma: row.gamma })),
-    xKey: "label",
-    series: [{ key: "gamma", label: "Gamma", color: "var(--color-up)", signed: true }],
-    yFormat: signedCompact,
-    height: "15rem"
-  });
+  watchPrice(host, rows, spot);
 }
 function monthDay(iso) {
   const match = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso || "");
@@ -753,10 +836,11 @@ function paintCharts() {
     { klass: "chart-vxn", label: "Nasdaq volatility", points: (vol.vxn || []).map((point, index) => ({ x: index, y: point.close, label: monthDay(point.date) })) }
   ].filter(item => item.points.length);
   lineChart(document.getElementById("index-chart"), indexSeries, value => value.toFixed(0));
-  const book = (names.find(item => item.symbol === current) || {}).book;
+  const item = names.find(entry => entry.symbol === current) || {};
+  const book = item.book;
   const rows = book ? book.strikes : [];
-  strikeChart(document.getElementById("oi-chart"), rows, "oi");
-  strikeChart(document.getElementById("gamma-chart"), rows, "gamma");
+  strikeChart(document.getElementById("oi-chart"), rows, "oi", item.spot);
+  strikeChart(document.getElementById("gamma-chart"), rows, "gamma", item.spot);
   const walls = document.getElementById("walls");
   if (!book) {
     walls.textContent = "";

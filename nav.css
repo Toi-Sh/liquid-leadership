@@ -63,7 +63,7 @@
   font-style: normal;
   letter-spacing: -0.02em;
   line-height: 1;
-  color: inherit;
+  color: var(--color-accent);
   white-space: nowrap;
 }
 
@@ -136,10 +136,11 @@
   }
   .nav-edge .bbg-keys {
     flex: 1 0 100%;
-    height: var(--banner-height);
+    height: auto;
+    flex-wrap: wrap;
   }
   .nav-edge .desk-tab {
-    height: var(--banner-height);
+    height: 2.5rem;
     font-size: var(--text-xs);
   }
 }

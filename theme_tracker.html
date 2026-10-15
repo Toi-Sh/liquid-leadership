@@ -341,8 +341,20 @@
     .blurb { margin: 0 0 var(--space-sm); max-width: 46rem; color: var(--color-ink-2); }
     .miss { color: var(--color-muted); }
     .empty { padding: var(--space-lg) var(--page-gutter); }
-    .view-switch { display: flex; gap: var(--space-4); }
-    .view-switch .lane { padding: 0 var(--space-xs); }
+    .view-switch { display: flex; align-items: center; gap: var(--space-16); min-height: 45px; }
+    .view-switch .choice {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--color-muted);
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+    .view-switch .choice:has(:checked) { color: var(--color-ink); }
+    .view-switch input { margin: 0; accent-color: var(--color-accent); }
     .bars { margin: var(--space-sm) var(--page-gutter) var(--space-md); padding: var(--space-sm) var(--space-md) var(--space-md); background: color-mix(in oklch, var(--color-paper-3) 46%, transparent); border: var(--rule) solid color-mix(in oklch, white 28%, transparent); border-radius: 12px; box-shadow: inset 0 1px 0 color-mix(in oklch, white 32%, transparent); backdrop-filter: blur(14px) saturate(1.35); -webkit-backdrop-filter: blur(14px) saturate(1.35); }
     .bars[hidden], .table-scroll[hidden], #tape[hidden], .tape[hidden] { display: none; }
     .bar-periods {
@@ -418,22 +430,6 @@
       cursor: pointer;
     }
     .pin[aria-pressed="true"] { color: var(--color-accent); }
-    .chart-list {
-      margin: 0 0 var(--space-sm);
-      font-family: var(--font-body);
-      font-size: var(--text-sm);
-      line-height: 1.5;
-      color: var(--color-ink-2);
-    }
-    .chart-list[hidden] { display: none; }
-    .chart-list__label {
-      display: block;
-      margin: 0 0 0.2rem;
-      color: var(--color-muted);
-      font-size: var(--text-xs);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
     .bar-track {
       display: grid;
       grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1fr);
@@ -494,7 +490,7 @@
       thead th, tr.detail td { background: var(--color-paper-3); }
     }
   </style>
-  <link rel="stylesheet" href="nav.css?v=20261015k">
+  <link rel="stylesheet" href="nav.css?v=20261015m">
 </head>
 <body>
 <a class="skip-link" href="#tape">Skip to tape</a>
@@ -509,21 +505,21 @@
     <a class="desk-tab" href="liquid.html">Leaders</a>
     <a class="desk-tab" href="rs.html">Setups</a>
     <a class="desk-tab" href="tape.html" aria-current="page">Tape</a>
+    <a class="desk-tab" href="crowding.html">Crowding</a>
   </nav>
 </header>
 <p class="lede" id="lede" role="note"><span class="lede-mark" aria-hidden="true">i</span><span class="visually-hidden">Information. </span><span class="lede-text"></span></p>
 <div class="tape-bar">
   <div class="tools">
-    <div class="view-switch" role="group" aria-label="How to show the tape">
-      <button type="button" class="lane" data-tape-view="table" aria-pressed="true">Table</button>
-      <button type="button" class="lane" data-tape-view="bars" aria-pressed="false">Bars</button>
+    <div class="view-switch" role="radiogroup" aria-label="How to show the tape">
+      <label class="choice" data-tape-view="table"><input type="radio" name="tape-view" value="table" checked>Table</label>
+      <label class="choice" data-tape-view="bars"><input type="radio" name="tape-view" value="bars">Bars</label>
     </div>
     <label class="visually-hidden" for="q" style="position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)">Filter themes</label>
     <input id="q" class="search" type="search" placeholder="Filter" autocomplete="off" enterkeyhint="search">
   </div>
   <div class="lanes" id="lanes" role="toolbar" aria-label="Theme lanes"></div>
 </div>
-<div id="chart-list" class="chart-list" hidden></div>
 <div id="tape" class="tape"></div>
 <div class="table-scroll">
   <table>
@@ -638,19 +634,8 @@ function pinButton(symbol) {
   return `<button type="button" class="pin" data-pin="${esc(key)}" aria-pressed="${on ? "true" : "false"}">${on ? "Pinned" : "Pin"}</button>`;
 }
 function paintPins() {
-  const host = document.getElementById("chart-list");
-  const pins = readPins();
-  if (host) {
-    const chips = pins.map(symbol => `<button type="button" class="pin" data-pin="${esc(symbol)}" aria-pressed="true">${esc(symbol)}</button>`).join(" ");
-    const count = pins.length === 1 ? "1 stock" : `${pins.length} stocks`;
-    host.hidden = false;
-    host.innerHTML = pins.length
-      ? `<span class="chart-list__label">Look at tomorrow</span>${count}. ${chips}`
-      : `<span class="chart-list__label">Look at tomorrow</span>Pin a stock on any list. It stays here for the next session.`;
-  }
-  const held = new Set(pins);
+  const held = new Set(readPins());
   document.querySelectorAll("button.pin[data-pin]").forEach(button => {
-    if (button.closest("#chart-list")) return;
     const on = held.has(button.dataset.pin);
     button.setAttribute("aria-pressed", on ? "true" : "false");
     button.textContent = on ? "Pinned" : "Pin";
@@ -743,8 +728,9 @@ let rankById = new Map();
 function paint() {
   rankById = todayRankMap();
   const rows = visible();
-  document.querySelectorAll("[data-tape-view]").forEach(button => {
-    button.setAttribute("aria-pressed", button.dataset.tapeView === view ? "true" : "false");
+  document.querySelectorAll("[data-tape-view]").forEach(choice => {
+    const input = choice.querySelector("input");
+    if (input) input.checked = choice.dataset.tapeView === view;
   });
   tableScrollEl.hidden = view !== "table";
   barsEl.hidden = view !== "bars";
@@ -782,23 +768,23 @@ function paint() {
     </tr>${open ? `<tr class="detail"><td colspan="10">${memberTable(theme)}</td></tr>` : ""}`;
   }).join("") || `<tr><td class="empty" colspan="10">No themes match this filter.</td></tr>`;
 }
+document.querySelector(".view-switch").addEventListener("change", event => {
+  const choice = event.target.closest("[data-tape-view]");
+  if (!choice) return;
+  view = choice.dataset.tapeView === "bars" ? "bars" : "table";
+  try { localStorage.setItem("lld-tape-view", view); } catch (e) {}
+  if (view === "bars" && !PERIODS.some(([key]) => key === sortKey)) {
+    sortKey = "today";
+    sortDir = -1;
+  }
+  paint();
+});
 document.addEventListener("click", event => {
   const pin = event.target.closest("[data-pin]");
   if (pin) {
     event.preventDefault();
     event.stopPropagation();
     togglePin(pin.dataset.pin);
-    return;
-  }
-  const viewBtn = event.target.closest("[data-tape-view]");
-  if (viewBtn) {
-    view = viewBtn.dataset.tapeView === "bars" ? "bars" : "table";
-    try { localStorage.setItem("lld-tape-view", view); } catch (e) {}
-    if (view === "bars" && !PERIODS.some(([key]) => key === sortKey)) {
-      sortKey = "today";
-      sortDir = -1;
-    }
-    paint();
     return;
   }
   const laneBtn = event.target.closest("[data-lane]");

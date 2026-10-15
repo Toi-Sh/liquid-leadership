@@ -924,6 +924,7 @@ def render_html(snapshot: dict, health_rows: list[dict]) -> str:
     <a class="desk-tab" href="liquid.html">Leaders</a>
     <a class="desk-tab" href="rs.html">Setups</a>
     <a class="desk-tab" href="tape.html">Tape</a>
+    <a class="desk-tab" href="crowding.html">Crowding</a>
   </nav>
 </header>
 <p class="lede" role="note"><span class="lede-mark" aria-hidden="true">i</span><span class="visually-hidden">Information. </span>Measured regime, T2108, the day’s breadth and the tape. Every delta is against the prior session.</p>
@@ -1569,7 +1570,7 @@ HTML_PAGE = r"""<!doctype html>
       .desk-tab, .skip-link { transition: none; }
     }
   </style>
-  <link rel="stylesheet" href="nav.css?v=20261015k">
+  <link rel="stylesheet" href="nav.css?v=20261015m">
   <link rel="stylesheet" href="charts.css?v=20261015d">
   <link rel="stylesheet" href="shadcn-chart.css?v=20261015g">
 </head>
