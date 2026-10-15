@@ -1,22 +1,24 @@
-/* Hallmark · pre-emit critique: P5 H4 E4 S4 R5 V4
- * genre: editorial · tone: austere
- * paper oklch(97.2% 0.008 85) · accent oklch(36% 0.05 165)
- * display: Newsreader · body: Source Sans 3
- * theme_axes: light / roman-serif / cool
+/* Hallmark · terminal
+ * paper #121212 · accent oklch(74% 0.17 52)
+ * display: Butler · body: Source Sans 3
+ * Butler by Fabian De Smet, free for personal and commercial use.
+ * https://www.fabiandesmet.com/portfolio/butler-font/
+ * License: assets/fonts/Butler-EULA-v2-00.pdf
+ * theme_axes: dark / roman-serif / warm
  */
 @font-face {
-  font-family: "Newsreader";
+  font-family: "Butler";
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url("assets/fonts/newsreader-latin-400.woff2") format("woff2");
+  src: url("assets/fonts/Butler-Free-Rmn.woff2") format("woff2");
 }
 @font-face {
-  font-family: "Newsreader";
+  font-family: "Butler";
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url("assets/fonts/newsreader-latin-600.woff2") format("woff2");
+  src: url("assets/fonts/Butler-Free-SBd.woff2") format("woff2");
 }
 @font-face {
   font-family: "Source Sans 3";
@@ -34,17 +36,18 @@
 }
 
 :root {
-  --color-paper: oklch(97.2% 0.008 85);
-  --color-paper-2: oklch(94.4% 0.012 85);
-  --color-paper-3: oklch(99% 0.004 85);
-  --color-rule: oklch(88% 0.012 85);
-  --color-rule-2: oklch(80% 0.016 80);
-  --color-muted: oklch(44% 0.02 70);
-  --color-ink-2: oklch(32% 0.02 65);
-  --color-ink: oklch(22% 0.02 60);
-  --color-accent: oklch(36% 0.05 165);
-  --color-accent-ink: oklch(97.2% 0.008 85);
-  --color-focus: oklch(36% 0.05 165);
+  color-scheme: dark;
+  --color-paper: #121212;
+  --color-paper-2: #1c1c1c;
+  --color-paper-3: #262626;
+  --color-rule: oklch(32% 0.02 260);
+  --color-rule-2: oklch(42% 0.05 50);
+  --color-muted: oklch(78% 0.06 55);
+  --color-ink-2: oklch(90% 0.04 55);
+  --color-ink: oklch(95% 0.03 55);
+  --color-accent: oklch(74% 0.17 52);
+  --color-accent-ink: oklch(24% 0.05 50);
+  --color-focus: oklch(78% 0.16 52);
 
   --color-graphite: var(--color-paper-2);
   --color-graphite-2: var(--color-paper);
@@ -52,22 +55,30 @@
   --color-graphite-muted: var(--color-muted);
   --color-graphite-rule: var(--color-rule);
 
-  --color-frame-1m: oklch(38% 0.06 165);
-  --color-frame-3m: oklch(46% 0.08 75);
-  --color-frame-6m: oklch(46% 0.08 40);
-  --color-rank-1: oklch(38% 0.06 165);
-  --color-rank-2: oklch(48% 0.09 78);
-  --color-rank-3: oklch(46% 0.08 40);
-  --color-rank-4: oklch(42% 0.05 250);
-  --color-rank-5: oklch(48% 0.08 22);
-  --color-prior: oklch(78% 0.012 85);
-  --color-liquidity: oklch(42% 0.07 75);
-  --color-warn: oklch(46% 0.09 75);
-  --color-danger: oklch(46% 0.13 28);
-  --color-up: oklch(40% 0.09 155);
-  --color-down: oklch(46% 0.13 28);
+  --color-frame-1m: oklch(76% 0.17 52);
+  --color-frame-3m: oklch(78% 0.16 145);
+  --color-frame-6m: oklch(66% 0.15 38);
+  --color-rank-1: oklch(76% 0.17 52);
+  --color-rank-2: oklch(78% 0.16 145);
+  --color-rank-3: oklch(66% 0.15 38);
+  --color-rank-4: oklch(75% 0.1 250);
+  --color-rank-5: oklch(72% 0.16 25);
+  --color-prior: oklch(32% 0.02 260);
+  --color-liquidity: oklch(76% 0.17 52);
+  --color-warn: oklch(76% 0.17 52);
+  --color-danger: oklch(70% 0.19 25);
+  --color-up: oklch(76% 0.14 250);
+  --color-down: oklch(74% 0.16 310);
 
-  --font-serif: "Newsreader", "Iowan Old Style", Palatino, serif;
+  --color-plot: #121212;
+  --color-grid: oklch(30% 0.018 260);
+  --color-series-1: oklch(74% 0.14 145);
+  --color-series-2: oklch(78% 0.17 55);
+  --color-series-3: oklch(78% 0.09 250);
+  --color-series-4: oklch(68% 0.16 38);
+  --color-series-5: oklch(68% 0.16 15);
+
+  --font-serif: "Butler", "Iowan Old Style", Palatino, serif;
   --font-sans: "Source Sans 3", "Helvetica Neue", sans-serif;
   --font-display: var(--font-serif);
   --font-body: var(--font-sans);

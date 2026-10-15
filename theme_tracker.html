@@ -3,36 +3,15 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Theme Tape | Liquid Leadership</title>
+  <title>Theme Tape | GB Market Terminal</title>
   <meta name="description" content="Equal-weight market themes: semis, AI, health, power, materials, and macro.">
   <meta name="robots" content="index, follow">
   <link rel="icon" type="image/png" href="assets/nel-favicon.png">
   <link rel="preload" href="assets/fonts/newsreader-latin-400.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/source-sans-3-latin-400.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="tokens.css?v=20261006">
-  <script>
-    try { if (localStorage.getItem("lld-tape-theme") === "dark") document.documentElement.dataset.theme = "dark"; } catch (e) {}
-  </script>
+  <link rel="stylesheet" href="tokens.css?v=20261015i">
   <style>
-    html { color-scheme: light; background: var(--color-paper); --color-bar: oklch(52% 0.16 255); --color-bar-down: oklch(48% 0.16 25); }
-    html[data-theme="dark"] {
-      color-scheme: dark;
-      --color-paper: oklch(17% 0.02 260);
-      --color-paper-2: oklch(22% 0.022 260);
-      --color-paper-3: oklch(25% 0.024 260);
-      --color-rule: oklch(32% 0.02 260);
-      --color-rule-2: oklch(40% 0.02 260);
-      --color-muted: oklch(74% 0.02 260);
-      --color-ink-2: oklch(90% 0.015 260);
-      --color-ink: oklch(96% 0.01 260);
-      --color-accent: oklch(78% 0.12 250);
-      --color-accent-ink: oklch(17% 0.02 260);
-      --color-focus: oklch(82% 0.12 250);
-      --color-up: oklch(78% 0.14 155);
-      --color-down: oklch(74% 0.15 25);
-      --color-bar: oklch(70% 0.15 255);
-      --color-bar-down: oklch(72% 0.15 25);
-    }
+    html { color-scheme: dark; background: var(--color-paper); --color-bar: var(--color-up); --color-bar-down: var(--color-down); }
     html, body { overflow-x: clip; margin: 0; }
     body {
       background: var(--color-paper);
@@ -205,6 +184,17 @@
       outline: 2px solid var(--color-focus);
       outline-offset: 1px;
     }
+    .tape-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-xs) var(--space-sm);
+      padding: var(--space-xs) var(--page-gutter);
+      padding-left: max(var(--page-gutter), env(safe-area-inset-left));
+      padding-right: max(var(--page-gutter), env(safe-area-inset-right));
+      background: var(--color-paper);
+      border-bottom: var(--rule) solid var(--color-rule);
+    }
     .tools { display: flex; align-items: center; gap: var(--space-xs); }
     .search {
       width: 9rem;
@@ -279,11 +269,18 @@
     th:first-child, td:first-child, th:nth-child(2), td:nth-child(2) { text-align: left; }
     thead th { background: var(--color-paper); }
     .sort {
+      display: inline-flex; align-items: center; gap: 0.35em;
       min-height: 32px;
       padding: 0;
       border: 0;
       letter-spacing: 0.08em;
     }
+    .sort[aria-sort="ascending"]::after,
+    .sort[aria-sort="descending"]::after {
+      content: ""; flex: none; width: 0.45em; height: 0.36em; background: currentColor;
+    }
+    .sort[aria-sort="ascending"]::after { clip-path: polygon(50% 0, 0 100%, 100% 100%); }
+    .sort[aria-sort="descending"]::after { clip-path: polygon(50% 100%, 0 0, 100% 0); }
     .name { font-family: var(--font-display); letter-spacing: -0.01em; text-transform: none; color: var(--color-ink); }
     .lane-tag { color: var(--color-accent); letter-spacing: 0.08em; text-transform: uppercase; font-size: var(--text-xs); }
     .ticker { color: var(--color-accent); font-family: var(--font-body); text-decoration: none; }
@@ -337,8 +334,8 @@
     .bar-item + .bar-item { border-top: var(--rule) solid var(--color-rule); }
     .bar-row {
       display: grid;
-      grid-template-columns: minmax(7.5rem, 11.5rem) minmax(0, 1fr);
-      align-items: center;
+      grid-template-columns: minmax(9rem, 16rem) minmax(0, 1fr);
+      align-items: start;
       gap: var(--space-sm);
       width: 100%;
       min-height: 2.15rem;
@@ -355,10 +352,50 @@
     .bar-row[aria-expanded="true"] { background: var(--color-paper-3); }
     .bar-name {
       font-family: var(--font-display);
-      font-size: var(--text-sm);
-      letter-spacing: -0.01em;
-      line-height: 1.2;
+      font-size: var(--text-md);
+      letter-spacing: -0.02em;
+      line-height: 1.1;
       color: var(--color-ink);
+    }
+    .bar-note, .theme-extra {
+      display: block;
+      max-width: 16rem;
+      margin-top: 0.15rem;
+      color: var(--color-muted);
+      font-family: var(--font-body);
+      font-size: var(--text-xs);
+      font-weight: 400;
+      letter-spacing: 0;
+      line-height: 1.35;
+    }
+    .pin {
+      display: inline-block;
+      margin-left: 0.35rem;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: var(--color-muted);
+      font-family: var(--font-body);
+      font-size: var(--text-xs);
+      letter-spacing: 0.04em;
+      cursor: pointer;
+    }
+    .pin[aria-pressed="true"] { color: var(--color-accent); }
+    .chart-list {
+      margin: 0 0 var(--space-sm);
+      font-family: var(--font-body);
+      font-size: var(--text-sm);
+      line-height: 1.5;
+      color: var(--color-ink-2);
+    }
+    .chart-list[hidden] { display: none; }
+    .chart-list__label {
+      display: block;
+      margin: 0 0 0.2rem;
+      color: var(--color-muted);
+      font-size: var(--text-xs);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
     }
     .bar-track {
       display: grid;
@@ -391,20 +428,14 @@
       flex: 0 0 auto;
       color: var(--color-ink);
       font-family: var(--font-mono);
-      font-size: var(--text-xs);
+      font-size: var(--text-sm);
       font-variant-numeric: tabular-nums;
       white-space: nowrap;
     }
     .bar-detail { padding: 0 0 var(--space-sm); overflow-x: auto; }
     @media (max-width: 700px) {
-      .nav-edge {
-        grid-template-columns: minmax(0, 1fr) auto;
-        grid-template-areas:
-          "brand tools"
-          "keys keys"
-          "lanes lanes";
-      }
-      .bbg-keys { flex-wrap: wrap; }
+      .tape-bar { align-items: stretch; }
+      .tools, .lanes { flex: 1 1 100%; }
       .search { width: 6.5rem; }
       .tape-row { grid-template-columns: 1fr; row-gap: 2px; }
       .bar-row { grid-template-columns: minmax(5.5rem, 8.5rem) minmax(0, 1fr); }
@@ -414,48 +445,37 @@
       .bar-fill { animation: none; }
     }
   </style>
+  <link rel="stylesheet" href="nav.css?v=20261015j">
 </head>
 <body>
 <a class="skip-link" href="#tape">Skip to tape</a>
 <header class="nav-edge">
   <div class="brand">
-    <span class="product">Theme Tape</span>
+    <span class="product">GB Market Terminal</span>
   </div>
   <nav class="bbg-keys" aria-label="Terminal panels">
     <a class="desk-tab" href="regime.html">Regime</a>
-    <a class="desk-tab" href="index.html#thematic-title">Themes</a>
-    <div class="desk-menu">
-      <button class="desk-tab" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="menu-leaders">Leaders <span class="desk-caret" aria-hidden="true"></span></button>
-      <div id="menu-leaders" class="desk-menu__panel" role="menu" hidden>
-        <a role="menuitem" href="index.html#liquid-title">Liquid Leaders</a>
-        <a role="menuitem" href="index.html#focus-title">Focus</a>
-        <a role="menuitem" href="index.html#nel-title">Non-extended</a>
-      </div>
-    </div>
-    <div class="desk-menu">
-      <button class="desk-tab" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="menu-setups">Setups <span class="desk-caret" aria-hidden="true"></span></button>
-      <div id="menu-setups" class="desk-menu__panel" role="menu" hidden>
-        <a role="menuitem" href="index.html#rs-title">Relative strength</a>
-        <a role="menuitem" href="index.html#ema8-title">8-week</a>
-        <a role="menuitem" href="index.html#ma-stack-title">Moving averages</a>
-        <a role="menuitem" href="index.html#aplus-title">Flag breakouts</a>
-      </div>
-    </div>
-    <a class="desk-tab" href="theme_tracker.html" aria-current="page">Tape</a>
+    <a class="desk-tab" href="monitor.html">Monitor</a>
+    <a class="desk-tab" href="themes.html">Themes</a>
+    <a class="desk-tab" href="liquid.html">Leaders</a>
+    <a class="desk-tab" href="rs.html">Setups</a>
+    <a class="desk-tab" href="tape.html" aria-current="page">Tape</a>
   </nav>
+</header>
+<div class="tape-bar">
   <div class="tools">
     <div class="view-switch" role="group" aria-label="How to show the tape">
       <button type="button" class="lane" data-tape-view="table" aria-pressed="true">Table</button>
       <button type="button" class="lane" data-tape-view="bars" aria-pressed="false">Bars</button>
     </div>
-    <button type="button" class="lane" id="theme-toggle" aria-pressed="false">Dark</button>
     <label class="visually-hidden" for="q" style="position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)">Filter themes</label>
     <input id="q" class="search" type="search" placeholder="Filter" autocomplete="off" enterkeyhint="search">
     <span id="clock" class="clock"></span>
   </div>
   <div class="lanes" id="lanes" role="toolbar" aria-label="Theme lanes"></div>
-</header>
+</div>
 <p class="lede" id="lede"></p>
+<div id="chart-list" class="chart-list" hidden></div>
 <div id="tape" class="tape"></div>
 <div class="table-scroll">
   <table>
@@ -549,13 +569,101 @@ function paintHead() {
   const cols = [["name","Theme"], ["lane","Lane"], ...PERIODS, ["breadth","Breadth"]];
   headEl.innerHTML = cols.map(([key, label]) => {
     const active = key === sortKey;
-    const arrow = !active ? "" : (sortDir < 0 ? " ▼" : " ▲");
-    return `<th><button type="button" class="sort" data-sort="${key}" aria-sort="${active ? (sortDir < 0 ? "descending" : "ascending") : "none"}">${esc(label)}${arrow}</button></th>`;
+    return `<th><button type="button" class="sort" data-sort="${key}" aria-sort="${active ? (sortDir < 0 ? "descending" : "ascending") : "none"}">${esc(label)}</button></th>`;
   }).join("") + "<th>Leader</th>";
+}
+const PIN_KEY = "lld-pins";
+const PIN_CAP = 10;
+function readPins() {
+  try {
+    const raw = JSON.parse(localStorage.getItem(PIN_KEY) || "[]");
+    if (!Array.isArray(raw)) return [];
+    const seen = new Set();
+    const pins = [];
+    raw.forEach(item => {
+      const key = String(item || "").trim().toUpperCase();
+      if (!key || seen.has(key)) return;
+      seen.add(key);
+      pins.push(key);
+    });
+    return pins.slice(0, PIN_CAP);
+  } catch (e) { return []; }
+}
+function pinButton(symbol) {
+  const key = String(symbol || "").trim().toUpperCase();
+  if (!key) return "";
+  const on = readPins().includes(key);
+  return `<button type="button" class="pin" data-pin="${esc(key)}" aria-pressed="${on ? "true" : "false"}">${on ? "Pinned" : "Pin"}</button>`;
+}
+function paintPins() {
+  const host = document.getElementById("chart-list");
+  const pins = readPins();
+  if (host) {
+    const chips = pins.map(symbol => `<button type="button" class="pin" data-pin="${esc(symbol)}" aria-pressed="true">${esc(symbol)}</button>`).join(" ");
+    const count = pins.length === 1 ? "1 stock" : `${pins.length} stocks`;
+    host.hidden = false;
+    host.innerHTML = pins.length
+      ? `<span class="chart-list__label">Look at tomorrow</span>${count}. ${chips}`
+      : `<span class="chart-list__label">Look at tomorrow</span>Pin a stock on any list. It stays here for the next session.`;
+  }
+  const held = new Set(pins);
+  document.querySelectorAll("button.pin[data-pin]").forEach(button => {
+    if (button.closest("#chart-list")) return;
+    const on = held.has(button.dataset.pin);
+    button.setAttribute("aria-pressed", on ? "true" : "false");
+    button.textContent = on ? "Pinned" : "Pin";
+  });
+}
+function togglePin(symbol) {
+  const key = String(symbol || "").trim().toUpperCase();
+  if (!key) return;
+  const current = readPins();
+  const next = current.includes(key) ? current.filter(item => item !== key) : [key, ...current].slice(0, PIN_CAP);
+  try { localStorage.setItem(PIN_KEY, JSON.stringify(next)); } catch (e) {}
+  paintPins();
+}
+function ordinal(n) {
+  const value = Number(n);
+  const mod = value % 100;
+  const suffix = mod >= 11 && mod <= 13 ? "th" : ({1: "st", 2: "nd", 3: "rd"}[value % 10] || "th");
+  return `${value}${suffix}`;
+}
+function todayRankMap() {
+  const ranked = data.themes.filter(theme => finite(theme.today)).sort((a, b) => b.today - a.today || a.name.localeCompare(b.name));
+  const map = new Map();
+  ranked.forEach((theme, index) => map.set(theme.id, index + 1));
+  return map;
+}
+function leaderDominates(theme) {
+  const prints = (theme.members || []).filter(member => finite(member.today));
+  if (prints.length < 2 || !theme.leader || !finite(theme.today) || theme.today === 0) return false;
+  const rest = prints.filter(member => member.symbol !== theme.leader.symbol);
+  if (!rest.length) return false;
+  const restAvg = rest.reduce((sum, member) => sum + member.today, 0) / rest.length;
+  if (restAvg === 0 || (restAvg > 0) !== (theme.today > 0)) return true;
+  return Math.abs(restAvg) < Math.abs(theme.today) * 0.5;
+}
+function storyLine(theme, rank) {
+  const bits = [];
+  const prior = theme.prior_rank;
+  const hasPrior = data.themes.some(item => Number.isFinite(item.prior_rank));
+  if (rank && Number.isFinite(prior) && prior !== rank) {
+    const moved = Math.abs(prior - rank);
+    if (moved >= 5 || rank <= 10 || prior <= 10) bits.push(`Was ${ordinal(prior)}. Now ${ordinal(rank)}.`);
+  } else if (rank && hasPrior && !Number.isFinite(prior)) bits.push("New since the last tape.");
+  const prints = (theme.members || []).filter(member => finite(member.today));
+  if (prints.length) {
+    const up = prints.filter(member => member.today > 0).length;
+    if (prints.length === 1) bits.push(up ? "1 is up." : "1 is down.");
+    else if (up === 1) bits.push(`1 of ${prints.length} is up.`);
+    else bits.push(`${up} of ${prints.length} are up.`);
+  }
+  if (leaderDominates(theme)) bits.push(`${theme.leader.symbol} is most of the move.`);
+  return bits.join(" ");
 }
 function memberTable(theme) {
   const head = `<tr><th>Symbol</th><th>Name</th>${PERIODS.map(([, label]) => `<th>${label}</th>`).join("")}</tr>`;
-  const rows = theme.members.map(member => `<tr><td><a class="ticker" href="${esc(member.url)}" target="_blank" rel="noopener noreferrer">${esc(member.symbol)}</a></td><td>${esc(member.description || "—")}</td>${PERIODS.map(([key]) => `<td class="${tone(member[key])}">${fmt(member[key])}</td>`).join("")}</tr>`).join("");
+  const rows = theme.members.map(member => `<tr><td><a class="ticker" href="${esc(member.url)}" target="_blank" rel="noopener noreferrer">${esc(member.symbol)}</a>${pinButton(member.symbol)}</td><td>${esc(member.description || "—")}</td>${PERIODS.map(([key]) => `<td class="${tone(member[key])}">${fmt(member[key])}</td>`).join("")}</tr>`).join("");
   const missing = theme.unquoted.length ? `<p class="miss">These stocks have no price: ${theme.unquoted.map(esc).join(", ")}.</p>` : "";
   const proxy = theme.etf ? ` The fund ${esc(theme.etf)} is a label only. It is not part of the average.` : "";
   return `<p class="blurb">${esc(theme.blurb)}${proxy}</p>${missing}<table class="members"><thead>${head}</thead><tbody>${rows || `<tr><td colspan="8">No stocks in this theme have a price.</td></tr>`}</tbody></table>`;
@@ -585,16 +693,17 @@ function paintBars(rows) {
     const neg = value < 0 ? `${pct}${fill}` : "";
     const pos = value < 0 ? "" : `${fill}${pct}`;
     const mark = `<span class="bar-side bar-side--neg">${neg}</span><span class="bar-axis"></span><span class="bar-side bar-side--pos">${pos}</span>`;
-    return `<div class="bar-item" style="--i:${Math.min(index, 12)}"><button type="button" class="bar-row" data-open="${esc(theme.id)}" aria-expanded="${open ? "true" : "false"}"><span class="bar-name">${esc(theme.name)}</span><span class="bar-track">${mark}</span></button>${open ? `<div class="bar-detail">${memberTable(theme)}</div>` : ""}</div>`;
+    const note = storyLine(theme, rankById.get(theme.id));
+    return `<div class="bar-item" style="--i:${Math.min(index, 12)}"><button type="button" class="bar-row" data-open="${esc(theme.id)}" aria-expanded="${open ? "true" : "false"}"><span class="bar-copy"><span class="bar-name">${esc(theme.name)}</span>${note ? `<span class="bar-note">${esc(note)}</span>` : ""}</span><span class="bar-track">${mark}</span></button>${open ? `<div class="bar-detail">${memberTable(theme)}</div>` : ""}</div>`;
   }).join("") || `<p class="empty">No themes match this filter.</p>`;
 }
+let rankById = new Map();
 function paint() {
+  rankById = todayRankMap();
   const rows = visible();
   document.querySelectorAll("[data-tape-view]").forEach(button => {
     button.setAttribute("aria-pressed", button.dataset.tapeView === view ? "true" : "false");
   });
-  const themeBtn = document.getElementById("theme-toggle");
-  if (themeBtn) themeBtn.setAttribute("aria-pressed", document.documentElement.dataset.theme === "dark" ? "true" : "false");
   tableScrollEl.hidden = view !== "table";
   barsEl.hidden = view !== "bars";
   tapeEl.hidden = view === "bars";
@@ -607,7 +716,10 @@ function paint() {
   const showing = shownThemes < totalThemes
     ? (shownThemes === 1 ? "1 theme is showing. " : `${shownThemes} themes are showing. `)
     : "";
-  ledeEl.textContent = `${showing}The date is ${data.as_of}. Each theme is an equal-weight average.`;
+  const expected = typeof expectedSnapshotDate === "function" ? expectedSnapshotDate(new Date()) : "";
+  const behind = expected && data.as_of < expected ? " Later closes have not been scanned." : "";
+  ledeEl.textContent = `${showing}The date is ${data.as_of}.${behind} Each theme is an equal-weight average.`;
+  paintPins();
   footEl.textContent = "Select a theme to see its stocks. The numbers are the percent change. Stocks with no price are listed, and they are left out of the average.";
   bodyEl.innerHTML = rows.map(theme => {
     const cells = PERIODS.map(([key]) => `<td class="${tone(theme[key])}">${fmt(theme[key])}</td>`).join("");
@@ -615,11 +727,12 @@ function paint() {
       ? `<span class="meter" style="--fill:${Math.round(theme.breadth * 100)}%"><i></i></span>${theme.green}/${theme.prints}`
       : "—";
     const leader = theme.leader
-      ? `<a class="ticker" href="${esc(theme.leader.url)}" target="_blank" rel="noopener noreferrer">${esc(theme.leader.symbol)}</a> <span class="${tone(theme.leader.today)}">${fmt(theme.leader.today)}</span>`
+      ? `<a class="ticker" href="${esc(theme.leader.url)}" target="_blank" rel="noopener noreferrer">${esc(theme.leader.symbol)}</a>${pinButton(theme.leader.symbol)} <span class="${tone(theme.leader.today)}">${fmt(theme.leader.today)}</span>`
       : "—";
     const open = theme.id === openId;
+    const note = storyLine(theme, rankById.get(theme.id));
     return `<tr>
-      <td><button type="button" class="sort name" data-open="${esc(theme.id)}" aria-expanded="${open ? "true" : "false"}">${esc(theme.name)}</button></td>
+      <td><button type="button" class="sort name" data-open="${esc(theme.id)}" aria-expanded="${open ? "true" : "false"}">${esc(theme.name)}</button>${note ? `<span class="theme-extra">${esc(note)}</span>` : ""}</td>
       <td class="lane-tag">${esc(theme.lane)}</td>
       ${cells}
       <td>${breadth}</td>
@@ -628,13 +741,11 @@ function paint() {
   }).join("") || `<tr><td class="empty" colspan="10">No themes match this filter.</td></tr>`;
 }
 document.addEventListener("click", event => {
-  const themeBtn = event.target.closest("#theme-toggle");
-  if (themeBtn) {
-    const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
-    if (next === "dark") document.documentElement.dataset.theme = "dark";
-    else delete document.documentElement.dataset.theme;
-    try { localStorage.setItem("lld-tape-theme", next); } catch (e) {}
-    themeBtn.setAttribute("aria-pressed", next === "dark" ? "true" : "false");
+  const pin = event.target.closest("[data-pin]");
+  if (pin) {
+    event.preventDefault();
+    event.stopPropagation();
+    togglePin(pin.dataset.pin);
     return;
   }
   const viewBtn = event.target.closest("[data-tape-view]");
@@ -728,6 +839,12 @@ if (industry) {
 }
 symbolFilter = (params.get("symbols") || "").split(",").map(symbol => symbol.trim().toUpperCase()).filter(Boolean);
 paint();
+if (location.pathname.endsWith("/theme_tracker.html")) {
+  const path = location.pathname;
+  const next = path.slice(0, path.lastIndexOf("/") + 1) + "tape.html" + location.search + location.hash;
+  if (history.replaceState) history.replaceState(null, "", next);
+  else location.replace(next);
+}
 </script>
 </body>
 </html>

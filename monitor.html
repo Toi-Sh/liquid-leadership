@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Monitor | GB Market Terminal</title>
+  <meta name="description" content="Implied volatility, open interest, and gamma walls for SPY, QQQ, and IWM.">
+  <link rel="icon" type="image/png" href="assets/nel-favicon.png">
+  <link rel="preload" href="assets/fonts/newsreader-latin-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/source-sans-3-latin-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="tokens.css?v=20261015i">
+  <style>
+    /* Hallmark · monitor board · terminal tokens */
+    html { color-scheme: dark; }
+    html, body { overflow-x: clip; margin: 0; }
+    body {
+      background: var(--color-paper);
+      color: var(--color-ink-2);
+      font-family: var(--font-body);
+      font-size: var(--text-sm);
+      line-height: 1.4;
+    }
+    h1, h2, button, a { font-style: normal; }
+    .skip-link {
+      position: absolute;
+      left: var(--space-sm);
+      top: var(--space-sm);
+      z-index: var(--z-sticky-nav);
+      padding: var(--space-xs) var(--space-sm);
+      background: var(--color-accent);
+      color: var(--color-accent-ink);
+      text-decoration: none;
+      transform: translateY(-200%);
+    }
+    .skip-link:focus-visible { transform: none; outline: 2px solid var(--color-focus); }
+    .nav-edge {
+      position: sticky;
+      top: 0;
+      z-index: var(--z-sticky-nav);
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      min-height: var(--banner-height);
+      padding: var(--space-xs) max(var(--page-gutter), env(safe-area-inset-right)) var(--space-xs) max(var(--page-gutter), env(safe-area-inset-left));
+      background: var(--color-paper);
+      border-bottom: var(--rule) solid var(--color-rule);
+    }
+    .brand { font-family: var(--font-display); color: var(--color-ink); text-decoration: none; }
+    .bbg-keys { display: flex; flex-wrap: wrap; min-width: 0; }
+    .desk-menu { position: relative; display: flex; }
+    .desk-tab {
+      display: flex;
+      align-items: center;
+      min-height: var(--control-height);
+      padding: 0 var(--space-12);
+      border: 0;
+      background: transparent;
+      color: var(--color-muted);
+      font-family: var(--font-body);
+      font-size: var(--text-xs);
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .desk-tab[aria-current="page"], .desk-tab[aria-expanded="true"] { color: var(--color-accent); }
+    .desk-tab:hover { color: var(--color-accent); }
+    .desk-tab:focus-visible, .quote:focus-visible, .symbol:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+    .desk-menu__panel {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      z-index: var(--z-raised);
+      min-width: 11rem;
+      padding: var(--space-xs) 0;
+      background: var(--color-paper);
+      border: var(--rule) solid var(--color-rule);
+    }
+    .desk-menu__panel[hidden] { display: none; }
+    .desk-menu__panel a {
+      display: block;
+      padding: var(--space-xs) var(--space-sm);
+      color: var(--color-ink-2);
+      text-decoration: none;
+    }
+    .desk-menu__panel a:hover { color: var(--color-accent); }
+    main {
+      padding: var(--space-md) max(var(--page-gutter), env(safe-area-inset-right)) var(--space-xl) max(var(--page-gutter), env(safe-area-inset-left));
+    }
+    h1 {
+      margin: 0 0 var(--space-2xs);
+      font-family: var(--font-display);
+      font-size: var(--text-xl);
+      font-weight: 600;
+      color: var(--color-ink);
+    }
+    .lede { margin: 0 0 var(--space-md); color: var(--color-muted); }
+    .quotes, .split { display: grid; gap: var(--space-sm); }
+    .quotes { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-bottom: var(--space-md); }
+    .split { grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); margin-bottom: var(--space-md); }
+    .quote, .panel {
+      min-width: 0;
+      padding: var(--space-sm) var(--space-md);
+      border: var(--rule) solid var(--color-rule);
+      background: var(--color-paper);
+      color: inherit;
+      font: inherit;
+      text-align: left;
+    }
+    .quote { cursor: pointer; }
+    .quote[aria-pressed="true"] { border-color: var(--color-accent); }
+    .quote-symbol, .panel h2 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: var(--text-lg);
+      font-weight: 600;
+      color: var(--color-ink);
+    }
+    .quote-symbol { font-size: var(--text-display); font-weight: 400; letter-spacing: -0.02em; line-height: 1.1; }
+    .quote-last { margin: var(--space-2xs) 0 0; font-family: var(--font-display); font-size: var(--text-md); color: var(--color-ink); }
+    .quote .muted { font-size: var(--text-xs); }
+    .up { color: var(--color-up); }
+    .down { color: var(--color-down); }
+    .muted { color: var(--color-muted); }
+    .panel h2 { font-size: var(--text-md); margin-bottom: var(--space-xs); }
+    .symbols { display: flex; gap: var(--space-xs); margin: 0 0 var(--space-sm); }
+    .symbol {
+      min-height: var(--control-height);
+      padding: 0 var(--space-sm);
+      border: 0;
+      border-bottom: 2px solid transparent;
+      background: transparent;
+      color: var(--color-muted);
+      font-family: var(--font-body);
+      font-size: var(--text-sm);
+      cursor: pointer;
+    }
+    .symbol[aria-pressed="true"] { color: var(--color-ink); border-bottom-color: var(--color-accent); }
+    svg { display: block; width: 100%; height: auto; }
+    .swatch { display: inline-block; width: 0.7rem; height: 0.7rem; margin-right: 0.25rem; vertical-align: -0.05rem; }
+    .swatch-spy { background: var(--color-accent); }
+    .swatch-qqq { background: var(--color-frame-6m); }
+    .swatch-iwm { background: var(--color-frame-3m); }
+    .swatch-vix { background: var(--color-ink); }
+    .swatch-vxn { background: var(--color-muted); }
+    .swatch-call { background: var(--color-up); }
+    .swatch-put { background: var(--color-down); }
+    .legend, .walls, .method { margin: var(--space-xs) 0 0; }
+    .walls { color: var(--color-ink); }
+    .chart-call { fill: var(--color-up); }
+    .chart-put { fill: var(--color-down); }
+    .chart-spy { stroke: var(--color-accent); }
+    .chart-qqq { stroke: var(--color-frame-6m); }
+    .chart-iwm { stroke: var(--color-frame-3m); }
+    .chart-vix { stroke: var(--color-ink); }
+    .chart-vxn { stroke: var(--color-muted); }
+    .axis { stroke: var(--color-rule); }
+    .tick { fill: var(--color-muted); font-family: var(--font-body); font-size: 11px; }
+    @media (max-width: 800px) {
+      .quotes, .split { grid-template-columns: minmax(0, 1fr); }
+    }
+  </style>
+  <link rel="stylesheet" href="nav.css?v=20261015j">
+  <link rel="stylesheet" href="charts.css?v=20261015d">
+  <link rel="stylesheet" href="shadcn-chart.css?v=20261015g">
+</head>
+<body>
+<a class="skip-link" href="#monitor">Skip to monitor</a>
+<header class="nav-edge">
+  <a class="brand" href="themes.html">GB Market Terminal</a>
+  <nav class="bbg-keys" aria-label="Terminal panels">
+    <a class="desk-tab" href="regime.html">Regime</a>
+    <a class="desk-tab" href="monitor.html" aria-current="page">Monitor</a>
+    <a class="desk-tab" href="themes.html">Themes</a>
+    <a class="desk-tab" href="liquid.html">Leaders</a>
+    <a class="desk-tab" href="rs.html">Setups</a>
+    <a class="desk-tab" href="tape.html">Tape</a>
+  </nav>
+</header>
+<main id="monitor">
+  <h1>Monitor</h1>
+  <p class="lede" id="lede"></p>
+  <div class="quotes" id="quotes"></div>
+  <div class="split">
+    <section class="panel" aria-labelledby="iv-title">
+      <h2 id="iv-title">Implied volatility</h2>
+      <div id="iv-chart"></div>
+      <p class="legend"><span class="swatch swatch-spy"></span>SPY <span class="swatch swatch-qqq"></span>QQQ <span class="swatch swatch-iwm"></span>IWM</p>
+    </section>
+    <section class="panel" aria-labelledby="index-title">
+      <h2 id="index-title">Volatility indexes</h2>
+      <div id="index-chart"></div>
+      <p class="legend"><span class="swatch swatch-vix"></span>VIX <span class="swatch swatch-vxn"></span>Nasdaq volatility</p>
+    </section>
+  </div>
+  <div class="symbols" id="symbols" role="group" aria-label="Underlying"></div>
+  <section class="panel" aria-labelledby="oi-title">
+    <h2 id="oi-title">Open interest</h2>
+    <div id="oi-chart"></div>
+    <p class="legend"><span class="swatch swatch-call"></span>Calls <span class="swatch swatch-put"></span>Puts</p>
+  </section>
+  <section class="panel" aria-labelledby="gamma-title" style="margin-top:var(--space-sm)">
+    <h2 id="gamma-title">Gamma</h2>
+    <div id="gamma-chart"></div>
+    <p class="walls" id="walls"></p>
+  </section>
+  <p class="method muted" id="method"></p>
+</main>
+<script id="payload" type="application/json">{"as_of":"2026-10-15","names":[{"symbol":"SPY","spot":769.6,"change_pct":-1.0928,"front_iv":0.13098,"front_expiry":null,"term":[{"expiry":"2026-10-16","days":1,"iv":0.1411},{"expiry":"2026-10-22","days":7,"iv":0.1181},{"expiry":"2026-10-28","days":13,"iv":0.12304999999999999},{"expiry":"2026-11-13","days":29,"iv":0.1335},{"expiry":"2026-12-18","days":64,"iv":0.13945000000000002},{"expiry":"2026-12-31","days":77,"iv":0.1395}],"book":{"expiry":"2026-10-16","days":1,"call_wall":770.0,"put_wall":772.0,"flip":774.5298296671873,"strikes":[{"strike":755.0,"call_oi":3824,"put_oi":38027,"call_gamma":33746929.954816,"put_gamma":-337841846.28480005,"gamma":-304094916.32998407},{"strike":756.0,"call_oi":1068,"put_oi":6494,"call_gamma":10500487.415808,"put_gamma":-64233098.695168,"gamma":-53732611.279360004},{"strike":757.0,"call_oi":960,"put_oi":30422,"call_gamma":10518966.6816,"put_gamma":-336945364.9802241,"gamma":-326426398.2986241},{"strike":758.0,"call_oi":1541,"put_oi":10360,"call_gamma":18801823.745536003,"put_gamma":-127630129.07008001,"gamma":-108828305.32454401},{"strike":759.0,"call_oi":1339,"put_oi":6613,"call_gamma":18161268.426496,"put_gamma":-90869183.481856,"gamma":-72707915.05536},{"strike":760.0,"call_oi":9819,"put_oi":31978,"call_gamma":147717209.44281602,"put_gamma":-486759615.7199361,"gamma":-339042406.27712005},{"strike":761.0,"call_oi":2910,"put_oi":5691,"call_gamma":48259313.356800005,"put_gamma":-95727571.98950401,"gamma":-47468258.632704005},{"strike":762.0,"call_oi":3022,"put_oi":10464,"call_gamma":54949399.85766401,"put_gamma":-193986803.39251202,"gamma":-139037403.534848},{"strike":763.0,"call_oi":2368,"put_oi":9942,"call_gamma":47124970.733568005,"put_gamma":-201386327.86022404,"gamma":-154261357.12665603},{"strike":764.0,"call_oi":2477,"put_oi":5627,"call_gamma":53548707.047680005,"put_gamma":-124312804.71833602,"gamma":-70764097.67065601},{"strike":765.0,"call_oi":7183,"put_oi":31631,"call_gamma":167622458.57843202,"put_gamma":-755001972.677888,"gamma":-587379514.0994561},{"strike":766.0,"call_oi":7430,"put_oi":7558,"call_gamma":185268262.10048002,"put_gamma":-193384095.03129604,"gamma":-8115832.930816025},{"strike":767.0,"call_oi":8141,"put_oi":10569,"call_gamma":215051626.45657602,"put_gamma":-287327174.07513607,"gamma":-72275547.61856005},{"strike":768.0,"call_oi":3796,"put_oi":18176,"call_gamma":105220939.41964802,"put_gamma":-518890202.20211214,"gamma":-413669262.78246415},{"strike":769.0,"call_oi":3559,"put_oi":5018,"call_gamma":102024263.351296,"put_gamma":-148306887.552512,"gamma":-46282624.201216},{"strike":770.0,"call_oi":18899,"put_oi":29339,"call_gamma":551843412.154112,"put_gamma":-884490570.9852161,"gamma":-332647158.83110416},{"strike":771.0,"call_oi":3811,"put_oi":6968,"call_gamma":111279710.234368,"put_gamma":-210066133.76819202,"gamma":-98786423.53382403},{"strike":772.0,"call_oi":6758,"put_oi":52219,"call_gamma":193328301.86342403,"put_gamma":-1543331478.896896,"gamma":-1350003177.0334718},{"strike":773.0,"call_oi":3536,"put_oi":26545,"call_gamma":97385730.72384001,"put_gamma":-754664785.3056002,"gamma":-657279054.5817602},{"strike":774.0,"call_oi":4632,"put_oi":9840,"call_gamma":119889212.01254402,"put_gamma":-263429041.27488002,"gamma":-143539829.26233602},{"strike":775.0,"call_oi":21823,"put_oi":15933,"call_gamma":520894314.114304,"put_gamma":-393517208.83737606,"gamma":127377105.27692795},{"strike":776.0,"call_oi":7298,"put_oi":4120,"call_gamma":157770877.68832004,"put_gamma":-92239965.94175999,"gamma":65530911.74656005},{"strike":777.0,"call_oi":8228,"put_oi":9778,"call_gamma":157408044.41190404,"put_gamma":-194589511.75372803,"gamma":-37181467.341823995},{"strike":778.0,"call_oi":10186,"put_oi":5420,"call_gamma":170130781.996032,"put_gamma":-94058278.31296,"gamma":76072503.683072},{"strike":779.0,"call_oi":5893,"put_oi":4806,"call_gamma":84815032.483584,"put_gamma":-71162941.824,"gamma":13652090.659584},{"strike":780.0,"call_oi":27605,"put_oi":8792,"call_gamma":338445087.70176005,"put_gamma":-108313136.56217599,"gamma":230131951.13958406},{"strike":781.0,"call_oi":9507,"put_oi":1828,"call_gamma":98539796.40959999,"put_gamma":-18297553.011712,"gamma":80242243.39788799},{"strike":782.0,"call_oi":13307,"put_oi":1514,"call_gamma":115070269.629952,"put_gamma":-12105695.94624,"gamma":102964573.683712},{"strike":783.0,"call_oi":8825,"put_oi":1291,"call_gamma":63768274.0864,"put_gamma":-7952244.045824,"gamma":55816030.040576},{"strike":784.0,"call_oi":8380,"put_oi":650,"call_gamma":50129746.73408,"put_gamma":-3041379.1616000007,"gamma":47088367.57248},{"strike":785.0,"call_oi":59346,"put_oi":8008,"call_gamma":295257444.378624,"put_gamma":-27509467.009024,"gamma":267747977.36960003}]}},{"symbol":"QQQ","spot":722.1,"change_pct":-2.0056,"front_iv":0.19808,"front_expiry":null,"term":[{"expiry":"2026-10-16","days":1,"iv":0.24755},{"expiry":"2026-10-22","days":7,"iv":0.20450000000000002},{"expiry":"2026-10-28","days":13,"iv":0.203},{"expiry":"2026-11-13","days":29,"iv":0.20829999999999999},{"expiry":"2026-12-18","days":64,"iv":0.20785},{"expiry":"2026-12-31","days":77,"iv":0.20565}],"book":{"expiry":"2026-10-16","days":1,"call_wall":730.0,"put_wall":730.0,"flip":718.5669834513908,"strikes":[{"strike":707.0,"call_oi":1059,"put_oi":14030,"call_gamma":5301049.787424001,"put_gamma":-70961713.74531001,"gamma":-65660663.95788601},{"strike":708.0,"call_oi":1351,"put_oi":2453,"call_gamma":7396722.710055002,"put_gamma":-13430170.842165003,"gamma":-6033448.132110001},{"strike":709.0,"call_oi":1320,"put_oi":3571,"call_gamma":7846454.71368,"put_gamma":-21227037.714054003,"gamma":-13380583.000374004},{"strike":710.0,"call_oi":5059,"put_oi":25000,"call_gamma":32710038.444756005,"put_gamma":-161642807.1,"gamma":-128932768.655244},{"strike":711.0,"call_oi":777,"put_oi":2927,"call_gamma":5429008.319237999,"put_gamma":-20451360.811338004,"gamma":-15022352.492100004},{"strike":712.0,"call_oi":8831,"put_oi":15670,"call_gamma":66768647.186294995,"put_gamma":-118476356.17815001,"gamma":-51707708.99185502},{"strike":713.0,"call_oi":1450,"put_oi":8631,"call_gamma":11794710.6342,"put_gamma":-70657043.125347,"gamma":-58862332.491147004},{"strike":714.0,"call_oi":2637,"put_oi":5078,"call_gamma":23100112.848456003,"put_gamma":-44483266.228464015,"gamma":-21383153.380008012},{"strike":715.0,"call_oi":7073,"put_oi":18696,"call_gamma":66385136.590739995,"put_gamma":-176450122.51581603,"gamma":-110064985.92507604},{"strike":716.0,"call_oi":1520,"put_oi":13088,"call_gamma":15217366.717439998,"put_gamma":-131711982.08054401,"gamma":-116494615.36310402},{"strike":717.0,"call_oi":2228,"put_oi":22652,"call_gamma":23699546.948592003,"put_gamma":-243314764.672392,"gamma":-219615217.7238},{"strike":718.0,"call_oi":9263,"put_oi":5738,"call_gamma":104810812.55171101,"put_gamma":-65523841.143102,"gamma":39286971.40860901},{"strike":719.0,"call_oi":3164,"put_oi":5617,"call_gamma":37945388.25252001,"put_gamma":-67949630.392104,"gamma":-30004242.13958399},{"strike":720.0,"call_oi":18790,"put_oi":19401,"call_gamma":237102883.73837999,"put_gamma":-246836075.01080403,"gamma":-9733191.272424042},{"strike":721.0,"call_oi":1993,"put_oi":2396,"call_gamma":26395853.256702006,"put_gamma":-32108101.488252006,"gamma":-5712248.231550001},{"strike":722.0,"call_oi":1070,"put_oi":5249,"call_gamma":14840895.405420002,"put_gamma":-73624700.77802101,"gamma":-58783805.372601},{"strike":723.0,"call_oi":1450,"put_oi":3798,"call_gamma":20943172.08765,"put_gamma":-55450782.83304001,"gamma":-34507610.745390005},{"strike":724.0,"call_oi":1744,"put_oi":12649,"call_gamma":26098951.920048002,"put_gamma":-191930445.58041903,"gamma":-165831493.66037104},{"strike":725.0,"call_oi":9674,"put_oi":25289,"call_gamma":149311233.77486402,"put_gamma":-395592091.8147,"gamma":-246280858.039836},{"strike":726.0,"call_oi":2154,"put_oi":2736,"call_gamma":34143966.57225601,"put_gamma":-43940146.396608,"gamma":-9796179.824351996},{"strike":727.0,"call_oi":2022,"put_oi":6811,"call_gamma":32684175.59562,"put_gamma":-111870640.36606503,"gamma":-79186464.77044502},{"strike":728.0,"call_oi":2256,"put_oi":8724,"call_gamma":36937154.278944,"put_gamma":-145566126.36288002,"gamma":-108628972.08393602},{"strike":729.0,"call_oi":1567,"put_oi":5119,"call_gamma":25901382.695499003,"put_gamma":-86214902.59451702,"gamma":-60313519.89901802},{"strike":730.0,"call_oi":16570,"put_oi":28780,"call_gamma":274754186.36766005,"put_gamma":-486217392.32952005,"gamma":-211463205.96186},{"strike":731.0,"call_oi":2880,"put_oi":2943,"call_gamma":47454156.737280004,"put_gamma":-49412954.702286005,"gamma":-1958797.9650060013},{"strike":732.0,"call_oi":1325,"put_oi":11679,"call_gamma":21555850.4694,"put_gamma":-193654444.33240205,"gamma":-172098593.86300206},{"strike":733.0,"call_oi":1735,"put_oi":5635,"call_gamma":27683155.715310004,"put_gamma":-91673371.61891998,"gamma":-63990215.903609976},{"strike":734.0,"call_oi":4078,"put_oi":24344,"call_gamma":63153636.16260601,"put_gamma":-383348327.03380805,"gamma":-320194690.87120205},{"strike":735.0,"call_oi":10961,"put_oi":13563,"call_gamma":163459776.53748602,"put_gamma":-205799085.57255304,"gamma":-42339309.03506702},{"strike":736.0,"call_oi":1364,"put_oi":3420,"call_gamma":19416533.988852,"put_gamma":-49575327.50916,"gamma":-30158793.520307995},{"strike":737.0,"call_oi":1049,"put_oi":3468,"call_gamma":14166740.614131,"put_gamma":-47558650.99064401,"gamma":-33391910.376513008}]}},{"symbol":"IWM","spot":271.37,"change_pct":-1.9641,"front_iv":0.19524999999999998,"front_expiry":null,"term":[{"expiry":"2026-10-16","days":1,"iv":0.2135},{"expiry":"2026-10-22","days":7,"iv":0.17695},{"expiry":"2026-10-28","days":13,"iv":0.18825},{"expiry":"2026-11-13","days":29,"iv":0.1976},{"expiry":"2026-12-18","days":64,"iv":0.19465},{"expiry":"2026-12-31","days":77,"iv":0.19324999999999998}],"book":{"expiry":"2026-10-16","days":1,"call_wall":277.0,"put_wall":272.0,"flip":null,"strikes":[{"strike":262.0,"call_oi":52,"put_oi":10173,"call_gamma":70077.41973804,"put_gamma":-13709569.057597712,"gamma":-13639491.637859672},{"strike":263.0,"call_oi":68,"put_oi":13372,"call_gamma":114674.81926868002,"put_gamma":-22648939.5806564,"gamma":-22534264.76138772},{"strike":264.0,"call_oi":74,"put_oi":8293,"call_gamma":157490.09021834,"put_gamma":-17710602.369419303,"gamma":-17553112.279200964},{"strike":265.0,"call_oi":329,"put_oi":47396,"call_gamma":886748.8882236601,"put_gamma":-127745745.61169787,"gamma":-126858996.7234742},{"strike":266.0,"call_oi":35,"put_oi":30522,"call_gamma":118047.60807070002,"put_gamma":-103393798.06772278,"gamma":-103275750.45965208},{"strike":267.0,"call_oi":25,"put_oi":39753,"call_gamma":103466.5560445,"put_gamma":-165402483.37202206,"gamma":-165299016.81597757},{"strike":268.0,"call_oi":123,"put_oi":24209,"call_gamma":608692.6445846399,"put_gamma":-121051533.07729562,"gamma":-120442840.43271098},{"strike":269.0,"call_oi":59,"put_oi":63659,"call_gamma":338030.02530637995,"put_gamma":-368942098.6194578,"gamma":-368604068.5941514},{"strike":270.0,"call_oi":377,"put_oi":68781,"call_gamma":2398715.6133283204,"put_gamma":-444213495.2859255,"gamma":-441814779.67259717},{"strike":271.0,"call_oi":351,"put_oi":55280,"call_gamma":2372867.38473642,"put_gamma":-380223171.3695888,"gamma":-377850303.9848524},{"strike":272.0,"call_oi":356,"put_oi":66009,"call_gamma":2422398.7766193594,"put_gamma":-457907467.0363559,"gamma":-455485068.25973654},{"strike":273.0,"call_oi":464,"put_oi":62897,"call_gamma":2986435.10833184,"put_gamma":-412696993.18135566,"gamma":-409710558.0730238},{"strike":274.0,"call_oi":384,"put_oi":42436,"call_gamma":2183092.7833651206,"put_gamma":-245317068.77287945,"gamma":-243133975.98951432},{"strike":275.0,"call_oi":4120,"put_oi":85204,"call_gamma":19387496.9941092,"put_gamma":-407219296.9643352,"gamma":-387831799.970226},{"strike":276.0,"call_oi":3749,"put_oi":23404,"call_gamma":13886957.12891443,"put_gamma":-88243702.07578114,"gamma":-74356744.9468667},{"strike":277.0,"call_oi":13645,"put_oi":41705,"call_gamma":38384914.0256791,"put_gamma":-119470696.65595403,"gamma":-81085782.63027494},{"strike":278.0,"call_oi":8923,"put_oi":25090,"call_gamma":18727483.46489295,"put_gamma":-53212886.59452479,"gamma":-34485403.12963185},{"strike":279.0,"call_oi":7222,"put_oi":42074,"call_gamma":11328196.05917934,"put_gamma":-65066398.191702604,"gamma":-53738202.13252327},{"strike":280.0,"call_oi":30619,"put_oi":64636,"call_gamma":36528318.98101782,"put_gamma":-72826522.45005853,"gamma":-36298203.469040714}]}}],"vol":{"vix":[{"date":"2026-07-23","close":18.7},{"date":"2026-07-24","close":18.58},{"date":"2026-07-27","close":18.67},{"date":"2026-07-28","close":18.21},{"date":"2026-07-29","close":20.66},{"date":"2026-07-30","close":17.09},{"date":"2026-07-31","close":15.99},{"date":"2026-08-03","close":15.86},{"date":"2026-08-04","close":16.5},{"date":"2026-08-05","close":15.81},{"date":"2026-08-06","close":15.15},{"date":"2026-08-07","close":14.9},{"date":"2026-08-10","close":15.46},{"date":"2026-08-11","close":15.28},{"date":"2026-08-12","close":14.55},{"date":"2026-08-13","close":14.63},{"date":"2026-08-14","close":14.25},{"date":"2026-08-17","close":15.19},{"date":"2026-08-18","close":15.84},{"date":"2026-08-19","close":14.89},{"date":"2026-08-20","close":16.01},{"date":"2026-08-21","close":15.13},{"date":"2026-08-24","close":15.85},{"date":"2026-08-25","close":15.45},{"date":"2026-08-26","close":15.21},{"date":"2026-08-27","close":14.51},{"date":"2026-08-28","close":14.43},{"date":"2026-08-31","close":14.92},{"date":"2026-09-01","close":16.34},{"date":"2026-09-02","close":15.2},{"date":"2026-09-03","close":14.32},{"date":"2026-09-04","close":14.53},{"date":"2026-09-07","close":15.3},{"date":"2026-09-08","close":15.72},{"date":"2026-09-09","close":16.46},{"date":"2026-09-10","close":17.84},{"date":"2026-09-11","close":15.84},{"date":"2026-09-14","close":17.1},{"date":"2026-09-15","close":17.2},{"date":"2026-09-16","close":17.71},{"date":"2026-09-17","close":15.44},{"date":"2026-09-18","close":14.81},{"date":"2026-09-21","close":14.87},{"date":"2026-09-22","close":14.21},{"date":"2026-09-23","close":15.18},{"date":"2026-09-24","close":15.67},{"date":"2026-09-25","close":14.87},{"date":"2026-09-28","close":16.07},{"date":"2026-09-29","close":16.04},{"date":"2026-09-30","close":16.34},{"date":"2026-10-01","close":16.39},{"date":"2026-10-02","close":15.31},{"date":"2026-10-05","close":15.52},{"date":"2026-10-06","close":15.01},{"date":"2026-10-07","close":15.08},{"date":"2026-10-08","close":15.41},{"date":"2026-10-09","close":14.84},{"date":"2026-10-12","close":15.21},{"date":"2026-10-13","close":15.27},{"date":"2026-10-14","close":16.87}],"vxn":[{"date":"2026-07-22","close":26.74},{"date":"2026-07-23","close":28.06},{"date":"2026-07-24","close":28.39},{"date":"2026-07-27","close":28.65},{"date":"2026-07-28","close":28.61},{"date":"2026-07-29","close":30.84},{"date":"2026-07-30","close":27.55},{"date":"2026-07-31","close":26.0},{"date":"2026-08-03","close":24.77},{"date":"2026-08-04","close":25.48},{"date":"2026-08-05","close":24.15},{"date":"2026-08-06","close":23.95},{"date":"2026-08-07","close":22.82},{"date":"2026-08-10","close":23.04},{"date":"2026-08-11","close":22.38},{"date":"2026-08-12","close":20.97},{"date":"2026-08-13","close":21.23},{"date":"2026-08-14","close":20.72},{"date":"2026-08-17","close":21.51},{"date":"2026-08-18","close":22.56},{"date":"2026-08-19","close":22.04},{"date":"2026-08-20","close":23.26},{"date":"2026-08-21","close":21.98},{"date":"2026-08-24","close":22.69},{"date":"2026-08-25","close":21.79},{"date":"2026-08-26","close":21.42},{"date":"2026-08-27","close":20.24},{"date":"2026-08-28","close":19.92},{"date":"2026-08-31","close":20.18},{"date":"2026-09-01","close":21.96},{"date":"2026-09-02","close":21.07},{"date":"2026-09-03","close":20.16},{"date":"2026-09-04","close":20.04},{"date":"2026-09-08","close":21.71},{"date":"2026-09-09","close":22.32},{"date":"2026-09-10","close":23.33},{"date":"2026-09-11","close":21.02},{"date":"2026-09-14","close":22.05},{"date":"2026-09-15","close":22.26},{"date":"2026-09-16","close":22.44},{"date":"2026-09-17","close":19.96},{"date":"2026-09-18","close":19.29},{"date":"2026-09-21","close":20.39},{"date":"2026-09-22","close":20.18},{"date":"2026-09-23","close":20.76},{"date":"2026-09-24","close":21.24},{"date":"2026-09-25","close":20.87},{"date":"2026-09-28","close":22.13},{"date":"2026-09-29","close":22.07},{"date":"2026-09-30","close":22.46},{"date":"2026-10-01","close":22.51},{"date":"2026-10-02","close":21.2},{"date":"2026-10-05","close":21.7},{"date":"2026-10-06","close":21.15},{"date":"2026-10-07","close":21.0},{"date":"2026-10-08","close":21.98},{"date":"2026-10-09","close":20.55},{"date":"2026-10-12","close":20.84},{"date":"2026-10-13","close":21.14},{"date":"2026-10-14","close":22.7}]}}</script>
+<script src="shadcn-charts.js?v=20261015g"></script>
+<script>
+const data = JSON.parse(document.getElementById("payload").textContent);
+const names = (data.names || []).filter(item => item && item.book);
+let current = names[0] ? names[0].symbol : "";
+function esc(value) {
+  return String(value ?? "").replace(/[&<>"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char]));
+}
+function pct(value, digits) {
+  const number = Number(value);
+  if (!Number.isFinite(number)) return "—";
+  const sign = number > 0 ? "+" : "";
+  return sign + number.toFixed(digits == null ? 2 : digits) + "%";
+}
+function ivPct(value) {
+  const number = Number(value);
+  if (!Number.isFinite(number)) return "—";
+  return (number * 100).toFixed(1) + "%";
+}
+function money(value) {
+  const number = Number(value);
+  if (!Number.isFinite(number)) return "—";
+  return number.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+function strikeLabel(value) {
+  const number = Number(value);
+  if (!Number.isFinite(number)) return "—";
+  return Number.isInteger(number) ? String(number) : number.toFixed(1);
+}
+function compact(value) {
+  const number = Math.abs(Number(value) || 0);
+  if (number >= 1e9) return (number / 1e9).toFixed(1) + "b";
+  if (number >= 1e6) return (number / 1e6).toFixed(1) + "m";
+  if (number >= 1e3) return (number / 1e3).toFixed(1) + "k";
+  return String(Math.round(number));
+}
+function tone(value) {
+  const number = Number(value);
+  if (!Number.isFinite(number) || number === 0) return "";
+  return number > 0 ? "up" : "down";
+}
+const chartColors = {
+  "chart-spy": "var(--chart-1)",
+  "chart-qqq": "var(--chart-2)",
+  "chart-iwm": "var(--chart-4)",
+  "chart-vix": "var(--chart-4)",
+  "chart-vxn": "var(--chart-2)"
+};
+function lineChart(host, series, yFormat) {
+  const points = series.flatMap(item => item.points);
+  if (!host || !points.length || !window.GBCharts) {
+    if (host) host.innerHTML = "<p class='muted'>No print for this chart.</p>";
+    return;
+  }
+  const keys = series.map((_, index) => "s" + index);
+  const byX = new Map();
+  series.forEach((item, index) => {
+    item.points.forEach(point => {
+      const row = byX.get(point.x) || { x: point.x, label: point.label || "" };
+      row[keys[index]] = point.y;
+      if (point.label) row.label = point.label;
+      byX.set(point.x, row);
+    });
+  });
+  GBCharts.mount(host, {
+    type: series.length === 1 ? "area" : "line",
+    data: [...byX.values()].sort((a, b) => a.x - b.x),
+    xKey: "label",
+    series: series.map((item, index) => ({
+      key: keys[index],
+      label: item.label || item.klass,
+      color: chartColors[item.klass] || "var(--chart-1)"
+    })),
+    yFormat,
+    height: "15rem"
+  });
+}
+function signedCompact(value) {
+  const text = compact(value).replace(/\.0([kmb])$/, "$1");
+  return value < 0 ? "-" + text : text;
+}
+function strikeChart(host, rows, mode) {
+  if (!host || !rows.length || !window.GBCharts) {
+    if (host) host.innerHTML = "<p class='muted'>No open interest in this window.</p>";
+    return;
+  }
+  if (mode === "oi") {
+    GBCharts.mount(host, {
+      type: "bar",
+      data: rows.map(row => ({ label: strikeLabel(row.strike), call: row.call_oi, put: row.put_oi })),
+      xKey: "label",
+      series: [
+        { key: "call", label: "Calls", color: "var(--color-up)" },
+        { key: "put", label: "Puts", color: "var(--color-down)" }
+      ],
+      yFormat: compact,
+      domain: [0, "auto"],
+      decimals: false,
+      height: "15rem"
+    });
+    return;
+  }
+  GBCharts.mount(host, {
+    type: "bar",
+    data: rows.map(row => ({ label: strikeLabel(row.strike), gamma: row.gamma })),
+    xKey: "label",
+    series: [{ key: "gamma", label: "Gamma", color: "var(--color-up)", signed: true }],
+    yFormat: signedCompact,
+    height: "15rem"
+  });
+}
+function monthDay(iso) {
+  const match = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso || "");
+  if (!match) return iso || "";
+  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  return `${Number(match[3])} ${months[Number(match[2]) - 1]}`;
+}
+function paintQuotes() {
+  document.getElementById("quotes").innerHTML = (data.names || []).map(item => {
+    if (!item.book && item.error) {
+      return `<article class="quote"><p class="quote-symbol">${esc(item.symbol)}</p><p class="muted">No chain.</p></article>`;
+    }
+    const pressed = item.symbol === current ? "true" : "false";
+    return `<button type="button" class="quote" data-symbol="${esc(item.symbol)}" aria-pressed="${pressed}"><p class="quote-symbol">${esc(item.symbol)}</p><p class="quote-last">${money(item.spot)} <span class="${tone(item.change_pct)}">${pct(item.change_pct)}</span></p><p class="muted">30-day IV ${ivPct(item.front_iv)}</p></button>`;
+  }).join("");
+}
+function paintSymbols() {
+  document.getElementById("symbols").innerHTML = names.map(item => `<button type="button" class="symbol" data-symbol="${esc(item.symbol)}" aria-pressed="${item.symbol === current ? "true" : "false"}">${esc(item.symbol)}</button>`).join("");
+}
+function paintCharts() {
+  const classes = { SPY: "chart-spy", QQQ: "chart-qqq", IWM: "chart-iwm" };
+  const series = names.map(item => ({
+    klass: classes[item.symbol] || "chart-spy",
+    label: item.symbol,
+    points: (item.term || []).map(point => ({ x: point.days, y: point.iv * 100, label: monthDay(point.expiry) }))
+  })).filter(item => item.points.length);
+  lineChart(document.getElementById("iv-chart"), series, value => value.toFixed(0) + "%");
+  const vol = data.vol || {};
+  const indexSeries = [
+    { klass: "chart-vix", label: "VIX", points: (vol.vix || []).map((point, index) => ({ x: index, y: point.close, label: monthDay(point.date) })) },
+    { klass: "chart-vxn", label: "Nasdaq volatility", points: (vol.vxn || []).map((point, index) => ({ x: index, y: point.close, label: monthDay(point.date) })) }
+  ].filter(item => item.points.length);
+  lineChart(document.getElementById("index-chart"), indexSeries, value => value.toFixed(0));
+  const book = (names.find(item => item.symbol === current) || {}).book;
+  const rows = book ? book.strikes : [];
+  strikeChart(document.getElementById("oi-chart"), rows, "oi");
+  strikeChart(document.getElementById("gamma-chart"), rows, "gamma");
+  const walls = document.getElementById("walls");
+  if (!book) {
+    walls.textContent = "";
+    return;
+  }
+  const bits = [`The book is ${monthDay(book.expiry)}.`];
+  if (book.call_wall != null && book.put_wall != null && book.call_wall === book.put_wall) {
+    bits.push(`The wall is ${strikeLabel(book.call_wall)}.`);
+  } else {
+    if (book.call_wall != null) bits.push(`The call wall is ${strikeLabel(book.call_wall)}.`);
+    if (book.put_wall != null) bits.push(`The put wall is ${strikeLabel(book.put_wall)}.`);
+  }
+  if (book.flip != null) bits.push(`Gamma flips near ${strikeLabel(book.flip)}.`);
+  walls.textContent = bits.join(" ");
+}
+function paint() {
+  document.getElementById("lede").textContent = `The date is ${data.as_of}. Quotes are delayed. The 30-day IV is the exchange number. The curve is the at-the-money average.`;
+  paintQuotes();
+  paintSymbols();
+  paintCharts();
+  document.getElementById("method").textContent = "Open interest and gamma are delayed CBOE quotes. Calls are counted positive and puts negative, for a 1% move. VIX is the S&P volatility index. The other line is Nasdaq volatility.";
+}
+document.addEventListener("click", event => {
+  const toggle = event.target.closest(".desk-tab[aria-haspopup]");
+  if (toggle) {
+    const panel = document.getElementById(toggle.getAttribute("aria-controls"));
+    const open = toggle.getAttribute("aria-expanded") === "true";
+    document.querySelectorAll(".desk-menu__panel").forEach(item => { item.hidden = true; });
+    document.querySelectorAll(".desk-tab[aria-haspopup]").forEach(item => item.setAttribute("aria-expanded", "false"));
+    if (!open && panel) {
+      panel.hidden = false;
+      toggle.setAttribute("aria-expanded", "true");
+    }
+    return;
+  }
+  if (!event.target.closest(".desk-menu")) {
+    document.querySelectorAll(".desk-menu__panel").forEach(item => { item.hidden = true; });
+    document.querySelectorAll(".desk-tab[aria-haspopup]").forEach(item => item.setAttribute("aria-expanded", "false"));
+  }
+  const pick = event.target.closest("[data-symbol]");
+  if (!pick || !names.some(item => item.symbol === pick.dataset.symbol)) return;
+  current = pick.dataset.symbol;
+  paint();
+});
+paint();
+</script>
+</body>
+</html>

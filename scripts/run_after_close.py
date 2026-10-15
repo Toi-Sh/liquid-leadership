@@ -90,6 +90,23 @@ def next_session_date(now: datetime) -> date:
     return candidate
 
 
+def is_session(day: date) -> bool:
+    return day.weekday() < 5 and day not in nyse_holidays(day.year)
+
+
+def expected_snapshot_date(now: datetime) -> date:
+    """The stamp a finished scan should already have written.
+
+    Before 16:10 NY on a session day, last night's file is stamped today.
+    After the close, tonight's file is stamped for the next session.
+    Weekends and holidays already carry Friday's next-session stamp.
+    """
+    local = now.astimezone(NY_TZ)
+    if is_session(local.date()) and (local.hour, local.minute) < (16, 10):
+        return local.date()
+    return next_session_date(local)
+
+
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(

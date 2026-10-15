@@ -185,7 +185,7 @@ class PageTests(unittest.TestCase):
             day(date="2026-10-10", t2108=22.0),
             day(date="2026-10-12", t2108=24.4, ratio5=0.56, up4=86, down4=367),
         ])
-        snapshot = build_snapshot(walked, [], {"price": "15.32", "delta": "—", "band": "normal", "day": "15.13–15.53"}, {"price": "5.24", "delta": "—", "side": "above 5.0"}, [], "12 Oct 2026, close")
+        snapshot = build_snapshot(walked, [], {"price": "15.32", "delta": "—", "band": "normal", "day": "15.13–15.53"}, {"price": "5.24", "delta": "—", "side": "above 5.0"}, [], "12 Oct 2026")
         snapshot["rules"] = ["<script>alert(1)</script>"]
         html = render_html(snapshot, [{
             "symbol": "SPY",

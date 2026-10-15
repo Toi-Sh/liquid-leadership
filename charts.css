@@ -1,0 +1,79 @@
+/* Hallmark · pre-emit critique: P4 H4 E4 S4 R4 V4
+ * Plot language shared by every chart. Grid, thin stroke, soft fill.
+ */
+.chart svg,
+.panel svg.spark,
+svg.spark {
+  color: var(--color-series-1);
+}
+.panel .chart-up svg,
+.chart-up svg.spark { color: var(--color-up); }
+.panel .chart-down svg,
+.chart-down svg.spark { color: var(--color-down); }
+
+.chart polyline,
+.chart path.line,
+svg.spark polyline,
+svg.spark path.line {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5px;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+.chart circle,
+svg.spark circle {
+  fill: currentColor;
+  stroke: var(--color-paper-3);
+  stroke-width: 1.5px;
+  vector-effect: non-scaling-stroke;
+}
+.chart .area,
+svg.spark .area {
+  stroke: none;
+  fill: currentColor;
+  opacity: 0.16;
+}
+.chart .grid,
+svg.spark .grid,
+.axis.grid {
+  fill: none;
+  stroke: var(--color-grid);
+  stroke-width: 1px;
+  vector-effect: non-scaling-stroke;
+}
+.chart .guide,
+svg.spark .guide {
+  fill: none;
+  stroke: var(--color-rule-2);
+  stroke-width: 1px;
+  stroke-dasharray: 3 3;
+  vector-effect: non-scaling-stroke;
+}
+.chart .tick,
+svg.spark .tick {
+  fill: var(--color-muted);
+  font-family: var(--font-body);
+  font-size: 11px;
+}
+.chart .bar-up,
+svg.spark .bar-up { fill: var(--color-up); }
+.chart .bar-down,
+svg.spark .bar-down { fill: var(--color-down); }
+
+.chart-spy { color: var(--color-series-1); stroke: var(--color-series-1); fill: var(--color-series-1); }
+.chart-qqq { color: var(--color-series-2); stroke: var(--color-series-2); fill: var(--color-series-2); }
+.chart-iwm { color: var(--color-series-3); stroke: var(--color-series-3); fill: var(--color-series-3); }
+.chart-vix { color: var(--color-series-4); stroke: var(--color-series-4); fill: var(--color-series-4); }
+.chart-vxn { color: var(--color-series-5); stroke: var(--color-series-5); fill: var(--color-series-5); }
+path.area { stroke: none; fill: currentColor; opacity: 0.16; }
+path.line { fill: none; stroke: currentColor; stroke-width: 1.5px; stroke-linejoin: round; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+
+.swatch-spy { background: var(--color-series-1); }
+.swatch-qqq { background: var(--color-series-2); }
+.swatch-iwm { background: var(--color-series-3); }
+.swatch-vix { background: var(--color-series-4); }
+.swatch-vxn { background: var(--color-series-5); }
+.swatch-call { background: var(--color-up); }
+.swatch-put { background: var(--color-down); }

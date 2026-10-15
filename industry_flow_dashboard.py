@@ -8,6 +8,7 @@ from pathlib import Path
 
 import pandas as pd
 
+from theme_tracker import leader_is_most_of_the_move
 from themes_catalog import THEMES
 
 
@@ -536,6 +537,56 @@ def collect_industry_history(output_dir: Path) -> list[dict]:
     return annotate_rising_themes(snapshots)
 
 
+def tape_brief(output_dir: Path) -> dict:
+    """Strongest and weakest themes from the newest tape CSV."""
+    paths = [
+        path for path in sorted(output_dir.glob("theme_tracker_*.csv"))
+        if re.search(r"theme_tracker_\d{4}-\d{2}-\d{2}\.csv$", path.name)
+    ]
+    if not paths:
+        return {}
+    path = paths[-1]
+    stamp = re.search(r"(\d{4}-\d{2}-\d{2})", path.name).group(1)
+    frame = pd.read_csv(path)
+    rows = []
+    for record in frame.to_dict(orient="records"):
+        today = record.get("today")
+        if today is None or (isinstance(today, float) and pd.isna(today)):
+            continue
+        try:
+            value = float(today)
+        except (TypeError, ValueError):
+            continue
+        rows.append({
+            "name": str(record.get("theme") or ""),
+            "today": value,
+            "leader": str(record.get("leader") or ""),
+        })
+    if not rows:
+        return {"date": stamp}
+    rows.sort(key=lambda item: (-item["today"], item["name"]))
+    dominates: dict[str, bool] = {}
+    member_path = output_dir / f"theme_members_{stamp}.csv"
+    if member_path.exists():
+        members = pd.read_csv(member_path)
+        grouped: dict[str, list[tuple[str, float]]] = {}
+        for record in members.to_dict(orient="records"):
+            today = record.get("today")
+            if today is None or (isinstance(today, float) and pd.isna(today)):
+                continue
+            try:
+                value = float(today)
+            except (TypeError, ValueError):
+                continue
+            grouped.setdefault(str(record.get("theme") or ""), []).append((str(record.get("symbol") or ""), value))
+        leaders = {row["name"]: row["leader"] for row in rows}
+        for name, prints in grouped.items():
+            dominates[name] = leader_is_most_of_the_move(prints, leaders.get(name, ""))
+    for row in rows:
+        row["dominates"] = bool(dominates.get(row["name"]))
+    return {"date": stamp, "strongest": rows[0], "weakest": rows[-1]}
+
+
 def write_dashboard(output_dir: Path) -> Path:
     """Write an offline-friendly interactive dashboard with embedded history."""
     history = collect_industry_history(output_dir)
@@ -548,17 +599,18 @@ def write_dashboard(output_dir: Path) -> Path:
         [{"id": item["id"], "name": item["name"], "tickers": list(item["tickers"])} for item in THEMES],
         separators=(",", ":"),
     )
+    tape_payload = json.dumps(tape_brief(output_dir), separators=(",", ":"))
     template = r'''<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>State of the Markets</title>
+  <title>State of the Markets | GB Market Terminal</title>
   <meta name="description" content="Find non-extended leaders from the market’s most liquid momentum stocks.">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://toi-sh.github.io/liquid-leadership/">
   <meta property="og:type" content="website">
-  <meta property="og:site_name" content="Liquid Leadership">
+  <meta property="og:site_name" content="GB Market Terminal">
   <meta property="og:title" content="State of the Markets">
   <meta property="og:description" content="Find non-extended leaders from the market’s most liquid momentum stocks.">
   <meta property="og:url" content="https://toi-sh.github.io/liquid-leadership/">
@@ -573,9 +625,9 @@ def write_dashboard(output_dir: Path) -> Path:
   <link rel="apple-touch-icon" href="assets/nel-favicon.png">
   <link rel="preload" href="assets/fonts/newsreader-latin-400.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/source-sans-3-latin-400.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="tokens.css?v=20261006">
+  <link rel="stylesheet" href="tokens.css?v=20261015i">
   <style>
-html { color-scheme: light; }
+html { color-scheme: dark; }
 html, body { overflow-x: clip; overflow-anchor: none; }
 * { box-sizing: border-box; }
 html { background: var(--color-paper); }
@@ -973,8 +1025,8 @@ main {
 .nel-window h3 {
   margin: 0;
   padding: var(--space-2xs) var(--space-xs);
-  font-size: var(--text-xs);
-  letter-spacing: 0.08em;
+  font-size: var(--text-lg);
+  letter-spacing: -0.02em;
   background: var(--color-paper-3);
 }
 .trend-label { margin-top: 0; border-top: var(--rule) solid var(--color-rule); }
@@ -1099,6 +1151,24 @@ tbody tr.row--theme-lead.row--theme-rising {
 }
 .desk-note[hidden],
 .session-note[hidden] { display: none; }
+.desk-note--behind { border-color: var(--color-warn); }
+.pin {
+  display: block;
+  margin-top: 0.15rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-muted);
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  letter-spacing: 0.04em;
+  cursor: pointer;
+}
+.pin[aria-pressed="true"] { color: var(--color-accent); }
+.pin--chip {
+  display: inline;
+  margin: 0 0.45rem 0 0;
+}
 .desk-note__label,
 .session-note__label {
   display: block;
@@ -1121,9 +1191,14 @@ tbody tr.row--theme-lead.row--theme-rising {
   text-decoration: none;
 }
 .industry--rising::after {
-  content: " ▲";
-  color: var(--color-frame-1m);
-  font-size: 0.85em;
+  content: "";
+  display: inline-block;
+  width: 0.5em;
+  height: 0.38em;
+  margin-left: 0.28em;
+  vertical-align: middle;
+  background: var(--color-frame-1m);
+  clip-path: polygon(50% 0, 0 100%, 100% 100%);
 }
 .track {
   height: 0.75rem;
@@ -1160,7 +1235,7 @@ svg {
   background: var(--color-paper-2);
 }
 .desk-block--graphite .theme-card { border-bottom-color: var(--color-graphite-rule); }
-.theme-line { display: block; color: var(--color-ink-2); font-family: var(--font-body); font-size: var(--text-sm); line-height: 1.5; }
+.theme-line { display: block; color: var(--color-ink-2); font-family: var(--font-body); font-size: var(--text-xs); line-height: 1.5; }
 .theme-line + .theme-line { margin-top: var(--space-2xs); }
 .desk-block--graphite .theme-line { color: var(--color-graphite-muted); }
 .theme-line strong { color: var(--color-accent); font-weight: 600; }
@@ -1207,7 +1282,7 @@ table.sheet {
   min-width: 100%;
   table-layout: fixed;
 }
-table.sheet col.c-symbol { width: 5rem; }
+table.sheet col.c-symbol { width: 6rem; }
 table.sheet col.c-perf { width: 8rem; }
 table.sheet col.c-vol { width: 8.5rem; }
 table.sheet col.c-stretch { width: 5.5rem; }
@@ -1429,35 +1504,23 @@ tbody tr:nth-child(even) { background: color-mix(in oklch, var(--color-paper-2) 
   select:active, .btn:active { transform: none; }
 }
   </style>
+  <link rel="stylesheet" href="nav.css?v=20261015j">
+  <link rel="stylesheet" href="shadcn-chart.css?v=20261015g">
 </head>
 <body>
 <a class="skip-link" href="#desk">Skip to desk</a>
 <main>
   <header class="nav-edge topbar">
-    <a class="bbg-brand" href="index.html#thematic-title">
-      <span class="bbg-product">Liquid Leadership</span>
+    <a class="bbg-brand" href="themes.html">
+      <span class="bbg-product">GB Market Terminal</span>
     </a>
     <nav class="bbg-keys" aria-label="Terminal panels">
       <a class="desk-tab" href="regime.html">Regime</a>
-      <a class="desk-tab" data-panel="themes" href="#thematic-title">Themes</a>
-      <div class="desk-menu">
-        <button class="desk-tab" type="button" data-panel="leaders" aria-haspopup="menu" aria-expanded="false" aria-controls="menu-leaders">Leaders <span class="desk-caret" aria-hidden="true"></span></button>
-        <div id="menu-leaders" class="desk-menu__panel" role="menu" hidden>
-          <a role="menuitem" href="#liquid-title">Liquid Leaders</a>
-          <a role="menuitem" href="#focus-title">Focus</a>
-          <a role="menuitem" href="#nel-title">Non-extended</a>
-        </div>
-      </div>
-      <div class="desk-menu">
-        <button class="desk-tab" type="button" data-panel="setups" aria-haspopup="menu" aria-expanded="false" aria-controls="menu-setups">Setups <span class="desk-caret" aria-hidden="true"></span></button>
-        <div id="menu-setups" class="desk-menu__panel" role="menu" hidden>
-          <a role="menuitem" href="#rs-title">Relative strength</a>
-          <a role="menuitem" href="#ema8-title">8-week</a>
-          <a role="menuitem" href="#ma-stack-title">Moving averages</a>
-          <a role="menuitem" href="#aplus-title">Flag breakouts</a>
-        </div>
-      </div>
-      <a class="desk-tab" data-panel="tape" href="theme_tracker.html">Tape</a>
+      <a class="desk-tab" href="monitor.html">Monitor</a>
+      <a class="desk-tab" data-panel="themes" href="themes.html">Themes</a>
+      <a class="desk-tab" data-panel="leaders" href="liquid.html">Leaders</a>
+      <a class="desk-tab" data-panel="setups" href="rs.html">Setups</a>
+      <a class="desk-tab" data-panel="tape" href="tape.html">Tape</a>
     </nav>
     <div class="nav-edge__controls">
       <span id="bbg-clock" class="bbg-clock" aria-live="off"></span>
@@ -1476,10 +1539,13 @@ tbody tr:nth-child(even) { background: color-mix(in oklch, var(--color-paper-2) 
   <section class="desk-block" aria-labelledby="thematic-title">
     <div class="section-heading"><h1 id="thematic-title" class="dashboard-title">Thematic Leadership</h1></div>
     <div id="rising-theme-alert" class="rising-alert" hidden role="status" aria-live="polite"></div>
+    <div id="scan-freshness" class="desk-note" hidden></div>
+    <div id="chart-list" class="desk-note" hidden></div>
     <div id="session-note" class="session-note">
       <label class="session-note__label" for="session-note-input">Note for this session</label>
       <input id="session-note-input" class="note-input session-note__input" type="text" placeholder="What stood out?" maxlength="500" autocomplete="off" spellcheck="true">
     </div>
+    <div id="tape-brief" class="desk-note" hidden></div>
     <div id="what-changed" class="desk-note" hidden></div>
     <div id="overlap-list" class="desk-note" hidden></div>
     <div id="earnings-week" class="desk-note" hidden></div>
@@ -1555,12 +1621,15 @@ tbody tr:nth-child(even) { background: color-mix(in oklch, var(--color-paper-2) 
   </div>
 </main>
 <footer class="foot-line">
-  <p>Liquid Leadership · not financial advice</p>
+  <p>GB Market Terminal · not financial advice</p>
 </footer>
+<script src="shadcn-charts.js?v=20261015g"></script>
+<script src="session_clock.js"></script>
 <script>
 const history = __DATA__;
 const QUOTES = __QUOTES__;
 const BASKETS = __BASKETS__;
+const TAPE = __TAPE__;
 (function initQuoteOfDay() {
   const text = document.getElementById('qotd-text');
   const meta = document.getElementById('qotd-meta');
@@ -1634,6 +1703,8 @@ const flowMeta = { '1m': { label:'1 month', color:'var(--color-frame-1m)' }, '3m
 const rankColors = ['var(--color-rank-1)', 'var(--color-rank-2)', 'var(--color-rank-3)', 'var(--color-rank-4)', 'var(--color-rank-5)'];
 const NOTE_KEY = 'nel-note:';
 const SESSION_NOTE_KEY = 'lld-session-note:';
+const PIN_KEY = 'lld-pins';
+const PIN_CAP = 10;
 
 function risingThemes(snapshot) { return snapshot?.rising_themes || []; }
 function risingIndustrySet(snapshot) { return new Set(snapshot?.rising_industries || []); }
@@ -1742,7 +1813,7 @@ function industryLink(industry) {
   params.set('industry', name);
   const symbols = industrySymbols(name);
   if (symbols.length) params.set('symbols', symbols.join(','));
-  return `<a class="industry-link" href="theme_tracker.html?${params.toString()}">${escapeHTML(name)}</a>`;
+  return `<a class="industry-link" href="tape.html?${params.toString()}">${escapeHTML(name)}</a>`;
 }
 function tickerMarkup(row) {
   const name = String(row.name || '').trim();
@@ -1750,7 +1821,7 @@ function tickerMarkup(row) {
   const earn = isTrue(row.earnings_soon);
   const title = earn && row.earnings_date ? `Earnings are on ${String(row.earnings_date)}.` : 'Open the chart in a new tab.';
   const classes = `ticker-link${highLiquidity ? ' high-liquidity' : ''}${earn ? ' ticker-link--earn' : ''}`;
-  return `<td class="col-ticker"><a class="${classes}" href="${escapeHTML(chartUrl(row))}" target="_blank" rel="noopener noreferrer" title="${escapeHTML(title)}">${escapeHTML(name)}</a></td>`;
+  return `<td class="col-ticker"><a class="${classes}" href="${escapeHTML(chartUrl(row))}" target="_blank" rel="noopener noreferrer" title="${escapeHTML(title)}">${escapeHTML(name)}</a>${pinButton(name)}</td>`;
 }
 function noteMarkup(row) {
   const name = String(row.name || '').trim();
@@ -1819,22 +1890,47 @@ function renderBars(current, previous, frame, container) {
   }).join('');
   return names;
 }
+function chartHost(node) {
+  if (!node) return null;
+  if (node.tagName && node.tagName.toLowerCase() === "svg") {
+    const host = document.createElement("div");
+    host.id = node.id;
+    host.setAttribute("role", "img");
+    const label = node.getAttribute("aria-label");
+    if (label) host.setAttribute("aria-label", label);
+    node.replaceWith(host);
+    return host;
+  }
+  return node;
+}
 function renderTrend(frame, svg, names) {
   const legend = document.getElementById(`trend-legend-${frame}`);
   if (legend) {
     legend.innerHTML = (names || []).map((name, index) => `<span class="trend-legend__item"><span class="trend-legend__swatch" style="background:${rankColors[index]}"></span>${escapeHTML(name)}</span>`).join('');
   }
+  const host = chartHost(svg);
+  if (!host) return;
   const active = history.filter(d => d.groups?.[frame]);
-  if (active.length < 2) { svg.innerHTML = '<text x="20" y="45" fill="var(--color-muted)">More daily updates will show how these industries change.</text>'; return; }
-  const width = Math.max(620, svg.clientWidth || 900), height = 300, left = 42, right = 28, top = 18, bottom = 34;
-  const max = Math.max(1, ...active.flatMap(d => Object.values(counts(d, frame))));
-  const x = i => left + i * ((width-left-right) / Math.max(1, active.length-1));
-  const y = value => top + (max-value) * ((height-top-bottom)/max);
-  let markup = `<line x1="${left}" y1="${height-bottom}" x2="${width-right}" y2="${height-bottom}" stroke="var(--color-rule)"/><line x1="${left}" y1="${top}" x2="${left}" y2="${height-bottom}" stroke="var(--color-rule)"/>`;
-  for (let i=0;i<=max;i++) markup += `<text x="${left-8}" y="${y(i)+4}" text-anchor="end" font-size="12" fill="var(--color-ink-2)">${i}</text>`;
-  active.forEach((d,i) => markup += `<text x="${x(i)}" y="${height-12}" text-anchor="middle" font-size="12" fill="var(--color-ink-2)">${d.date.slice(5)}</text>`);
-  names.forEach((name, index) => { const color = rankColors[index]; const points = active.map((d,i) => `${x(i)},${y(counts(d,frame)[name]||0)}`).join(' '); markup += `<polyline points="${points}" fill="none" stroke="${color}" stroke-width="2.5"/>`; active.forEach((d,i) => markup += `<circle cx="${x(i)}" cy="${y(counts(d,frame)[name]||0)}" r="3" fill="${color}"><title>${escapeHTML(name)} had ${leaderPhrase(counts(d,frame)[name]||0)} on ${d.date}.</title></circle>`); });
-  svg.setAttribute('viewBox', `0 0 ${width} ${height}`); svg.innerHTML = markup;
+  if (active.length < 2 || !window.GBCharts) {
+    if (host.__gbRoot) { host.__gbRoot.unmount(); host.__gbRoot = null; }
+    host.textContent = "More daily updates will show how these industries change.";
+    return;
+  }
+  const data = active.map(day => {
+    const row = { label: day.date.slice(5) };
+    names.forEach((name, index) => { row["s" + index] = counts(day, frame)[name] || 0; });
+    return row;
+  });
+  GBCharts.mount(host, {
+    type: "line",
+    data,
+    xKey: "label",
+    series: names.map((name, index) => ({ key: "s" + index, label: name, color: rankColors[index] })),
+    yFormat: value => String(Math.round(value)),
+    domain: [0, "auto"],
+    decimals: false,
+    height: "14rem"
+  });
 }
 function windowTables(prefix, heading, extraHead, extraCell, emptyLabel) {
   return Object.entries(flowMeta).map(([frame, meta]) => {
@@ -2230,6 +2326,103 @@ function renderBasketMatch(snapshot) {
     : `No stock from ${name} is on this desk.`;
   setDeskNote('basket-match', 'From the tape', [sentence]);
 }
+function readPins() {
+  try {
+    const raw = JSON.parse(localStorage.getItem(PIN_KEY) || '[]');
+    if (!Array.isArray(raw)) return [];
+    const seen = new Set();
+    const pins = [];
+    raw.forEach(item => {
+      const key = String(item || '').trim().toUpperCase();
+      if (!key || seen.has(key)) return;
+      seen.add(key);
+      pins.push(key);
+    });
+    return pins.slice(0, PIN_CAP);
+  } catch { return []; }
+}
+function pinButton(symbol) {
+  const key = String(symbol || '').trim().toUpperCase();
+  if (!key) return '';
+  const on = readPins().includes(key);
+  return `<button type="button" class="pin" data-pin="${escapeHTML(key)}" aria-pressed="${on ? 'true' : 'false'}">${on ? 'Pinned' : 'Pin'}</button>`;
+}
+function paintPins() {
+  const pins = readPins();
+  const host = document.getElementById('chart-list');
+  if (host) {
+    if (!pins.length) {
+      host.hidden = false;
+      host.classList.remove('desk-note--behind');
+      host.innerHTML = `<span class="desk-note__label">Look at tomorrow</span><span class="desk-note__text">Pin a stock on any list. It stays here for the next session.</span>`;
+    } else {
+      const count = pins.length === 1 ? '1 stock' : `${pins.length} stocks`;
+      const chips = pins.map(symbol => `<button type="button" class="pin pin--chip" data-pin="${escapeHTML(symbol)}" aria-pressed="true">${escapeHTML(symbol)}</button>`).join(' ');
+      host.hidden = false;
+      host.innerHTML = `<span class="desk-note__label">Look at tomorrow</span><span class="desk-note__text">${count}. ${chips}</span>`;
+    }
+  }
+  const held = new Set(pins);
+  document.querySelectorAll('button.pin[data-pin]').forEach(button => {
+    if (button.classList.contains('pin--chip')) return;
+    const on = held.has(button.dataset.pin);
+    button.setAttribute('aria-pressed', on ? 'true' : 'false');
+    button.textContent = on ? 'Pinned' : 'Pin';
+  });
+}
+function togglePin(symbol) {
+  const key = String(symbol || '').trim().toUpperCase();
+  if (!key) return;
+  const current = readPins();
+  const next = current.includes(key) ? current.filter(item => item !== key) : [key, ...current].slice(0, PIN_CAP);
+  try { localStorage.setItem(PIN_KEY, JSON.stringify(next)); } catch { /* private mode */ }
+  paintPins();
+}
+function formatCover(iso) {
+  const date = parseISODate(iso);
+  if (!date) return String(iso || '');
+  return `${date.getUTCDate()} ${EARNINGS_MONTHS[date.getUTCMonth()]}`;
+}
+function renderFreshness() {
+  const latest = history.length ? history[history.length - 1].date : '';
+  const host = document.getElementById('scan-freshness');
+  const session = document.getElementById('bbg-session');
+  if (!latest) return;
+  const expected = typeof expectedSnapshotDate === 'function' ? expectedSnapshotDate(new Date()) : '';
+  const behind = Boolean(expected && latest < expected);
+  const sentence = `This desk covers ${formatCover(latest)}.${behind ? ' Later closes have not been scanned.' : ''}`;
+  if (host) {
+    host.hidden = false;
+    host.classList.toggle('desk-note--behind', behind);
+    host.innerHTML = `<span class="desk-note__label">Scan</span><span class="desk-note__text">${escapeHTML(sentence)}</span>`;
+  }
+  if (session) session.textContent = sentence;
+}
+function movePhrase(value) {
+  const number = Number(value);
+  if (!Number.isFinite(number) || number === 0) return 'flat';
+  const verb = number > 0 ? 'up' : 'down';
+  return `${verb} ${Math.abs(number).toFixed(2)}%`;
+}
+function themeSentence(row, role, dated) {
+  if (!row || !row.name) return '';
+  const extra = row.dominates && row.leader ? ` ${row.leader} is most of the move.` : '';
+  return `${dated}${row.name} is the ${role} theme, ${movePhrase(row.today)}.${extra}`.replace('..', '.');
+}
+function renderTapeBrief() {
+  const tape = (typeof TAPE === 'object' && TAPE) ? TAPE : {};
+  if (!tape.strongest) {
+    setDeskNote('tape-brief', 'Themes', []);
+    return;
+  }
+  const snapshot = currentSnapshot();
+  const dated = tape.date && snapshot?.date && tape.date !== snapshot.date ? `On the ${formatCover(tape.date)} tape, ` : '';
+  const sentences = [themeSentence(tape.strongest, 'strongest', dated)];
+  if (tape.weakest && tape.weakest.name !== tape.strongest.name) {
+    sentences.push(themeSentence(tape.weakest, 'weakest', ''));
+  }
+  setDeskNote('tape-brief', 'Themes', sentences.filter(Boolean));
+}
 function render() {
   const current = currentSnapshot(), index = Number(dateSelect.value), previous = history[index-1];
   liquidTitle.textContent = `Liquid leaders — ${stockCount((current.liquid || []).length)}`;
@@ -2240,7 +2433,9 @@ function render() {
   if (maStackTitle) maStackTitle.textContent = `Moving averages — ${stockCount((current.ma_stack || []).length)}`;
   if (aplusTitle) aplusTitle.textContent = `Flag breakouts — ${stockCount((current.a_plus_flags || []).length)}`;
   renderRisingAlert(current);
+  renderFreshness();
   renderSessionNote(current);
+  renderTapeBrief();
   renderWhatChanged(current, previous);
   renderOverlap(current);
   renderEarningsWeek(current);
@@ -2258,6 +2453,7 @@ function render() {
   renderEMA8(current);
   renderMaStack(current);
   renderAPlusFlags(current);
+  paintPins();
 }
 function redrawChartsOnly() {
   const current = currentSnapshot(), index = Number(dateSelect.value), previous = history[index-1];
@@ -2288,6 +2484,29 @@ const panelViews = {
   '#aplus-title': { view: 'setups', sub: 'aplus' }
 };
 const panelGroups = Object.fromEntries(Object.entries(panelViews).map(([hash, spec]) => [hash, spec.view]));
+const deskPages = {
+  'themes.html': '#thematic-title',
+  'liquid.html': '#liquid-title',
+  'focus.html': '#focus-title',
+  'nel.html': '#nel-title',
+  'rs.html': '#rs-title',
+  'ema8.html': '#ema8-title',
+  'ma.html': '#ma-stack-title',
+  'aplus.html': '#aplus-title'
+};
+const hashPages = Object.fromEntries(Object.entries(deskPages).map(([file, hash]) => [hash, file]));
+function deskFile() {
+  const file = location.pathname.split('/').pop();
+  return file || 'index.html';
+}
+function hashForLocation() {
+  if (panelViews[location.hash]) return location.hash;
+  return deskPages[deskFile()] || '#thematic-title';
+}
+function deskUrl(file) {
+  const path = location.pathname;
+  return path.slice(0, path.lastIndexOf('/') + 1) + file;
+}
 function closeDeskMenus() {
   document.querySelectorAll('.desk-menu__panel').forEach(panel => {
     panel.hidden = true;
@@ -2303,11 +2522,24 @@ function setCurrentPanel(hash) {
     else tab.removeAttribute('aria-current');
   });
   document.querySelectorAll('.desk-menu__panel a').forEach(link => {
-    if (link.getAttribute('href') === hash) link.setAttribute('aria-current', 'true');
+    if (link.getAttribute('href') === hashPages[hash]) link.setAttribute('aria-current', 'true');
     else link.removeAttribute('aria-current');
   });
 }
-function showPanel(hash) {
+function syncAddress(hash, mode) {
+  const page = hashPages[hash];
+  if (!page || mode === 'stay') return;
+  const target = deskUrl(page);
+  if (location.pathname === target && !location.hash) return;
+  if (!history.pushState) {
+    if (mode === 'push') location.href = target;
+    else location.replace(target);
+    return;
+  }
+  if (mode === 'push') history.pushState({panel: hash}, '', target);
+  else history.replaceState({panel: hash}, '', target);
+}
+function showPanel(hash, mode) {
   const spec = panelViews[hash] || panelViews['#thematic-title'];
   const resolved = panelViews[hash] ? hash : '#thematic-title';
   document.querySelectorAll('.desk-view').forEach(view => {
@@ -2323,10 +2555,16 @@ function showPanel(hash) {
     });
   }
   setCurrentPanel(resolved);
-  if (history.replaceState) history.replaceState(null, '', resolved);
+  syncAddress(resolved, mode || 'push');
   if (spec.view === 'themes') requestAnimationFrame(redrawChartsOnly);
 }
 document.addEventListener('click', event => {
+  const pin = event.target.closest('[data-pin]');
+  if (pin) {
+    event.preventDefault();
+    togglePin(pin.dataset.pin);
+    return;
+  }
   const sub = event.target.closest('.subnav__tab');
   if (sub && sub.dataset.hash) {
     closeDeskMenus();
@@ -2344,15 +2582,16 @@ document.addEventListener('click', event => {
     }
     return;
   }
-  const nav = event.target.closest('.desk-menu__panel a[href^="#"], .desk-tab[href^="#"]');
+  const nav = event.target.closest('.desk-menu__panel a, a.desk-tab, a.bbg-brand');
   if (nav) {
-    const href = nav.getAttribute('href');
-    if (href && document.querySelector(href)) {
+    const href = nav.getAttribute('href') || '';
+    const hash = Object.keys(hashPages).find(key => hashPages[key] === href);
+    if (hash && history.pushState) {
       event.preventDefault();
       closeDeskMenus();
-      showPanel(href);
+      showPanel(hash, 'push');
+      return;
     }
-    return;
   }
   if (!event.target.closest('.desk-menu')) closeDeskMenus();
   const link = event.target.closest('a.ticker-link');
@@ -2397,11 +2636,16 @@ function onViewportChange() {
   clearTimeout(resizeTimer);
   resizeTimer = window.setTimeout(redrawChartsOnly, 180);
 }
-if (!history.length) { document.querySelector('main').innerHTML = '<p class="empty">Run the scanner once to create a momentum-leader snapshot.</p>'; } else { updateDates(); tickClock(); setInterval(tickClock, 1000); dateSelect.addEventListener('change', render); downloadLiquidButton.addEventListener('click', () => downloadSymbols('liquid', 'liquid_leaders')); downloadNelButton.addEventListener('click', () => downloadSymbols('nel', 'nel')); if (downloadFocusButton) downloadFocusButton.addEventListener('click', () => downloadSymbols('focus', 'focus')); if (downloadRsButton) downloadRsButton.addEventListener('click', () => downloadSymbols('rs_leads', 'rs_leads')); if (downloadEma8Button) downloadEma8Button.addEventListener('click', () => downloadSymbols('ema8_pullbacks', 'ema8_pullbacks')); if (downloadMaStackButton) downloadMaStackButton.addEventListener('click', () => downloadSymbols('ma_stack', 'ma_stack')); if (downloadAplusButton) downloadAplusButton.addEventListener('click', () => downloadSymbols('a_plus_flags', 'a_plus_flags')); window.addEventListener('resize', onViewportChange, { passive: true }); render(); showPanel(panelViews[location.hash] ? location.hash : '#thematic-title'); }
+if (!history.length) { document.querySelector('main').innerHTML = '<p class="empty">Run the scanner once to create a momentum-leader snapshot.</p>'; } else { updateDates(); tickClock(); setInterval(tickClock, 1000); dateSelect.addEventListener('change', render); downloadLiquidButton.addEventListener('click', () => downloadSymbols('liquid', 'liquid_leaders')); downloadNelButton.addEventListener('click', () => downloadSymbols('nel', 'nel')); if (downloadFocusButton) downloadFocusButton.addEventListener('click', () => downloadSymbols('focus', 'focus')); if (downloadRsButton) downloadRsButton.addEventListener('click', () => downloadSymbols('rs_leads', 'rs_leads')); if (downloadEma8Button) downloadEma8Button.addEventListener('click', () => downloadSymbols('ema8_pullbacks', 'ema8_pullbacks')); if (downloadMaStackButton) downloadMaStackButton.addEventListener('click', () => downloadSymbols('ma_stack', 'ma_stack')); if (downloadAplusButton) downloadAplusButton.addEventListener('click', () => downloadSymbols('a_plus_flags', 'a_plus_flags')); window.addEventListener('resize', onViewportChange, { passive: true }); render(); showPanel(hashForLocation(), 'replace'); window.addEventListener('popstate', () => showPanel(hashForLocation(), 'stay')); }
 </script>
 </body>
 </html>'''
-    rendered = template.replace("__DATA__", payload).replace("__QUOTES__", quotes_payload).replace("__BASKETS__", baskets_payload)
+    rendered = (
+        template.replace("__DATA__", payload)
+        .replace("__QUOTES__", quotes_payload)
+        .replace("__BASKETS__", baskets_payload)
+        .replace("__TAPE__", tape_payload)
+    )
     dashboard.write_text(rendered, encoding="utf-8")
     pages_entrypoint.write_text(rendered, encoding="utf-8")
     return dashboard

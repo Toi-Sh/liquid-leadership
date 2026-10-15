@@ -1,6 +1,8 @@
+from pathlib import Path
+import tempfile
 import unittest
 
-from theme_tracker import average, build_snapshot, render_html
+from theme_tracker import attach_prior_ranks, average, build_snapshot, leader_is_most_of_the_move, render_html
 from themes_catalog import THEMES, unique_tickers, validate_catalog
 
 
@@ -77,11 +79,42 @@ class ThemeTapeTests(unittest.TestCase):
         self.assertEqual(snapshot["themes"][0]["today"], 6.0)
         html = render_html(snapshot)
         self.assertIn("Theme Tape", html)
+        self.assertIn("GB Market Terminal", html)
         self.assertIn('aria-current="page"', html)
-        self.assertIn("index.html#liquid-title", html)
+        self.assertIn("liquid.html", html)
         self.assertIn('aria-current="page">Tape</a>', html)
         self.assertNotIn("<script>", html.split('type="application/json">', 1)[1].split("</script>", 1)[0])
         self.assertIn("\\u003c", html)
+
+    def test_leader_flag_when_the_rest_do_not_carry_the_move(self):
+        self.assertTrue(leader_is_most_of_the_move([("A", 20.0), ("B", 2.0), ("C", 2.0)], "A"))
+        self.assertTrue(leader_is_most_of_the_move([("A", 10.0), ("B", -1.0), ("C", -1.0)], "A"))
+        self.assertFalse(leader_is_most_of_the_move([("A", 10.0), ("B", 9.0), ("C", 8.0)], "A"))
+        self.assertFalse(leader_is_most_of_the_move([("A", 5.0)], "A"))
+
+    def test_prior_rank_comes_from_the_previous_tape(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            (root / "theme_tracker_2026-10-12.csv").write_text(
+                "theme,today\nBrazil,1.0\nHomebuilders,3.0\nWearable AI,\n",
+                encoding="utf-8",
+            )
+            (root / "theme_tracker_2026-10-13.csv").write_text(
+                "theme,today\nBrazil,9.0\nHomebuilders,1.0\nWearable AI,0.2\n",
+                encoding="utf-8",
+            )
+            snapshot = {
+                "as_of": "2026-10-13",
+                "themes": [
+                    {"name": "Brazil"},
+                    {"name": "Homebuilders"},
+                    {"name": "Wearable AI"},
+                ],
+            }
+            attach_prior_ranks(snapshot, root)
+        self.assertEqual(snapshot["themes"][0]["prior_rank"], 2)
+        self.assertEqual(snapshot["themes"][1]["prior_rank"], 1)
+        self.assertIsNone(snapshot["themes"][2]["prior_rank"])
 
 
 if __name__ == "__main__":

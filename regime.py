@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 import html
+import json
 import math
 import pickle
 import time
@@ -43,15 +44,6 @@ BATCH_SIZE = 80
 MIN_NAMES = 100
 
 STAGES = ("Washout", "Bounce", "Recovery", "Strength", "Extended", "Rolling over", "Weak")
-STAGE_CLOCK = {
-    "Strength": 11.6,
-    "Rolling over": 1.35,
-    "Weak": 3.15,
-    "Washout": 6.0,
-    "Bounce": 7.7,
-    "Recovery": 9.05,
-    "Extended": 10.45,
-}
 STAGE_TONE = {
     "Extended": "up",
     "Strength": "ink",
@@ -656,9 +648,7 @@ def long_stamp(when: datetime, last_session: date) -> str:
     now = when.astimezone(NY_TZ)
     if last_session == now.date() and now.weekday() < 5 and (now.hour, now.minute) < (16, 15):
         return f"{now.day} {now.strftime('%b')} {now.year}, {now:%H:%M} ET"
-    if last_session == now.date():
-        return f"{last_session.day} {last_session.strftime('%b')} {last_session.year}, close"
-    return f"{last_session.day} {last_session.strftime('%b')} {last_session.year} close"
+    return f"{last_session.day} {last_session.strftime('%b')} {last_session.year}"
 
 
 def _num(value: float, digits: int) -> str:
@@ -690,110 +680,80 @@ def _delta(value: float | None, digits: int, suffix: str = "", invert: bool = Fa
     text = f"{abs(number):,.{digits}f}{suffix}"
     return (
         f'<span class="delta delta-{visual}">'
-        f'<span aria-hidden="true">{arrow}</span>'
+        f'<span class="arr arr-{kind}" aria-hidden="true">{arrow}</span>'
         f'<span class="visually-hidden">{word} </span>{text}</span>'
     )
 
 
-def _clock_xy(cx: float, cy: float, radius: float, hour: float) -> tuple[float, float]:
-    rad = math.radians((hour % 12) * 30 - 90)
-    return cx + radius * math.cos(rad), cy + radius * math.sin(rad)
+def _signed(value: int | None) -> str:
+    if not finite(value):
+        return "—"
+    number = int(value)
+    if number > 0:
+        return f"+{number}"
+    if number < 0:
+        return f"−{abs(number)}"
+    return "0"
 
 
-def _anchor(hour: float) -> str:
-    place = hour % 12
-    if 1.2 <= place <= 4.8:
-        return "start"
-    if 7.2 <= place <= 10.8:
-        return "end"
-    return "middle"
-
-
-def gauge_svg(stage: str, posture: int | None, momentum: int | None) -> str:
-    cx, cy, radius = 180, 118, 70
-    labels = []
-    for name, hour in STAGE_CLOCK.items():
-        x, y = _clock_xy(cx, cy, radius + 28, hour)
-        tone = STAGE_TONE[name]
-        weight = "gauge-live" if name == stage else ""
-        labels.append(
-            f'<text class="gauge-{tone} {weight}" x="{x:.1f}" y="{y:.1f}" text-anchor="{_anchor(hour)}">{html.escape(name)}</text>'
+def cycle_board(stage: str, posture: int | None, momentum: int | None) -> str:
+    """Status block: posture meter and the seven stages, current one marked."""
+    score = "—" if posture is None else str(int(posture))
+    move = _signed(momentum)
+    if posture is None:
+        meter = (
+            '<div class="meter" role="meter" aria-valuemin="0" aria-valuemax="100" aria-label="Posture">'
+            '<span class="meter-fill" style="width:0%"></span></div>'
         )
-    dot_x, dot_y = _clock_xy(cx, cy, radius, STAGE_CLOCK[stage])
-    score = "—" if posture is None else str(posture)
-    if not finite(momentum):
-        move = "—"
-    elif int(momentum) > 0:
-        move = f"+{int(momentum)}"
-    elif int(momentum) < 0:
-        move = f"−{abs(int(momentum))}"
     else:
-        move = "0"
-    title = f"Market cycle is {stage}. Posture {score}. Momentum {move}."
+        width = max(0, min(100, int(posture)))
+        meter = (
+            f'<div class="meter" role="meter" aria-valuenow="{width}" aria-valuemin="0" aria-valuemax="100" '
+            f'aria-label="Posture {score}">'
+            f'<span class="meter-fill" style="width:{width}%"></span></div>'
+        )
+    steps = []
+    for name in STAGES:
+        current = name == stage
+        tone = STAGE_TONE.get(name, "ink")
+        mark = ' aria-current="step"' if current else ""
+        live = " is-current" if current else ""
+        steps.append(f'<li class="step step-{tone}{live}"{mark}>{html.escape(name)}</li>')
     return (
-        f'<svg class="gauge" viewBox="0 0 360 250" role="img" aria-label="{html.escape(title)}">'
-        f'<circle class="gauge-ring" cx="{cx}" cy="{cy}" r="{radius}"/>'
-        f'{"".join(labels)}'
-        f'<circle class="gauge-dot" cx="{dot_x:.1f}" cy="{dot_y:.1f}" r="5"/>'
-        f'<text class="gauge-score" x="{cx}" y="{cy - 2}" text-anchor="middle">{score}</text>'
-        f'<text class="gauge-move" x="{cx}" y="{cy + 18}" text-anchor="middle">momentum {move}</text>'
-        f"</svg>"
+        '<div class="cycle-stats">'
+        f'<div><p class="figure">{score}</p><p class="meta">Posture</p></div>'
+        f'<div><p class="figure">{move}</p><p class="meta">Momentum</p></div>'
+        "</div>"
+        f"{meter}"
+        f'<ol class="steps">{"".join(steps)}</ol>'
     )
 
 
-def _series(values: list[float | None], width: int, height: int, floor: float | None = None, ceiling: float | None = None) -> str:
-    clean = [(index, float(value)) for index, value in enumerate(values) if finite(value)]
-    if len(clean) < 2:
-        return ""
-    lo = min(value for _, value in clean)
-    hi = max(value for _, value in clean)
-    if floor is not None:
-        lo = min(lo, floor)
-    if ceiling is not None:
-        hi = max(hi, ceiling)
-    pad = (hi - lo) * 0.08 or 1
-    lo -= pad
-    hi += pad
-    span = hi - lo or 1
-    last_index = len(values) - 1
-
-    def xy(index: int, value: float) -> tuple[float, float]:
-        x = 2 + (width - 4) * (index / last_index if last_index else 0)
-        y = 2 + (height - 4) * (1 - (value - lo) / span)
-        return x, y
-
-    points = " ".join(f"{xy(index, value)[0]:.1f},{xy(index, value)[1]:.1f}" for index, value in clean)
-    guides = []
-    for level in (floor, ceiling):
-        if level is None or not (lo <= level <= hi):
-            continue
-        y = xy(0, level)[1]
-        guides.append(f'<line class="guide" x1="0" y1="{y:.1f}" x2="{width}" y2="{y:.1f}"/>')
-    end_x, end_y = xy(*clean[-1])
-    return (
-        f'<svg class="spark" viewBox="0 0 {width} {height}" preserveAspectRatio="none" aria-hidden="true">'
-        f'{"".join(guides)}'
-        f'<polyline points="{points}"/>'
-        f'<circle cx="{end_x:.1f}" cy="{end_y:.1f}" r="2.2"/>'
-        f"</svg>"
-    )
+def _chart_node(kind: str, values: list[float | None], *, guides: list[float] | None = None, signed: bool = False, label: str = "Series") -> str:
+    payload = {
+        "kind": kind,
+        "label": label,
+        "signed": signed,
+        "guides": guides or [],
+        "values": [round(float(value), 4) if finite(value) else None for value in values],
+    }
+    blob = html.escape(json.dumps(payload, separators=(",", ":")), quote=True)
+    return f'<div class="spark shadcn-host" data-chart="{blob}"></div>'
 
 
-def _bars(values: list[float]) -> str:
+def _series(values: list[float | None], width: int, height: int, floor: float | None = None, ceiling: float | None = None, label: str = "Series") -> str:
     clean = [float(value) for value in values if finite(value)]
     if len(clean) < 2:
         return ""
-    width, height = 148, 36
-    peak = max(abs(value) for value in clean) or 1
-    slot = width / len(clean)
-    rects = []
-    for index, value in enumerate(clean):
-        bar = (abs(value) / peak) * (height - 4)
-        x = index * slot + 1
-        y = height - bar
-        tone = "bar-up" if value >= 0 else "bar-down"
-        rects.append(f'<rect class="{tone}" x="{x:.1f}" y="{y:.1f}" width="{max(slot - 1.4, 1):.1f}" height="{bar:.1f}"/>')
-    return f'<svg class="spark" viewBox="0 0 {width} {height}" preserveAspectRatio="none" aria-hidden="true">{"".join(rects)}</svg>'
+    guides = [float(level) for level in (floor, ceiling) if level is not None]
+    return _chart_node("area", list(values), guides=guides, label=label)
+
+
+def _bars(values: list[float], label: str = "Net") -> str:
+    clean = [float(value) for value in values if finite(value)]
+    if len(clean) < 2:
+        return ""
+    return _chart_node("bar", clean, signed=True, label=label)
 
 
 def _change(series: list[float | None]) -> float | None:
@@ -819,42 +779,42 @@ def build_snapshot(days: list[dict], tape: list[dict], vix: dict, yield_quote: d
             "figure": _pair(last["up4"], last["down4"]),
             "sub": f"up share {last['up4'] / max(last['up4'] + last['down4'], 1) * 100:.0f}%",
             "delta": _delta(_change([day["up4"] for day in days]), 0),
-            "chart": _bars([day["up4"] - day["down4"] for day in days[-24:]]),
+            "chart": _bars([day["up4"] - day["down4"] for day in days[-24:]], "4% up minus down"),
         },
         {
             "title": "5 / 10-day ratio",
             "figure": f"{last['ratio5']:.2f} / {last['ratio10']:.2f}" if finite(last.get("ratio10")) else f"{last['ratio5']:.2f}",
             "sub": "5d below 1" if last["ratio5"] < 1 else "5d above 1",
             "delta": _delta(_change([day["ratio5"] for day in days]), 2),
-            "chart": _series([day["ratio5"] if day["ratio5"] < 99 else None for day in days[-40:]], 148, 36),
+            "chart": _series([day["ratio5"] if day["ratio5"] < 99 else None for day in days[-40:]], 148, 36, label="5-day ratio"),
         },
         {
             "title": "13 / 34 balance",
             "figure": _num(last["balance"], 0),
             "sub": _pair(last["bull13"], last["bear13"]),
             "delta": _delta(_change([day["balance"] for day in days]), 0),
-            "chart": _series([day["balance"] for day in days[-40:]], 148, 36),
+            "chart": _series([day["balance"] for day in days[-40:]], 148, 36, label="13/34 balance"),
         },
         {
             "title": "20% study · 5 sess",
             "figure": _pair(last["bull20"], last["bear20"]),
             "sub": "bull / bear",
             "delta": _delta(_change([day["bull20"] for day in days]), 0),
-            "chart": _series([day["bull20"] - day["bear20"] for day in days[-40:]], 148, 36),
+            "chart": _series([day["bull20"] - day["bear20"] for day in days[-40:]], 148, 36, label="Bull minus bear"),
         },
         {
             "title": "25% quarter / month",
             "figure": _pair(last["up25q"], last["down25q"]),
             "sub": f"month {_pair(last['up25m'], last['down25m'])}",
             "delta": _delta(_change([day["up25q"] for day in days]), 0),
-            "chart": _series([day["up25q"] - day["down25q"] for day in days[-40:]], 148, 36),
+            "chart": _series([day["up25q"] - day["down25q"] for day in days[-40:]], 148, 36, label="Quarter up minus down"),
         },
         {
             "title": "50% · 40 days",
             "figure": _pair(last["up50"], last["down50"]),
             "sub": "up / down",
             "delta": _delta(_change([day["up50"] for day in days]), 0),
-            "chart": _series([day["up50"] - day["down50"] for day in days[-40:]], 148, 36),
+            "chart": _series([day["up50"] - day["down50"] for day in days[-40:]], 148, 36, label="50% up minus down"),
         },
     ]
     band = last["t2108"] - last["t2108_ema10"]
@@ -881,13 +841,13 @@ def build_snapshot(days: list[dict], tape: list[dict], vix: dict, yield_quote: d
         "nasdaq_ema10": _num(last["nasdaq_ema10"], 1) if finite(last.get("nasdaq_ema10")) else "—",
         "nasdaq_note": _ema_note(last.get("nasdaq"), last.get("nasdaq_ema10")),
         "nasdaq_thrust": "on" if last.get("nasdaq_improving") else "off",
-        "nasdaq_chart": _series([day.get("nasdaq") for day in window], 320, 96, floor=WASHOUT_LINE, ceiling=EXTENDED_LINE),
+        "nasdaq_chart": _series([day.get("nasdaq") for day in window], 320, 96, floor=WASHOUT_LINE, ceiling=EXTENDED_LINE, label="Nasdaq 40"),
         "n_nasdaq": int(last.get("n_nasdaq") or 0),
         "low6": _num(min(t2108_series), 1),
         "high6": _num(max(t2108_series), 1),
-        "t2108_chart": _series(t2108_series, 320, 96, floor=WASHOUT_LINE, ceiling=EXTENDED_LINE),
+        "t2108_chart": _series(t2108_series, 320, 96, floor=WASHOUT_LINE, ceiling=EXTENDED_LINE, label="T2108"),
         "chart_start": short_date(window[0]["date"]),
-        "intraday": _series(intraday, 120, 96) if len(intraday) > 2 else "",
+        "intraday": _series(intraday, 120, 96, label="SPY") if len(intraday) > 2 else "",
         "breadth": breadth,
         "tape": tape,
         "vix": vix,
@@ -905,7 +865,7 @@ def _ema_note(level: object, average: object) -> str:
 
 
 def _quote_card(name: str, price: float, change_pct: float | None, relation: str, series: list[float], url: str, stroke: str) -> str:
-    chart = _series(series, 148, 40)
+    chart = _series(series, 148, 40, label=name)
     return f"""<article class="panel quote">
       <h3><a href="{html.escape(url, True)}">{html.escape(name)}</a></h3>
       <p class="figure">{_num(price, 2)}</p>
@@ -916,9 +876,8 @@ def _quote_card(name: str, price: float, change_pct: float | None, relation: str
 
 def render_html(snapshot: dict, health_rows: list[dict]) -> str:
     stage = html.escape(str(snapshot["stage"]))
-    arrow = "▲" if snapshot["arrow"] == "up" else "▼"
     arrow_class = "up" if snapshot["arrow"] == "up" else "down"
-    session_word = "session" if snapshot["sessions"] == 1 else "sessions"
+    session_word = "Session" if snapshot["sessions"] == 1 else "Sessions"
     rules = "".join(f"<li>{html.escape(rule)}</li>" for rule in snapshot["rules"])
     breadth = "".join(
         f"""<article class="panel">
@@ -954,43 +913,40 @@ def render_html(snapshot: dict, health_rows: list[dict]) -> str:
     )
     body = f"""
 <header class="nav-edge">
-  <div class="brand"><h1 class="product">Regime</h1></div>
+  <div class="brand"><h1 class="product">GB Market Terminal</h1></div>
   <nav class="bbg-keys" aria-label="Terminal panels">
     <a class="desk-tab" href="regime.html" aria-current="page">Regime</a>
-    <a class="desk-tab" href="index.html#thematic-title">Themes</a>
-    <div class="desk-menu">
-      <button class="desk-tab" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="menu-leaders">Leaders <span class="desk-caret" aria-hidden="true"></span></button>
-      <div id="menu-leaders" class="desk-menu__panel" role="menu" hidden>
-        <a role="menuitem" href="index.html#liquid-title">Liquid Leaders</a>
-        <a role="menuitem" href="index.html#focus-title">Focus</a>
-        <a role="menuitem" href="index.html#nel-title">Non-extended</a>
-      </div>
-    </div>
-    <div class="desk-menu">
-      <button class="desk-tab" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="menu-setups">Setups <span class="desk-caret" aria-hidden="true"></span></button>
-      <div id="menu-setups" class="desk-menu__panel" role="menu" hidden>
-        <a role="menuitem" href="index.html#rs-title">Relative strength</a>
-        <a role="menuitem" href="index.html#ema8-title">8-week</a>
-        <a role="menuitem" href="index.html#ma-stack-title">Moving averages</a>
-        <a role="menuitem" href="index.html#aplus-title">Flag breakouts</a>
-      </div>
-    </div>
-    <a class="desk-tab" href="theme_tracker.html">Tape</a>
+    <a class="desk-tab" href="monitor.html">Monitor</a>
+    <a class="desk-tab" href="themes.html">Themes</a>
+    <a class="desk-tab" href="liquid.html">Leaders</a>
+    <a class="desk-tab" href="rs.html">Setups</a>
+    <a class="desk-tab" href="tape.html">Tape</a>
   </nav>
   <p class="clock">{html.escape(snapshot["as_of"])}</p>
 </header>
-<p class="lede">Measured regime, T2108, the day’s breadth and the tape. Every delta is against the prior session.</p>
+<p class="lede" role="note"><span class="lede-mark" aria-hidden="true">i</span><span class="visually-hidden">Information. </span>Measured regime, T2108, the day’s breadth and the tape. Every delta is against the prior session.</p>
 <main id="regime">
   <div class="top">
-    <section class="panel cycle" aria-labelledby="cycle-label">
-      <h2 id="cycle-label" class="kicker">Market cycle</h2>
-      <p class="stage"><span class="mark mark-{arrow_class}" aria-hidden="true">{arrow}</span> {stage}</p>
-      <p class="since">since {html.escape(snapshot["since"])} · {snapshot["sessions"]} {session_word} · {html.escape(snapshot["progress"])}</p>
-      <p class="meta">Breadth thrust · {html.escape(snapshot["thrust"])} · Nasdaq 40 · {html.escape(snapshot["nasdaq_thrust"])}</p>
-      {gauge_svg(snapshot["stage"], snapshot["posture"], snapshot["momentum"])}
-      <p class="place">{html.escape(snapshot["place"])} <span class="muted">({html.escape(snapshot["distance"])})</span></p>
-      <ul class="rules">{rules}</ul>
+    <section class="panel stage" aria-labelledby="stage-label">
+      <p class="kicker">Market cycle</p>
+      <h2 id="stage-label" class="stage-name stage-{arrow_class}">{stage}</h2>
+      <dl class="stage-meta"><div><dt>Since</dt><dd>{html.escape(snapshot["since"])}</dd></div><div><dt>{session_word}</dt><dd>{snapshot["sessions"]}</dd></div></dl>
+      <p class="cycle-note">{html.escape(snapshot["progress"])}</p>
     </section>
+    <section class="panel cycle" aria-labelledby="cycle-label">
+      <h2 id="cycle-label" class="kicker">Stages</h2>
+      {cycle_board(snapshot["stage"], snapshot["posture"], snapshot["momentum"])}
+      <dl class="facts">
+        <div><dt>Breadth thrust</dt><dd>{html.escape(snapshot["thrust"])}</dd></div>
+        <div><dt>Nasdaq 40</dt><dd>{html.escape(snapshot["nasdaq_thrust"])}</dd></div>
+        <div><dt>Place</dt><dd>{html.escape(snapshot["place"])} <span class="muted">{html.escape(snapshot["distance"])}</span></dd></div>
+      </dl>
+      <details class="call">
+        <summary>How this stage is called</summary>
+        <ul class="rules">{rules}</ul>
+      </details>
+    </section>
+    <div class="rail">
     <section class="panel t2108" aria-labelledby="t2108-label">
       <h2 id="t2108-label" class="kicker">Above the 40-day average</h2>
       <div class="readings">
@@ -1021,11 +977,12 @@ def render_html(snapshot: dict, health_rows: list[dict]) -> str:
         {intraday}
       </div>
     </section>
+    <section class="group" aria-labelledby="breadth-label">
+      <h2 id="breadth-label" class="kicker">Breadth</h2>
+      <div class="cards">{breadth}</div>
+    </section>
+    </div>
   </div>
-  <section class="group" aria-labelledby="breadth-label">
-    <h2 id="breadth-label" class="kicker">Breadth</h2>
-    <div class="cards">{breadth}</div>
-  </section>
   <section class="group" aria-labelledby="tape-label">
     <h2 id="tape-label" class="kicker">Tape</h2>
     <div class="cards cards-tape">
@@ -1067,7 +1024,8 @@ def render_html(snapshot: dict, health_rows: list[dict]) -> str:
     </div>
   </section>
 </main>
-<p class="foot">T2108 is the share of liquid NYSE names above their 40-day average ({snapshot["n_nyse"]:,} names). Nasdaq 40 is that share for liquid Nasdaq names ({snapshot["n_nasdaq"]:,} names). The other breadth counts use {snapshot["n"]:,} names. A 4% day is a close up or down 4% or more. The 5-day and 10-day ratios divide those up days by the down days. The 13/34 balance is names with the 13-day EMA above the 34-day EMA, minus the names below. A month is 21 sessions and a quarter is 63. The 50% count uses 40 sessions. Washout is a T2108 close at {WASHOUT_LINE:.0f} or below. Extended is a close at {EXTENDED_LINE:.0f} or above. A bounce needs a {BOUNCE_RISE:.0f}-point lift off the washout low and either a 5-day ratio of {RATIO_VOTE:.1f} or a {UP_VOTE:,}-name up day. The breadth thrust, fitted to S&P lows that held, fires when T2108 rises at least {FAST_CLOSE:.0f} points in {FAST_WINDOW} sessions, give or take {POINT_BAND:.0f}, from a reading at or under {FAST_CAP:.0f}, give or take {POINT_BAND:.0f}. The 5-day ratio is at least {FAST_RATIO:.1f}, and that rise beats the 10-day average. Nasdaq 40 is the same share for liquid Nasdaq names, and it uses that same band. A 10-day average still under {EMA_LOW:.0f} that is rising toward T2108 is catching up, not an improvement. Posture is half T2108 and half the index-health checks. At the highs means the S&P 500 is within 5% of its 252-day high. Not an instruction to trade.</p>
+<p class="foot">T2108 is the share of liquid NYSE names above their 40-day average ({snapshot["n_nyse"]:,} names). Nasdaq 40 is that share for liquid Nasdaq names ({snapshot["n_nasdaq"]:,} names). The other breadth counts use {snapshot["n"]:,} names. Not an instruction to trade.</p>
+<script src="shadcn-charts.js?v=20261015g"></script>
 <script>
 function closeDeskMenus() {{
   document.querySelectorAll(".desk-menu__panel").forEach(panel => {{
@@ -1101,6 +1059,7 @@ document.addEventListener("keydown", event => {{
     items[next]?.focus();
   }}
 }});
+if (window.GBCharts) GBCharts.upgradeRegime(document);
 </script>
 """
     return HTML_PAGE.replace("__BODY__", body)
@@ -1254,19 +1213,19 @@ HTML_PAGE = r"""<!doctype html>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Regime | Liquid Leadership</title>
+  <title>Regime | GB Market Terminal</title>
   <meta name="description" content="Market regime, T2108, breadth, and the index tape.">
   <meta name="robots" content="index, follow">
   <link rel="icon" type="image/png" href="assets/nel-favicon.png">
   <link rel="preload" href="assets/fonts/newsreader-latin-400.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/source-sans-3-latin-400.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="tokens.css?v=20261012">
+  <link rel="stylesheet" href="tokens.css?v=20261015i">
   <style>
     /* Hallmark · pre-emit critique: P5 H4 E4 S5 R4 V4
      * macrostructure: existing desk · tone: austere · anchor hue: cool
      * page: regime · inherits tokens.css
      */
-    html { color-scheme: light; background: var(--color-paper); }
+    html { color-scheme: dark; background: var(--color-paper); }
     html, body { overflow-x: clip; margin: 0; }
     body {
       background: var(--color-paper);
@@ -1344,6 +1303,18 @@ HTML_PAGE = r"""<!doctype html>
       padding-right: max(var(--page-gutter), env(safe-area-inset-right));
       color: var(--color-muted); font-size: var(--text-xs);
     }
+    .lede {
+      display: flex; align-items: center; gap: var(--space-sm);
+      padding-top: var(--space-8); padding-bottom: var(--space-8);
+      background: color-mix(in oklch, var(--color-up) 12%, var(--color-paper));
+      border-bottom: var(--rule) solid color-mix(in oklch, var(--color-up) 42%, var(--color-rule));
+      color: var(--color-ink-2); line-height: 1.4;
+    }
+    .lede-mark {
+      flex: none; display: inline-flex; align-items: center; justify-content: center;
+      width: 1rem; height: 1rem; border: var(--rule) solid var(--color-up); border-radius: 50%;
+      color: var(--color-up); font-size: 11px; line-height: 1;
+    }
     .foot { padding-bottom: var(--space-xl); max-width: 72rem; }
     main {
       display: flex; flex-direction: column; gap: var(--space-sm);
@@ -1352,6 +1323,12 @@ HTML_PAGE = r"""<!doctype html>
       padding-right: max(var(--page-gutter), env(safe-area-inset-right));
     }
     .top { display: grid; grid-template-columns: minmax(16rem, 22rem) minmax(0, 1fr); gap: var(--space-sm); align-items: start; }
+    .rail { display: contents; }
+    .top > .stage { grid-column: 1 / -1; grid-row: 1; }
+    .top > .cycle { grid-column: 1; grid-row: 2; }
+    .rail > .t2108 { grid-column: 2; grid-row: 2; }
+    .rail > .group { grid-column: 1 / -1; }
+    .rail .cards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .cards, .cards-tape { display: grid; gap: var(--space-sm); }
     .cards { grid-template-columns: repeat(6, minmax(0, 1fr)); }
     .cards-tape { grid-template-columns: repeat(6, minmax(0, 1fr)); }
@@ -1364,10 +1341,83 @@ HTML_PAGE = r"""<!doctype html>
       margin: 0 0 var(--space-8); font-family: var(--font-body); font-size: var(--text-xs);
       font-weight: 400; letter-spacing: 0.04em; text-transform: uppercase; color: var(--color-muted);
     }
-    .stage {
-      margin: 0; font-family: var(--font-display); font-size: var(--text-xl);
-      font-weight: 400; letter-spacing: -0.02em; line-height: 1; color: var(--color-ink);
+    /* Hallmark · component: status card · genre: editorial · theme: terminal
+     * states: default · hover · focus · active
+     * contrast: pass
+     */
+    .panel.cycle { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); column-gap: var(--space-md); align-items: start; }
+    .panel.cycle > * { grid-column: 1 / -1; }
+    .panel.cycle .steps { grid-column: 1; }
+    .panel.cycle .facts { grid-column: 2; margin-top: var(--space-md); }
+    .panel.cycle .facts div { flex-direction: column; align-items: flex-start; gap: 2px; }
+    .panel.cycle .facts dd { text-align: left; }
+    .stage-name {
+      margin: 0;
+      font-family: var(--font-display); font-size: clamp(2.5rem, 4vw + 1rem, 3.5rem);
+      font-weight: 400; letter-spacing: -0.03em; line-height: 0.95; text-transform: none;
     }
+    .stage-down { color: var(--color-down); }
+    .stage-up { color: var(--color-up); }
+    .stage-meta { display: flex; gap: var(--space-xl); margin: var(--space-sm) 0 0; padding: 0; }
+    .stage-meta div { display: flex; flex-direction: column; gap: 2px; min-width: 6rem; }
+    .stage-meta dt {
+      margin: 0; font-family: var(--font-body); font-size: var(--text-xs); font-weight: 400;
+      letter-spacing: 0.04em; text-transform: uppercase; color: var(--color-muted);
+    }
+    .stage-meta dd {
+      margin: 0; font-family: var(--font-display); font-size: var(--text-lg); font-weight: 400;
+      letter-spacing: -0.02em; line-height: 1.1; color: var(--color-ink);
+    }
+    .stage-meta + .cycle-note { margin-top: var(--space-sm); }
+    .cycle-head { display: flex; align-items: center; justify-content: space-between; gap: var(--space-sm); }
+    .cycle-head .kicker { margin: 0; }
+    .badge {
+      display: inline-flex; align-items: center; gap: var(--space-4); margin: 0;
+      padding: var(--space-4) var(--space-8); border: var(--rule) solid var(--color-rule);
+      font-family: var(--font-body); font-size: var(--text-xs); line-height: 1;
+      color: var(--color-ink); white-space: nowrap;
+    }
+    .badge-down { color: var(--color-down); border-color: var(--color-down); --arrow: var(--color-down); }
+    .badge-up { color: var(--color-up); border-color: var(--color-up); --arrow: var(--color-up); }
+    .cycle-note { margin: var(--space-8) 0 0; font-size: var(--text-xs); line-height: 1.45; color: var(--color-ink-2); }
+    .cycle-stats { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-sm); margin-top: var(--space-md); }
+    .cycle-stats .figure { margin: 0; }
+    .cycle-stats .meta { margin: var(--space-4) 0 0; }
+    .meter { height: 4px; margin-top: var(--space-sm); background: var(--color-paper); }
+    .meter-fill { display: block; height: 100%; background: var(--color-accent); }
+    .steps { list-style: none; display: flex; flex-direction: column; margin: var(--space-md) 0 0; padding: 0; }
+    .step {
+      position: relative; display: flex; align-items: center; gap: var(--space-8);
+      min-height: 1.65rem; color: var(--color-muted); font-size: var(--text-xs); line-height: 1.3;
+    }
+    .step::before {
+      content: ""; width: 7px; height: 7px; flex: 0 0 auto;
+      border: var(--rule) solid var(--color-rule-2); border-radius: 50%; background: transparent;
+    }
+    .step:not(:last-child)::after {
+      content: ""; position: absolute; left: 3px; top: 1.15rem; width: 1px; height: calc(100% - 0.55rem);
+      background: var(--color-rule);
+    }
+    .step.is-current { color: var(--color-ink); }
+    .step-down.is-current::before { background: var(--color-down); border-color: var(--color-down); }
+    .step-up.is-current::before { background: var(--color-up); border-color: var(--color-up); }
+    .step-ink.is-current::before { background: var(--color-accent); border-color: var(--color-accent); }
+    .facts { margin: var(--space-md) 0 0; }
+    .facts div {
+      display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-sm);
+      padding: var(--space-8) 0; border-top: var(--rule) solid var(--color-rule);
+    }
+    .facts dt, .facts dd { margin: 0; font-size: var(--text-xs); }
+    .facts dt { color: var(--color-muted); }
+    .facts dd { color: var(--color-ink); text-align: right; }
+    .call { margin-top: var(--space-xs); }
+    .call summary {
+      cursor: pointer; color: var(--color-muted); font-size: var(--text-xs);
+    }
+    .call summary:hover { color: var(--color-ink); }
+    .call summary:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+    .call summary:active { color: var(--color-accent); }
+    .call[open] summary { color: var(--color-ink); }
     .mark-up { color: var(--color-accent); }
     .mark-down { color: var(--color-down); }
     .since, .place, .meta, .sub { margin: var(--space-8) 0 0; font-size: var(--text-xs); color: var(--color-ink-2); }
@@ -1377,16 +1427,35 @@ HTML_PAGE = r"""<!doctype html>
       font-weight: 400; letter-spacing: -0.03em; line-height: 1; color: var(--color-ink);
     }
     .figure-xl { font-size: var(--text-display); }
+    .readings .kicker {
+      font-family: var(--font-display); font-size: var(--text-display); font-weight: 400;
+      letter-spacing: -0.02em; text-transform: none; color: var(--color-ink); line-height: 1.1;
+    }
+    .readings .figure-xl { font-size: var(--text-md); }
+    .readings .sub, .readings .meta { font-size: var(--text-xs); }
     .rules { margin: var(--space-sm) 0 0; padding-left: 1.1rem; font-size: var(--text-xs); color: var(--color-ink-2); }
     .rules li { margin: var(--space-4) 0; }
     .rules li::marker { color: var(--color-accent); }
-    h3 { margin: 0; font-family: var(--font-body); font-size: var(--text-xs); font-weight: 400; letter-spacing: 0.03em; text-transform: uppercase; color: var(--color-muted); }
+    h3 {
+      margin: 0; font-family: var(--font-display); font-size: var(--text-display); font-weight: 400;
+      letter-spacing: -0.02em; text-transform: none; color: var(--color-ink); line-height: 1.1;
+    }
+    .cards .figure { font-size: var(--text-md); }
     h3 a { color: inherit; text-decoration: none; }
     h3 a:hover { color: var(--color-accent); }
-    .delta { font-variant-numeric: tabular-nums; white-space: nowrap; }
-    .delta-up { color: var(--color-up); }
-    .delta-down { color: var(--color-down); }
-    .delta-flat { color: var(--color-muted); }
+    .delta { display: inline-flex; align-items: baseline; gap: 0.28em; font-variant-numeric: tabular-nums; white-space: nowrap; line-height: 1; }
+    .mark, .arr {
+      position: relative; display: inline-block; width: 0.55em; height: 0.42em;
+      overflow: hidden; line-height: 0; color: transparent; vertical-align: middle; flex: none;
+    }
+    .delta .arr { transform: translateY(-0.16em); }
+    .mark::before, .arr::before { content: ""; position: absolute; inset: 0; background: var(--arrow); }
+    .mark-up::before, .arr-up::before { clip-path: polygon(50% 0, 0 100%, 100% 100%); }
+    .mark-down::before, .arr-down::before { clip-path: polygon(50% 100%, 0 0, 100% 0); }
+    .arr-flat::before { clip-path: polygon(0 0, 100% 50%, 0 100%); }
+    .delta-up { color: var(--color-up); --arrow: var(--color-up); }
+    .delta-down { color: var(--color-down); --arrow: var(--color-down); }
+    .delta-flat { color: var(--color-muted); --arrow: var(--color-muted); }
     .chart { min-width: 0; margin-top: var(--space-8); }
     .chart svg { display: block; width: 100%; height: 2.4rem; }
     .chart polyline, .chart circle { fill: none; stroke: var(--color-ink); stroke-width: 1.4; }
@@ -1398,20 +1467,26 @@ HTML_PAGE = r"""<!doctype html>
     .guide { stroke: var(--color-rule-2); stroke-dasharray: 2 3; stroke-width: 1; }
     .bar-up { fill: var(--color-up); }
     .bar-down { fill: var(--color-down); }
-    .readings { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-sm); }
-    .chart-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 7.5rem; gap: var(--space-sm); align-items: end; }
-    .chart-row .chart svg { height: 6rem; }
+    .panel.t2108 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: var(--space-md); row-gap: var(--space-8); }
+    .panel.t2108 > .kicker { grid-column: 1 / -1; grid-row: 1; }
+    .readings, .chart-row { display: contents; }
+    .readings > :first-child { grid-column: 1; grid-row: 2; }
+    .readings > :last-child { grid-column: 2; grid-row: 2; }
+    .chart-row > .grow:nth-child(1) { grid-column: 1; grid-row: 3; }
+    .chart-row > .grow:nth-child(2) { grid-column: 2; grid-row: 3; }
+    .panel.t2108 .chart-row .chart .shadcn-host { height: 9rem; }
+    .chart-row .chart svg { height: 8rem; }
+    .chart-row .grow > .axis { display: none; }
+    .chart-row > .intra {
+      grid-column: 1 / -1; grid-row: 4;
+      display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center;
+      column-gap: var(--space-md); margin-top: var(--space-4);
+      padding-top: var(--space-sm); border-top: var(--rule) solid var(--color-rule);
+    }
+    .panel.t2108 .chart-row .intra .shadcn-host,
+    .chart-row > .intra svg { height: 4.5rem; }
+    .chart-row > .intra .axis { margin: 0; justify-content: flex-start; white-space: nowrap; }
     .axis { display: flex; justify-content: space-between; margin: var(--space-4) 0 0; color: var(--color-muted); font-size: var(--text-xs); }
-    .gauge { display: block; width: 100%; height: auto; margin-top: var(--space-4); }
-    .gauge-ring { fill: none; stroke: var(--color-rule); stroke-width: 1.5; }
-    .gauge-dot { fill: var(--color-accent); stroke: var(--color-paper-3); stroke-width: 2; }
-    .gauge-ink, .gauge-up, .gauge-down, .gauge-score, .gauge-move { font-family: var(--font-body); font-size: 11px; }
-    .gauge-ink { fill: var(--color-ink); }
-    .gauge-up { fill: var(--color-up); }
-    .gauge-down { fill: var(--color-down); }
-    .gauge-live { font-weight: 600; }
-    .gauge-score { fill: var(--color-ink); font-family: var(--font-display); font-size: 28px; }
-    .gauge-move { fill: var(--color-muted); font-size: 11px; }
     .health-wrap { overflow-x: auto; margin-top: var(--space-sm); }
     table { width: 100%; border-collapse: collapse; font-size: var(--text-xs); }
     th, td { padding: var(--space-8) var(--space-sm); text-align: center; border-bottom: var(--rule) solid var(--color-rule); white-space: nowrap; font-weight: 400; }
@@ -1425,13 +1500,19 @@ HTML_PAGE = r"""<!doctype html>
     }
     @media (max-width: 56rem) {
       .top { grid-template-columns: minmax(0, 1fr); }
+      .top > .stage, .top > .cycle, .rail > .t2108, .rail > .group { grid-column: 1; grid-row: auto; }
       .nav-edge { flex-wrap: wrap; padding-top: var(--space-8); padding-bottom: var(--space-8); }
       .clock { margin-left: auto; }
     }
     @media (max-width: 40rem) {
       :root { --page-gutter: var(--space-12); }
-      .cards, .cards-tape { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .readings, .chart-row { grid-template-columns: minmax(0, 1fr); }
+      .cards, .cards-tape, .rail .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .panel.t2108 { grid-template-columns: minmax(0, 1fr); }
+      .readings > :first-child { grid-column: 1; grid-row: 2; }
+      .chart-row > .grow:nth-child(1) { grid-column: 1; grid-row: 3; }
+      .readings > :last-child { grid-column: 1; grid-row: 4; }
+      .chart-row > .grow:nth-child(2) { grid-column: 1; grid-row: 5; }
+      .chart-row > .intra { grid-column: 1; grid-row: 6; }
       .desk-tab { padding: 0 var(--space-8); min-height: 2.75rem; }
     }
     @media (max-width: 22.5rem) {
@@ -1441,6 +1522,9 @@ HTML_PAGE = r"""<!doctype html>
       .desk-tab, .skip-link { transition: none; }
     }
   </style>
+  <link rel="stylesheet" href="nav.css?v=20261015j">
+  <link rel="stylesheet" href="charts.css?v=20261015d">
+  <link rel="stylesheet" href="shadcn-chart.css?v=20261015g">
 </head>
 <body>
 <a class="skip-link" href="#regime">Skip to regime</a>
