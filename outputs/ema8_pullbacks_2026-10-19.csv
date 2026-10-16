@@ -1,0 +1,6 @@
+name,close,ema8w,dist_to_ema8w_pct,ema8w_slope_pct,off_8w_high_pct,tagged_ema8w,ema8w_rising,signal,tradingview_url,description,exchange,industry,Perf.1M,Perf.3M,Perf.6M
+QLYS,181.05,180.1373,0.51,0.145,12.22,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:QLYS&interval=D,"Qualys, Inc.",NASDAQ,Packaged Software,0.8073496659242857,16.468317787069815,111.80393074403369
+SNPS,454.63,447.6816,1.55,0.445,11.29,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:SNPS&interval=D,"Synopsys, Inc.",NASDAQ,Packaged Software,23.708843537414968,13.207500186757644,0.45961772179869276
+P,124.01,121.7009,1.9,0.545,21.3,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NYSE:P&interval=D,"Everpure, Inc.",NYSE,Computer Peripherals,26.540816326530617,88.09343242833307,82.36764705882354
+HTFL,48.29,47.3049,2.08,0.599,11.1,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:HTFL&interval=D,"Heartflow, Inc.",NASDAQ,Packaged Software,-0.08276432857438268,90.26792750197006,58.32786885245902
+HUM,413.16,402.6074,2.62,0.755,9.49,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NYSE:HUM&interval=D,Humana Inc.,NYSE,Managed Health Care,4.2254231729774725,6.621935483870975,104.73736372646184

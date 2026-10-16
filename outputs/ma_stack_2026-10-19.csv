@@ -1,0 +1,5 @@
+name,close,SMA5,SMA10,SMA20,SMA30,sma5_gt_sma10,sma20_gt_sma30,sma20_30_gap_pct,cross_days_ago,signal,tradingview_url,description,exchange,industry,Perf.1M,Perf.3M,Perf.6M
+HUM,413.16,425.328,415.048,399.01,398.4827,True,True,0.132,0,20x30_TODAY,https://www.tradingview.com/chart/?symbol=NYSE:HUM&interval=D,Humana Inc.,NYSE,Managed Health Care,4.2254231729774725,6.621935483870975,104.73736372646184
+WING,131.72,127.486,121.391,112.2725,110.8918,True,True,1.245,1,20x30_1D,https://www.tradingview.com/chart/?symbol=NASDAQ:WING&interval=D,Wingstop Inc.,NASDAQ,Restaurants,29.124595627879614,-5.779685264663814,-31.588241404383503
+TTAN,74.98,73.564,72.591,67.367,65.6733,True,True,2.579,1,20x30_1D,https://www.tradingview.com/chart/?symbol=NASDAQ:TTAN&interval=D,"ServiceTitan, Inc.",NASDAQ,Packaged Software,31.451612903225815,1.2832635418073792,16.050147036062537
+FIGS,19.12,18.606,16.558,14.934,14.4207,True,True,3.56,2,20x30_2D,https://www.tradingview.com/chart/?symbol=NYSE:FIGS&interval=D,"FIGS, Inc.",NYSE,Apparel/Footwear,43.65138993238167,86.53658536585367,15.668481548699333
