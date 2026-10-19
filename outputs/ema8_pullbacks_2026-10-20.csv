@@ -1,0 +1,9 @@
+name,close,ema8w,dist_to_ema8w_pct,ema8w_slope_pct,off_8w_high_pct,tagged_ema8w,ema8w_rising,signal,tradingview_url,description,exchange,industry,Perf.1M,Perf.3M,Perf.6M
+ASST,25.54,25.4889,0.2,0.057,20.39,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:ASST&interval=D,"Strive, Inc.",NASDAQ,Financial Conglomerates,-13.540961408259987,101.2608353033885,55.92185592185592
+DNA,10.07,10.0414,0.28,0.081,44.73,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NYSE:DNA&interval=D,"Ginkgo Bioworks Holdings, Inc.",NYSE,Medical/Nursing Services,28.60791826309068,33.37748344370862,20.59880239520959
+OKTA,189.93,189.3243,0.32,0.091,19.18,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:OKTA&interval=D,"Okta, Inc.",NASDAQ,Packaged Software,0.07376574108225659,29.56545466948632,143.46878605307012
+FIVN,33.34,33.232,0.33,0.093,16.65,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:FIVN&interval=D,"Five9, Inc.",NASDAQ,Packaged Software,-3.1939605110336653,32.51192368839429,101.81598062953998
+SNPS,454.58,449.2146,1.19,0.342,11.3,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:SNPS&interval=D,"Synopsys, Inc.",NASDAQ,Packaged Software,18.072727272727267,20.517511068692166,-3.465703971119132
+DDOG,260.36,256.821,1.38,0.395,13.41,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:DDOG&interval=D,"Datadog, Inc.",NASDAQ,Packaged Software,9.18393021890464,0.7195357833655759,100.91056408673509
+AUGO,86.03,84.7521,1.51,0.433,7.98,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:AUGO&interval=D,Aura Minerals Inc.,NASDAQ,Other Metals/Minerals,-3.488893874803679,66.9512905103823,-15.623774029030987
+ATRC,55.53,53.9736,2.88,0.831,10.0,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:ATRC&interval=D,"AtriCure, Inc.",NASDAQ,Medical Specialties,-5.093146470688765,62.32095878398129,100.54171180931743
