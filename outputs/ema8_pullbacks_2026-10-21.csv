@@ -1,0 +1,7 @@
+name,close,ema8w,dist_to_ema8w_pct,ema8w_slope_pct,off_8w_high_pct,tagged_ema8w,ema8w_rising,signal,tradingview_url,description,exchange,industry,Perf.1M,Perf.3M,Perf.6M
+AMLX,28.77,28.4531,1.11,0.319,18.9,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:AMLX&interval=D,"Amylyx Pharmaceuticals, Inc.",NASDAQ,Pharmaceuticals: Major,-15.901783104355454,56.95581014729952,64.2123287671233
+OKTA,194.02,190.2332,1.99,0.572,17.44,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:OKTA&interval=D,"Okta, Inc.",NASDAQ,Packaged Software,2.2287791769850984,37.349568172164815,154.97076023391816
+CORT,116.45,113.9168,2.22,0.639,5.18,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:CORT&interval=D,Corcept Therapeutics Incorporated,NASDAQ,Pharmaceuticals: Major,-0.2996575342465705,22.34713175036772,151.24056094929878
+FIVN,34.31,33.4475,2.58,0.742,14.22,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:FIVN&interval=D,"Five9, Inc.",NASDAQ,Packaged Software,-0.37746806039487646,37.84652470871837,114.30356027482821
+TLN,349.43,339.5963,2.9,0.834,10.53,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:TLN&interval=D,Talen Energy Corporation,NASDAQ,Alternative Power Generation,18.93060140907389,-4.496009620640645,2.797717109908211
+SLS,11.98,11.6345,2.97,0.856,17.61,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:SLS&interval=D,"SELLAS Life Sciences Group, Inc.",NASDAQ,Pharmaceuticals: Major,3.275862068965524,-3.9294306335204507,152.21052631578948

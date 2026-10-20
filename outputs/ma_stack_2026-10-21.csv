@@ -1,0 +1,5 @@
+name,close,SMA5,SMA10,SMA20,SMA30,sma5_gt_sma10,sma20_gt_sma30,sma20_30_gap_pct,cross_days_ago,signal,tradingview_url,description,exchange,industry,Perf.1M,Perf.3M,Perf.6M
+ENOV,20.69,19.614,18.804,18.5305,18.4807,True,True,0.27,0,20x30_TODAY,https://www.tradingview.com/chart/?symbol=NYSE:ENOV&interval=D,Enovis Corporation,NYSE,Medical Specialties,16.89265536723165,-23.96177875780963,-11.769722814498925
+KVYO,19.61,17.862,17.567,16.797,16.6097,True,True,1.128,1,20x30_1D,https://www.tradingview.com/chart/?symbol=NYSE:KVYO&interval=D,"Klaviyo, Inc. Series A",NYSE,Packaged Software,22.562499999999996,12.960829493087559,0.05102040816325515
+ATRC,57.67,56.87,56.046,56.5505,56.502,True,True,0.086,,20x30_NEAR,https://www.tradingview.com/chart/?symbol=NASDAQ:ATRC&interval=D,"AtriCure, Inc.",NASDAQ,Medical Specialties,-1.435652025294815,67.15942028985508,107.96970789758385
+HTFL,55.59,51.053,50.2875,49.9362,49.5918,True,True,0.695,,20x30_NEAR,https://www.tradingview.com/chart/?symbol=NASDAQ:HTFL&interval=D,"Heartflow, Inc.",NASDAQ,Packaged Software,10.847457627118654,120.77045274027007,69.22374429223744
