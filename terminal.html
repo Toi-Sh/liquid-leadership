@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Terminal | GB Market Terminal</title>
+  <meta name="robots" content="index, follow">
+  <link rel="icon" type="image/png" href="assets/nel-favicon.png">
+  <link rel="stylesheet" href="tokens.css?v=20261015j">
+  <style>
+    html, body { height: 100%; margin: 0; }
+    html[data-theme="dark"], .swatch[data-theme="dark"] {
+      color-scheme: dark;
+      --tr-window: #1e1e20; --tr-sidebar: rgba(28, 28, 30, 0.94); --tr-card: #0c0c0d; --tr-header: #1c1c1e;
+      --tr-line: rgba(255, 255, 255, 0.09); --tr-grid: #222224; --tr-text: #ececee; --tr-muted: #8e8e93;
+      --tr-amber: #ffb000; --tr-up: #30d158; --tr-down: #ff453a; --tr-cyan: #64d2ff;
+      --tr-control: rgba(255, 255, 255, 0.07); --tr-accent: #0a84ff; --tr-rsi: #ff375f; --tr-ink: #1c1c1e;
+    }
+    html[data-theme="light"], .swatch[data-theme="light"] {
+      color-scheme: light;
+      --tr-window: #ececee; --tr-sidebar: rgba(246, 246, 248, 0.96); --tr-card: #fff; --tr-header: #f4f4f6;
+      --tr-line: rgba(0, 0, 0, 0.1); --tr-grid: #eaeaed; --tr-text: #1d1d1f; --tr-muted: #6e6e73;
+      --tr-amber: #b26800; --tr-up: #1c9640; --tr-down: #d72828; --tr-cyan: #007acc;
+      --tr-control: rgba(0, 0, 0, 0.06); --tr-accent: #0a84ff; --tr-rsi: #d72828; --tr-ink: #1d1d1f;
+    }
+    html[data-theme="bloomberg"], .swatch[data-theme="bloomberg"] {
+      color-scheme: dark;
+      --tr-window: #000; --tr-sidebar: rgba(10, 8, 2, 0.94); --tr-card: #000; --tr-header: #1c1400;
+      --tr-line: rgba(255, 176, 0, 0.18); --tr-grid: #1a1406; --tr-text: #ffb000; --tr-muted: #a07018;
+      --tr-amber: #ffd666; --tr-up: #00e676; --tr-down: #ff3b30; --tr-cyan: #60c8ff;
+      --tr-control: rgba(255, 176, 0, 0.09); --tr-accent: #ff8c00; --tr-rsi: #ff3b30; --tr-ink: #000;
+    }
+    html[data-theme="contrast"], .swatch[data-theme="contrast"] {
+      color-scheme: dark;
+      --tr-window: #000; --tr-sidebar: #000; --tr-card: #000; --tr-header: #1a1a1a;
+      --tr-line: rgba(255, 255, 255, 0.59); --tr-grid: #404040; --tr-text: #fff; --tr-muted: #c8c8c8;
+      --tr-amber: #ffeb00; --tr-up: #00ff66; --tr-down: #ff4040; --tr-cyan: #00e6ff;
+      --tr-control: rgba(255, 255, 255, 0.16); --tr-accent: #00c8ff; --tr-rsi: #ff4040; --tr-ink: #000;
+    }
+    html[data-theme="solarized-dark"], .swatch[data-theme="solarized-dark"] {
+      color-scheme: dark;
+      --tr-window: #073642; --tr-sidebar: rgba(7, 54, 66, 0.94); --tr-card: #002b36; --tr-header: #073642;
+      --tr-line: rgba(147, 161, 161, 0.16); --tr-grid: #0a3a46; --tr-text: #d0d8d8; --tr-muted: #839496;
+      --tr-amber: #b58900; --tr-up: #859900; --tr-down: #dc322f; --tr-cyan: #2aa198;
+      --tr-control: rgba(147, 161, 161, 0.1); --tr-accent: #268bd2; --tr-rsi: #d33682; --tr-ink: #002b36;
+    }
+    html[data-theme="solarized-light"], .swatch[data-theme="solarized-light"] {
+      color-scheme: light;
+      --tr-window: #eee8d5; --tr-sidebar: rgba(238, 232, 213, 0.96); --tr-card: #fdf6e3; --tr-header: #eee8d5;
+      --tr-line: rgba(88, 110, 117, 0.18); --tr-grid: #f0ead6; --tr-text: #073642; --tr-muted: #657b83;
+      --tr-amber: #9a6f00; --tr-up: #859900; --tr-down: #dc322f; --tr-cyan: #2aa198;
+      --tr-control: rgba(88, 110, 117, 0.09); --tr-accent: #268bd2; --tr-rsi: #d33682; --tr-ink: #fdf6e3;
+    }
+    html[data-theme="nord"], .swatch[data-theme="nord"] {
+      color-scheme: dark;
+      --tr-window: #2e3440; --tr-sidebar: rgba(59, 66, 82, 0.94); --tr-card: #242933; --tr-header: #3b4252;
+      --tr-line: rgba(216, 222, 233, 0.12); --tr-grid: #313744; --tr-text: #eceff4; --tr-muted: #9aa5b8;
+      --tr-amber: #ebcb8b; --tr-up: #a3be8c; --tr-down: #bf616a; --tr-cyan: #88c0d0;
+      --tr-control: rgba(216, 222, 233, 0.09); --tr-accent: #88c0d0; --tr-rsi: #b48ead; --tr-ink: #2e3440;
+    }
+    html[data-theme="monokai"], .swatch[data-theme="monokai"] {
+      color-scheme: dark;
+      --tr-window: #272822; --tr-sidebar: rgba(45, 46, 39, 0.94); --tr-card: #1e1f1c; --tr-header: #3e3d32;
+      --tr-line: rgba(248, 248, 242, 0.11); --tr-grid: #2c2d27; --tr-text: #f8f8f2; --tr-muted: #908c76;
+      --tr-amber: #e6db74; --tr-up: #a6e22e; --tr-down: #f92672; --tr-cyan: #66d9ef;
+      --tr-control: rgba(248, 248, 242, 0.08); --tr-accent: #a6e22e; --tr-rsi: #f92672; --tr-ink: #1e1f1c;
+    }
+    body {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background: var(--tr-window);
+      color: var(--tr-text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    .skip-link {
+      position: absolute; left: 8px; top: 8px; z-index: 5;
+      padding: 4px 8px; background: #ffb000; color: #1c1c1e;
+      text-decoration: none; transform: translateY(-200%);
+    }
+    .skip-link:focus-visible { transform: none; }
+    .desk {
+      --card: var(--tr-card);
+      --header: var(--tr-header);
+      --line: var(--tr-line);
+      --muted: var(--tr-muted);
+      --amber: var(--tr-amber);
+      --up: var(--tr-up);
+      --down: var(--tr-down);
+      --control: var(--tr-control);
+      flex: 1 1 auto;
+      min-height: 0;
+      display: grid;
+      grid-template-columns: 232px minmax(0, 1fr) minmax(280px, 36%);
+      grid-template-rows: 34px minmax(0, 1.35fr) minmax(168px, 0.72fr) 22px;
+      gap: 6px;
+      padding: 6px;
+    }
+    .toolbar { grid-column: 1 / -1; display: flex; align-items: center; gap: 8px; min-width: 0; }
+    .toolbar form { flex: 1 1 auto; display: flex; gap: 8px; min-width: 0; }
+    .toolbar input {
+      flex: 1 1 auto; min-width: 0; height: 26px; padding: 0 12px;
+      border: 1px solid var(--line); border-radius: 13px;
+      background: var(--control); color: var(--tr-text);
+      font: 12px/1 ui-monospace, "SF Mono", Menlo, monospace;
+    }
+    .toolbar input:focus-visible, .toolbar button:focus-visible, .sidebar button:focus-visible, .chart-card button:focus-visible {
+      outline: 2px solid var(--tr-accent); outline-offset: 1px;
+    }
+    .toolbar button {
+      height: 26px; min-width: 40px; padding: 0 10px; border: 0; border-radius: 13px;
+      background: var(--amber); color: var(--tr-ink); cursor: pointer;
+      font: 700 12px/1 ui-monospace, "SF Mono", Menlo, monospace;
+    }
+    .asof { margin: 0; color: var(--muted); font: 11.5px/1 ui-monospace, "SF Mono", Menlo, monospace; white-space: nowrap; }
+    .sidebar {
+      grid-row: 2 / 4; grid-column: 1;
+      overflow: auto; border-radius: 10px;
+      background: var(--tr-sidebar);
+      border: 1px solid var(--line);
+    }
+    .sidebar h2 {
+      margin: 12px 10px 4px; font-size: 12px; font-weight: 600; color: var(--tr-text);
+    }
+    .sidebar button, .quote {
+      display: flex; align-items: center; gap: 8px;
+      width: 100%; height: 24px; padding: 0 10px; border: 0;
+      background: transparent; color: var(--tr-text); text-align: left; cursor: pointer;
+      font: 12px/1 ui-monospace, "SF Mono", Menlo, monospace;
+    }
+    .sidebar button span:last-child, .hint { margin-left: auto; color: var(--muted); }
+    .sidebar button:hover, .quote:hover { background: var(--control); }
+    .quote.on, .sidebar button[aria-current="true"] { background: color-mix(in srgb, var(--tr-accent) 32%, transparent); }
+    .quote .sym { width: 4.6rem; color: var(--amber); }
+    .quote .last { flex: 1 1 auto; text-align: right; }
+    .quote .pct { width: 4.2rem; text-align: right; }
+    .up { color: var(--up); }
+    .down { color: var(--down); }
+    .card {
+      min-width: 0; min-height: 0; display: flex; flex-direction: column;
+      overflow: hidden; border-radius: 10px; background: var(--card);
+      border: 1px solid var(--line);
+    }
+    .card h2 {
+      display: flex; align-items: center; gap: 8px;
+      margin: 0; height: 28px; padding: 0 8px; background: var(--header);
+      font-size: 12px; font-weight: 600;
+    }
+    .card h2 b { color: var(--amber); font-weight: 650; }
+    .card h2 span { color: var(--muted); font-weight: 500; }
+    .chart-card { grid-column: 2; grid-row: 2; }
+    .trade-card, .theme-card { grid-column: 3; grid-row: 2; }
+    .pol-head { padding: 8px 10px 6px; font: 12px/1.45 ui-monospace, "SF Mono", Menlo, monospace; }
+    .pol-head strong { display: block; color: var(--tr-text); font-size: 14px; }
+    .pol-head p { margin: 0; }
+    .pol-head .tickers { color: var(--amber); }
+    .trade-card .asset { max-width: 8.5rem; overflow: hidden; text-overflow: ellipsis; }
+    .theme-card[hidden], .trade-card[hidden] { display: none; }
+    .wei-card { grid-column: 2; grid-row: 3; }
+    .wl-card { grid-column: 3; grid-row: 3; }
+    .chart-tools {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 6px;
+      padding: 4px 8px; background: var(--header);
+    }
+    .tab {
+      height: 22px; padding: 0 8px; border-radius: 6px;
+      background: color-mix(in srgb, var(--tr-accent) 32%, transparent);
+      font: 12px/22px ui-monospace, "SF Mono", Menlo, monospace;
+    }
+    .tab b { color: var(--amber); font-weight: 650; }
+    .pills { display: flex; gap: 2px; }
+    .pills button {
+      height: 20px; padding: 0 6px; border: 0; border-radius: 4px;
+      background: transparent; color: var(--muted); cursor: pointer;
+      font: 11px/1 ui-monospace, "SF Mono", Menlo, monospace;
+    }
+    .pills button[aria-pressed="true"] { background: var(--control); color: var(--tr-text); }
+    #readout {
+      margin: 0; padding: 4px 8px 0;
+      font: 12px/1.3 ui-monospace, "SF Mono", Menlo, monospace;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    #chart { flex: 1 1 auto; width: 100%; height: 0; min-height: 0; display: block; }
+    .scroll { flex: 1 1 auto; min-height: 0; overflow: auto; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td {
+      padding: 3px 8px; text-align: left; white-space: nowrap;
+      font: 11px/1.35 ui-monospace, "SF Mono", Menlo, monospace;
+    }
+    th { position: sticky; top: 0; background: var(--card); color: var(--muted); font-weight: 500; }
+    td.num, th.num { text-align: right; }
+    tbody tr { cursor: pointer; }
+    tbody tr:hover, tbody tr.on { background: rgba(255, 255, 255, 0.04); }
+    .name b { color: var(--amber); font-weight: 650; }
+    .name span, .kind { color: var(--muted); }
+    .region {
+      margin: 8px 8px 2px; color: var(--muted);
+      font: 10px/1.2 ui-monospace, "SF Mono", Menlo, monospace; letter-spacing: 0.04em;
+    }
+    .statusbar {
+      grid-column: 1 / -1; display: flex; align-items: center; gap: 14px;
+      padding: 0 8px; color: var(--muted);
+      font: 10px/1 ui-monospace, "SF Mono", Menlo, monospace;
+    }
+    #status { margin-left: auto; color: var(--tr-text); }
+    .ranges { justify-content: center; padding: 2px 8px 6px; }
+    .gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 8px; }
+    .swatch {
+      display: flex; flex-direction: column; align-items: stretch; gap: 4px;
+      height: auto; width: auto; padding: 6px; border-radius: 8px;
+      border: 1px solid var(--tr-line); background: transparent; color: var(--tr-text); cursor: pointer;
+    }
+    .swatch[aria-pressed="true"] { outline: 2px solid var(--tr-accent); }
+    .mini {
+      display: flex; align-items: flex-end; gap: 3px; height: 36px; padding: 6px; border-radius: 4px;
+      background: var(--tr-card);
+    }
+    .mini i { display: block; width: 6px; border-radius: 1px; }
+    .mini i:nth-child(1) { height: 16px; background: var(--tr-up); }
+    .mini i:nth-child(2) { height: 10px; background: var(--tr-down); }
+    .mini i:nth-child(3) { height: 22px; background: var(--tr-up); }
+    .mini i:nth-child(4) { height: 14px; background: var(--tr-amber); }
+    .swatch em { font: 11px/1.2 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: var(--tr-text); }
+    @media (max-width: 960px) {
+      body { overflow: auto; }
+      .desk { display: flex; flex-direction: column; height: auto; overflow: visible; }
+      .sidebar, .chart-card, .trade-card, .theme-card, .wei-card, .wl-card { min-height: 16rem; }
+      #chart { height: 22rem; flex: none; }
+    }
+  </style>
+  <link rel="stylesheet" href="nav.css?v=20261015n">
+</head>
+<body>
+<a class="skip-link" href="#command-line">Skip to command line</a>
+<header class="nav-edge">
+  <a class="brand" href="themes.html">GB Market Terminal</a>
+  <nav class="bbg-keys" aria-label="Terminal panels">
+    <a class="desk-tab" href="regime.html">Regime</a>
+    <a class="desk-tab" href="monitor.html">Monitor</a>
+    <a class="desk-tab" href="themes.html">Themes</a>
+    <a class="desk-tab" href="liquid.html">Leaders</a>
+    <a class="desk-tab" href="rs.html">Setups</a>
+    <a class="desk-tab" href="tape.html">Tape</a>
+    <a class="desk-tab" href="crowding.html">Crowding</a>
+    <a class="desk-tab" href="terminal.html" aria-current="page">Terminal</a>
+  </nav>
+</header>
+<div class="desk">
+  <div class="toolbar">
+    <form id="command">
+      <label class="visually-hidden" for="command-line" style="position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)">Command</label>
+      <input id="command-line" name="command" autocomplete="off" spellcheck="false" placeholder="Search or type a command — BTCUSD · US10Y · CL1 · AAPL · 5 · 1W">
+      <button type="submit">GO</button>
+    </form>
+    <p class="asof">Based on previous day</p>
+  </div>
+  <aside class="sidebar" aria-label="Sidebar">
+    <h2>Watchlist</h2>
+    <div id="side-quotes"></div>
+    <h2>Markets</h2>
+    <button type="button" data-go="WEI">World Markets <span>WEI</span></button>
+    <button type="button" data-go="SECF">Symbol Search <span>SECF</span></button>
+    <h2>More</h2>
+    <button type="button" data-go="THEME">Settings</button>
+  </aside>
+  <section class="card chart-card" aria-label="Chart">
+    <div class="chart-tools">
+      <span class="tab">GP <b id="tab-symbol">AAPL</b></span>
+      <div class="pills" id="intervals"></div>
+      <div class="pills" id="styles"></div>
+    </div>
+    <p id="readout">Loading AAPL</p>
+    <canvas id="chart" aria-label="Price chart"></canvas>
+    <div class="pills ranges" id="ranges"></div>
+  </section>
+  <section class="card trade-card" id="trade-card" aria-label="Politician trades">
+    <h2><b>POL</b> <span id="pol-name">Loading</span></h2>
+    <div class="pol-head" id="pol-head"><p>Loading filings</p></div>
+    <div class="scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>Filed</th><th>Traded</th><th>Lag</th><th>Type</th><th>Ticker</th>
+            <th>Amount</th><th class="num">Return</th><th>Owner</th><th>Asset</th>
+          </tr>
+        </thead>
+        <tbody id="trades"></tbody>
+      </table>
+    </div>
+  </section>
+  <section class="card theme-card" id="theme-card" tabindex="-1" aria-label="Themes" hidden>
+    <h2>Themes</h2>
+    <div class="scroll">
+      <div class="gallery" id="theme-gallery"></div>
+    </div>
+  </section>
+  <section class="card wei-card" id="world-card" tabindex="-1" aria-label="World markets">
+    <h2><b>WEI</b> World Markets</h2>
+    <div class="scroll" id="world"></div>
+  </section>
+  <section class="card wl-card" aria-label="Watchlist">
+    <h2><b>WL</b> Watchlist</h2>
+    <div class="scroll">
+      <table>
+        <thead>
+          <tr><th>Security</th><th class="num">Last</th><th class="num">Change</th><th class="num">%</th></tr>
+        </thead>
+        <tbody id="wl-body"></tbody>
+      </table>
+    </div>
+  </section>
+  <footer class="statusbar">
+    <span id="status" role="status"></span>
+  </footer>
+</div>
+<script src="terminal.js"></script>
+</body>
+</html>

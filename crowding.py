@@ -469,6 +469,7 @@ def render(markets: list[dict]) -> str:
     <a class="desk-tab" href="rs.html">Setups</a>
     <a class="desk-tab" href="tape.html">Tape</a>
     <a class="desk-tab" href="crowding.html" aria-current="page">Crowding</a>
+    <a class="desk-tab" href="terminal.html">Terminal</a>
   </nav>
 </header>
 <p class="lede" role="note"><span class="lede-mark" aria-hidden="true">i</span><span class="visually-hidden">Information. </span>{html.escape(lede)}</p>

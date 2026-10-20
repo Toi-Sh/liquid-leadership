@@ -579,6 +579,7 @@ HTML_TEMPLATE = r"""<!doctype html>
     <a class="desk-tab" href="rs.html">Setups</a>
     <a class="desk-tab" href="tape.html">Tape</a>
     <a class="desk-tab" href="crowding.html">Crowding</a>
+    <a class="desk-tab" href="terminal.html">Terminal</a>
   </nav>
 </header>
 <main id="monitor">

@@ -1493,6 +1493,7 @@ tbody tr:nth-child(even) { background: color-mix(in oklch, var(--color-paper-2) 
       <a class="desk-tab" data-panel="setups" href="rs.html">Setups</a>
       <a class="desk-tab" data-panel="tape" href="tape.html">Tape</a>
       <a class="desk-tab" href="crowding.html">Crowding</a>
+      <a class="desk-tab" href="terminal.html">Terminal</a>
     </nav>
   </header>
   <p class="lede"><span id="bbg-session">US equity session</span></p>
