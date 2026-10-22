@@ -1,0 +1,3 @@
+name,description,exchange,industry,close,change,volume,earn_yoy,sales_yoy,Perf.1M,sma10_rising,sma20_rising,tradingview_url
+EVH,"Evolent Health, Inc",NYSE,Miscellaneous Commercial Services,4.89,1.2422360248447124,1312923,42.84418235427535,46.855476134747306,31.45161290322579,True,True,https://www.tradingview.com/chart/?symbol=NYSE:EVH&interval=D
+ZETA,Zeta Global Holdings Corp.,NYSE,Packaged Software,33.52,-1.7296980357666265,4717943,92.81997918834547,43.5491923927351,4.75000000000001,True,True,https://www.tradingview.com/chart/?symbol=NYSE:ZETA&interval=D
