@@ -1,0 +1,3 @@
+date,frame,kind,industry,signal,prior_count,current_count,delta,members
+2026-10-26,1m,industry,Packaged Software,RISING,7,10,3,
+2026-10-26,6m,cluster,Semis complex,RISING,1,2,1,Computer Peripherals|Computer Processing Hardware|Electronic Equipment/Instruments|Electronic Production Equipment|Electronics/Appliances|Semiconductors

@@ -1,0 +1,4 @@
+name,close,ema8w,dist_to_ema8w_pct,ema8w_slope_pct,off_8w_high_pct,tagged_ema8w,ema8w_rising,signal,tradingview_url,description,exchange,industry,Perf.1M,Perf.3M,Perf.6M
+SLS,11.54,11.5368,0.03,0.008,20.63,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:SLS&interval=D,"SELLAS Life Sciences Group, Inc.",NASDAQ,Pharmaceuticals: Major,-3.1879194630872547,-6.4829821717990335,159.90990990990986
+P,123.33,122.0629,1.04,0.297,21.73,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NYSE:P&interval=D,"Everpure, Inc.",NYSE,Computer Peripherals,10.968148281446823,63.91547049441787,76.31165117941386
+PANW,380.55,371.4578,2.45,0.704,11.98,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:PANW&interval=D,"Palo Alto Networks, Inc.",NASDAQ,Packaged Software,0.19747235387045814,15.989515072083892,118.70689655172414

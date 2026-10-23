@@ -1,0 +1,641 @@
+theme,symbol,description,close,today,1w,1m,3m,6m,ytd
+GPUs,NVDA,NVIDIA Corporation,210.96,-0.59,-2.59,-7.49,1.69,5.5,11.13
+GPUs,AMD,"Advanced Micro Devices, Inc.",516.79,1.74,-5.62,-16.85,-5.51,53.46,136.08
+GPUs,AVGO,Broadcom Inc.,321.68,-0.48,-4.96,-11.19,-17.02,-24.31,-8.81
+GPUs,MRVL,"Marvell Technology, Inc.",228.51,2.26,-2.83,-12.9,12.62,34.52,163.44
+GPUs,ARM,Arm Holdings plc,210.33,0.11,-12.03,-36.61,-25.62,-5.24,86.41
+GPUs,ALAB,"Astera Labs, Inc.",257.16,-0.26,-12.34,-29.41,-18.96,26.53,49.79
+GPUs,CRDO,Credo Technology Group Holding Ltd,147.29,-9.51,-15.7,-23.09,-36.33,-21.97,-0.75
+GPUs,AMBA,"Ambarella, Inc.",66.5,5.35,6.52,-0.82,-2.83,5.06,-8.69
+CPUs,INTC,Intel Corporation,86.96,1.72,-6.97,-29.79,-13.35,5.79,130.24
+CPUs,AMD,"Advanced Micro Devices, Inc.",516.79,1.74,-5.62,-16.85,-5.51,53.46,136.08
+CPUs,ARM,Arm Holdings plc,210.33,0.11,-12.03,-36.61,-25.62,-5.24,86.41
+CPUs,QCOM,QUALCOMM Incorporated,175.91,1.78,0.51,-11.87,3.67,20.81,1.22
+CPUs,AVGO,Broadcom Inc.,321.68,-0.48,-4.96,-11.19,-17.02,-24.31,-8.81
+CPUs,IBM,International Business Machines Corporation,253.56,0.58,7.42,8.6,21.16,9.33,-14.79
+Memory,MU,"Micron Technology, Inc.",877.55,2.46,-3.09,-20.23,-8.5,76.96,197.35
+Memory,WDC,Western Digital Corporation,343.67,-2.97,-1.16,-25.76,-36.18,-16.2,93.94
+Memory,SNDK,Sandisk Corporation,1238.03,-1.82,-8.21,-34.68,-20.19,29.7,406.66
+Memory,STX,Seagate Technology Holdings PLC,630.49,-1.81,-6.89,-30.96,-28.29,6.38,123.6
+Memory,SIMO,Silicon Motion Technology Corporation,187.39,-0.3,-14.41,-32.67,-32.43,27.53,98.19
+Memory,RMBS,"Rambus, Inc.",85.65,-0.09,-5.45,-18.49,-15.17,-42.77,-10.24
+HBM,MU,"Micron Technology, Inc.",877.55,2.46,-3.09,-20.23,-8.5,76.96,197.35
+HBM,AMKR,"Amkor Technology, Inc.",39.3,0.64,-9.99,-28.4,-44.73,-49.46,-4.26
+HBM,ASX,"ASE Technology Holding Co., Ltd.",38.69,2.52,-6.18,-12.76,1.12,22.9,132.09
+HBM,FORM,"FormFactor, Inc.",98.51,3.66,-11.03,-21.44,-12.5,-35.71,70.29
+HBM,CAMT,Camtek Ltd.,121.16,1.41,-5.34,-18.9,-22.77,-39.21,9.6
+HBM,NVMI,Nova Ltd.,311.35,0.39,-3.57,-15.2,-31.95,-41.3,-7.34
+NAND,SNDK,Sandisk Corporation,1238.03,-1.82,-8.21,-34.68,-20.19,29.7,406.66
+NAND,MU,"Micron Technology, Inc.",877.55,2.46,-3.09,-20.23,-8.5,76.96,197.35
+NAND,SIMO,Silicon Motion Technology Corporation,187.39,-0.3,-14.41,-32.67,-32.43,27.53,98.19
+MLCC,VSH,"Vishay Intertechnology, Inc.",26.7,-1.22,-5.18,-18.0,-33.1,-5.12,80.04
+MLCC,KN,Knowles Corporation,32.17,-3.62,-5.52,-12.68,-17.43,2.81,48.11
+MLCC,BELFB,Bel Fuse Inc.,199.51,-0.15,-8.79,-20.3,-30.22,-26.14,16.91
+MLCC,CTS,CTS Corporation,53.06,-0.88,-3.12,-9.61,-13.57,-5.0,23.17
+MLCC,VPG,"Vishay Precision Group, Inc.",53.25,1.06,-16.47,-23.09,-51.56,-9.04,37.24
+MLCC,LFUS,"Littelfuse, Inc.",351.39,0.32,-9.72,-15.81,-15.36,-13.24,38.29
+Semi Testing,TER,"Teradyne, Inc.",308.85,0.03,-8.93,-22.4,-15.38,-24.46,54.98
+Semi Testing,KLAC,KLA Corporation,145.61,-1.5,-14.23,-21.82,-32.12,-21.41,15.59
+Semi Testing,ONTO,Onto Innovation Inc.,198.68,0.01,-13.56,-29.48,-30.37,-34.64,22.19
+Semi Testing,COHU,"Cohu, Inc.",47.96,3.67,-10.71,-25.02,-11.19,1.31,100.33
+Semi Testing,FORM,"FormFactor, Inc.",98.51,3.66,-11.03,-21.44,-12.5,-35.71,70.29
+Semi Testing,AEHR,Aehr Test Systems,55.31,-0.61,-18.07,-44.67,-36.45,-43.85,163.13
+Semi Testing,CAMT,Camtek Ltd.,121.16,1.41,-5.34,-18.9,-22.77,-39.21,9.6
+Semi Testing,NVMI,Nova Ltd.,311.35,0.39,-3.57,-15.2,-31.95,-41.3,-7.34
+Semi Equipment,AMAT,"Applied Materials, Inc.",377.24,0.44,-10.24,-19.95,-32.18,-8.55,41.25
+Semi Equipment,LRCX,Lam Research Corporation,230.1,-0.02,-15.23,-25.17,-26.4,-13.98,29.38
+Semi Equipment,ASML,ASML Holding N.V. - New York Registry Shares,1571.8,0.72,-5.26,-9.21,-12.18,7.69,38.64
+Semi Equipment,KLAC,KLA Corporation,145.61,-1.5,-14.23,-21.82,-32.12,-21.41,15.59
+Semi Equipment,TER,"Teradyne, Inc.",308.85,0.03,-8.93,-22.4,-15.38,-24.46,54.98
+Semi Equipment,ONTO,Onto Innovation Inc.,198.68,0.01,-13.56,-29.48,-30.37,-34.64,22.19
+Semi Equipment,MKSI,MKS Inc.,196.55,0.22,-12.41,-24.51,-42.38,-32.22,19.45
+Semi Equipment,ACLS,"Axcelis Technologies, Inc.",106.58,1.76,-5.5,-7.77,-24.18,-27.19,30.6
+Semi Equipment,CAMT,Camtek Ltd.,121.16,1.41,-5.34,-18.9,-22.77,-39.21,9.6
+Semi Equipment,VECO,Veeco Instruments Inc.,42.06,2.21,-5.39,-4.54,-21.53,-20.31,44.04
+Semi Equipment,NVMI,Nova Ltd.,311.35,0.39,-3.57,-15.2,-31.95,-41.3,-7.34
+Foundry,TSM,Taiwan Semiconductor Manufacturing Company Ltd.,418.51,1.49,-0.64,-6.95,1.74,5.65,34.15
+Foundry,GFS,GlobalFoundries Inc.,44.39,2.35,-7.52,-6.42,-20.63,-31.41,24.9
+Foundry,UMC,United Microelectronics Corporation (NEW),18.89,1.94,-8.52,-25.28,-4.79,55.09,140.64
+Foundry,INTC,Intel Corporation,86.96,1.72,-6.97,-29.79,-13.35,5.79,130.24
+Foundry,ASX,"ASE Technology Holding Co., Ltd.",38.69,2.52,-6.18,-12.76,1.12,22.9,132.09
+Foundry,TSEM,Tower Semiconductor Ltd.,167.56,-0.09,-17.5,-29.22,-34.2,-17.46,39.07
+Advanced Packaging,AMKR,"Amkor Technology, Inc.",39.3,0.64,-9.99,-28.4,-44.73,-49.46,-4.26
+Advanced Packaging,ASX,"ASE Technology Holding Co., Ltd.",38.69,2.52,-6.18,-12.76,1.12,22.9,132.09
+Advanced Packaging,TSEM,Tower Semiconductor Ltd.,167.56,-0.09,-17.5,-29.22,-34.2,-17.46,39.07
+Advanced Packaging,ONTO,Onto Innovation Inc.,198.68,0.01,-13.56,-29.48,-30.37,-34.64,22.19
+Advanced Packaging,CAMT,Camtek Ltd.,121.16,1.41,-5.34,-18.9,-22.77,-39.21,9.6
+Advanced Packaging,FORM,"FormFactor, Inc.",98.51,3.66,-11.03,-21.44,-12.5,-35.71,70.29
+Advanced Packaging,KLIC,"Kulicke and Soffa Industries, Inc.",73.71,0.42,-10.1,-16.56,-30.41,-17.71,57.47
+Analog Semis,TXN,Texas Instruments Incorporated,284.69,1.86,3.24,4.86,1.27,-1.09,62.71
+Analog Semis,ADI,"Analog Devices, Inc.",391.07,1.38,-2.27,0.55,4.39,-3.22,42.17
+Analog Semis,MCHP,Microchip Technology Incorporated,74.05,-0.63,1.25,-1.33,-7.77,-18.72,13.47
+Analog Semis,NXPI,NXP Semiconductors N.V.,234.92,-1.21,2.87,-0.67,-14.18,-3.86,6.49
+Analog Semis,ON,ON Semiconductor Corporation,72.25,-1.34,-0.63,-2.06,-18.35,-27.19,30.77
+Analog Semis,MPWR,"Monolithic Power Systems, Inc.",1140.12,-2.38,-6.8,-16.6,-17.01,-29.9,22.91
+Analog Semis,ALGM,"Allegro MicroSystems, Inc.",31.48,-0.66,-1.01,-11.27,-37.04,-30.13,16.59
+Analog Semis,DIOD,Diodes Incorporated,81.07,-0.7,-2.76,-14.47,-11.41,-22.61,60.63
+Analog Semis,POWI,"Power Integrations, Inc.",46.98,-0.3,5.55,-8.28,-33.61,-37.35,29.21
+Analog Semis,MTSI,"MACOM Technology Solutions Holdings, Inc.",236.24,2.83,-10.88,-14.48,-15.01,-18.79,35.16
+Analog Semis,SMTC,Semtech Corporation,132.0,5.5,-9.59,-24.36,-3.0,21.1,75.11
+Analog Semis,SLAB,"Silicon Laboratories, Inc.",221.27,0.07,0.0,-0.32,1.86,3.74,66.59
+Power Semis,ON,ON Semiconductor Corporation,72.25,-1.34,-0.63,-2.06,-18.35,-27.19,30.77
+Power Semis,MPWR,"Monolithic Power Systems, Inc.",1140.12,-2.38,-6.8,-16.6,-17.01,-29.9,22.91
+Power Semis,NVTS,Navitas Semiconductor Corporation,8.38,-1.3,-6.66,-32.31,-30.63,-56.17,11.73
+Power Semis,ALGM,"Allegro MicroSystems, Inc.",31.48,-0.66,-1.01,-11.27,-37.04,-30.13,16.59
+Power Semis,STM,STMicroelectronics N.V.,44.02,-0.16,-4.92,-16.17,-19.11,-14.67,59.96
+Power Semis,TXN,Texas Instruments Incorporated,284.69,1.86,3.24,4.86,1.27,-1.09,62.71
+Power Semis,DIOD,Diodes Incorporated,81.07,-0.7,-2.76,-14.47,-11.41,-22.61,60.63
+Power Semis,POWI,"Power Integrations, Inc.",46.98,-0.3,5.55,-8.28,-33.61,-37.35,29.21
+Power Semis,WOLF,"Wolfspeed, Inc.",22.93,1.33,-9.26,-17.87,-10.46,-21.2,27.74
+Power Semis,AOSL,Alpha and Omega Semiconductor Limited,21.91,-1.75,-3.82,-22.06,-34.34,-49.18,7.45
+RF Semis,QCOM,QUALCOMM Incorporated,175.91,1.78,0.51,-11.87,3.67,20.81,1.22
+RF Semis,SWKS,"Skyworks Solutions, Inc.",83.43,1.26,5.57,-7.52,38.52,32.79,30.01
+RF Semis,MTSI,"MACOM Technology Solutions Holdings, Inc.",236.24,2.83,-10.88,-14.48,-15.01,-18.79,35.16
+RF Semis,NXPI,NXP Semiconductors N.V.,234.92,-1.21,2.87,-0.67,-14.18,-3.86,6.49
+RF Semis,STM,STMicroelectronics N.V.,44.02,-0.16,-4.92,-16.17,-19.11,-14.67,59.96
+Optical,COHR,Coherent Corp.,209.29,0.71,-15.47,-32.95,-31.6,-37.96,11.32
+Optical,LITE,Lumentum Holdings Inc.,756.17,0.48,-11.4,-20.11,-6.7,-9.66,99.32
+Optical,AAOI,"Applied Optoelectronics, Inc.",67.51,-0.82,-18.97,-36.67,-38.05,-52.46,85.75
+Optical,CIEN,Ciena Corporation,320.26,-0.74,-8.74,-13.12,-20.3,-37.79,32.89
+Optical,FN,Fabrinet,314.94,-0.86,-16.95,-22.38,-38.35,-54.75,-32.23
+Optical,CRDO,Credo Technology Group Holding Ltd,147.29,-9.51,-15.7,-23.09,-36.33,-21.97,-0.75
+Optical,ALAB,"Astera Labs, Inc.",257.16,-0.26,-12.34,-29.41,-18.96,26.53,49.79
+Optical,MTSI,"MACOM Technology Solutions Holdings, Inc.",236.24,2.83,-10.88,-14.48,-15.01,-18.79,35.16
+Optical,VIAV,Viavi Solutions Inc.,30.45,0.48,-16.61,-16.68,-26.46,-35.8,68.67
+Optical,NOVT,Novanta Inc.,140.8,3.03,5.07,-1.83,-1.55,5.85,17.44
+EDA Software,SNPS,"Synopsys, Inc.",430.14,1.81,-7.35,5.06,13.79,-8.36,-10.19
+EDA Software,CDNS,"Cadence Design Systems, Inc.",316.49,2.21,-2.31,3.55,-5.59,-1.12,0.25
+EDA Software,ARM,Arm Holdings plc,210.33,0.11,-12.03,-36.61,-25.62,-5.24,86.41
+EDA Software,KEYS,Keysight Technologies Inc.,314.77,1.04,-7.14,-9.34,-2.74,-10.07,53.31
+EDA Software,PDFS,"PDF Solutions, Inc.",39.32,-0.38,-2.89,-18.69,-24.89,-21.55,34.66
+PCB and EMS,TTMI,"TTM Technologies, Inc.",80.11,8.42,-19.05,-36.91,-43.75,-41.41,14.66
+PCB and EMS,FLEX,Flex Ltd.,76.55,-0.18,-21.2,-32.89,-39.37,-13.3,24.59
+PCB and EMS,CLS,"Celestica, Inc.",260.01,-3.35,-16.48,-26.97,-21.73,-35.8,-12.78
+PCB and EMS,SANM,Sanmina Corporation,155.71,0.8,-16.0,-27.89,-28.36,-15.37,1.18
+PCB and EMS,JBL,Jabil Inc.,273.97,2.45,-3.72,-10.65,-14.14,-20.01,18.45
+PCB and EMS,PLXS,Plexus Corp.,216.98,-1.72,-8.54,-17.58,-17.09,-13.16,47.37
+PCB and EMS,ROG,Rogers Corporation,124.96,-3.05,-8.66,-10.26,-6.05,-3.83,35.08
+Connectors,APH,Amphenol Corporation,74.09,1.4,-9.11,-11.14,-5.2,-2.1,8.07
+Connectors,TEL,TE Connectivity plc,208.05,-0.18,-1.53,-2.87,4.6,-5.43,-9.7
+Connectors,FN,Fabrinet,314.94,-0.86,-16.95,-22.38,-38.35,-54.75,-32.23
+Connectors,GLW,Corning Incorporated,123.69,-0.24,-9.45,-22.77,-20.08,-28.01,39.12
+Connectors,BDC,Belden Inc,104.15,0.67,0.14,-9.58,0.77,-21.44,-10.45
+Connectors,LFUS,"Littelfuse, Inc.",351.39,0.32,-9.72,-15.81,-15.36,-13.24,38.29
+Connectors,ITT,ITT Inc.,190.1,0.98,-5.34,-8.68,-2.82,-12.72,8.68
+Semi Materials,ENTG,"Entegris, Inc.",134.52,4.84,-7.05,-10.18,1.56,-12.6,56.13
+Semi Materials,MKSI,MKS Inc.,196.55,0.22,-12.41,-24.51,-42.38,-32.22,19.45
+Semi Materials,ASYS,"Amtech Systems, Inc.",12.42,0.65,-6.69,-17.69,-27.37,-29.03,-2.13
+Semi Materials,UCTT,"Ultra Clean Holdings, Inc.",45.32,1.93,-16.84,-39.97,-54.32,-44.49,73.37
+Semi Materials,PLAB,"Photronics, Inc.",28.15,0.9,-0.25,-7.22,-9.28,-45.03,-14.93
+Semi Materials,AXTI,AXT Inc,52.08,1.01,-7.38,-33.58,2.12,-32.43,202.79
+Semi Materials,ICHR,Ichor Holdings,37.94,0.21,-16.83,-32.94,-59.16,-46.56,97.71
+Robotics,ISRG,"Intuitive Surgical, Inc.",452.29,1.9,5.57,12.82,35.17,-5.92,-20.2
+Robotics,SYM,Symbotic Inc.,39.28,-2.68,-0.2,-12.81,-3.28,-38.2,-35.42
+Robotics,ROK,"Rockwell Automation, Inc.",426.11,0.53,0.69,0.36,-7.97,4.57,8.7
+Robotics,CGNX,Cognex Corporation,55.55,1.74,-0.07,-4.65,-12.46,1.67,52.48
+Robotics,TER,"Teradyne, Inc.",308.85,0.03,-8.93,-22.4,-15.38,-24.46,54.98
+Robotics,PATH,"UiPath, Inc.",14.13,1.36,2.24,6.76,37.59,39.07,-14.36
+Robotics,ZBRA,Zebra Technologies Corporation,386.45,0.6,2.21,6.46,49.52,69.94,56.88
+Robotics,SERV,Serve Robotics Inc.,2.78,-3.47,-20.34,-38.83,-45.38,-70.36,-74.28
+Industrial Automation,ROK,"Rockwell Automation, Inc.",426.11,0.53,0.69,0.36,-7.97,4.57,8.7
+Industrial Automation,EMR,Emerson Electric Company,161.59,0.81,0.12,5.62,11.52,13.5,21.29
+Industrial Automation,HON,Honeywell International Inc.,221.15,1.3,4.6,5.81,-10.43,-0.86,7.81
+Industrial Automation,ETN,"Eaton Corporation, PLC",366.11,-0.78,-8.27,-17.27,-10.67,-14.87,13.27
+Industrial Automation,CGNX,Cognex Corporation,55.55,1.74,-0.07,-4.65,-12.46,1.67,52.48
+Industrial Automation,ZBRA,Zebra Technologies Corporation,386.45,0.6,2.21,6.46,49.52,69.94,56.88
+Industrial Automation,IR,Ingersoll Rand Inc.,73.48,-0.85,-6.3,0.14,-12.6,-12.62,-7.95
+Industrial Automation,PH,Parker-Hannifin Corporation,880.57,-1.42,-8.8,-8.37,-10.98,-9.32,-0.12
+Industrial Automation,ITW,Illinois Tool Works Inc.,275.75,-1.25,0.92,2.27,-0.82,1.44,11.8
+Humanoid Robots,TSLA,"Tesla, Inc.",372.22,-0.63,0.83,-2.07,16.06,-0.34,-18.69
+Humanoid Robots,SERV,Serve Robotics Inc.,2.78,-3.47,-20.34,-38.83,-45.38,-70.36,-74.28
+Humanoid Robots,SYM,Symbotic Inc.,39.28,-2.68,-0.2,-12.81,-3.28,-38.2,-35.42
+Humanoid Robots,RR,Richtech Robotics Inc.,1.16,-0.85,-17.73,-32.56,-28.83,-55.56,-65.27
+Humanoid Robots,PATH,"UiPath, Inc.",14.13,1.36,2.24,6.76,37.59,39.07,-14.36
+Humanoid Robots,CGNX,Cognex Corporation,55.55,1.74,-0.07,-4.65,-12.46,1.67,52.48
+Agentic AI,PLTR,Palantir Technologies Inc.,196.75,0.29,-2.5,5.61,57.19,37.63,8.52
+Agentic AI,PATH,"UiPath, Inc.",14.13,1.36,2.24,6.76,37.59,39.07,-14.36
+Agentic AI,NOW,"ServiceNow, Inc.",158.96,1.25,4.63,15.84,67.47,85.31,3.84
+Agentic AI,CRM,"Salesforce, Inc.",248.57,-0.69,-0.77,6.04,54.99,41.54,-6.2
+Agentic AI,SNOW,Snowflake Inc.,325.43,3.65,-4.23,-3.76,21.02,128.36,47.99
+Agentic AI,DDOG,"Datadog, Inc.",269.65,4.62,1.6,7.17,8.54,110.45,96.47
+Agentic AI,MDB,"MongoDB, Inc.",371.09,2.44,0.96,-13.57,23.01,43.83,-12.17
+Agentic AI,GTLB,GitLab Inc.,56.28,3.21,0.18,14.46,82.19,169.67,48.18
+Agentic AI,AI,"C3.ai, Inc.",12.46,3.57,2.21,14.84,51.03,43.88,-8.25
+Agentic AI,SOUN,"SoundHound AI, Inc.",4.43,-1.56,-9.22,-27.73,-30.02,-44.59,-56.95
+Agentic AI,BBAI,"BigBear.ai, Inc.",2.14,0.47,-7.36,-25.69,-24.91,-43.54,-61.79
+Agentic AI,ESTC,Elastic N.V.,102.43,4.3,5.06,14.59,76.42,124.23,35.78
+Edge AI,QCOM,QUALCOMM Incorporated,175.91,1.78,0.51,-11.87,3.67,20.81,1.22
+Edge AI,ARM,Arm Holdings plc,210.33,0.11,-12.03,-36.61,-25.62,-5.24,86.41
+Edge AI,AMBA,"Ambarella, Inc.",66.5,5.35,6.52,-0.82,-2.83,5.06,-8.69
+Edge AI,LSCC,Lattice Semiconductor Corporation,96.19,-0.22,-8.36,-21.39,-29.26,-23.31,27.37
+Edge AI,SYNA,Synaptics Incorporated,117.26,0.19,0.11,20.11,1.09,34.57,54.86
+Edge AI,CRUS,"Cirrus Logic, Inc.",112.32,1.66,2.37,-6.51,-15.88,-35.82,-6.6
+Edge AI,NXPI,NXP Semiconductors N.V.,234.92,-1.21,2.87,-0.67,-14.18,-3.86,6.49
+Edge AI,STM,STMicroelectronics N.V.,44.02,-0.16,-4.92,-16.17,-19.11,-14.67,59.96
+Edge AI,INTC,Intel Corporation,86.96,1.72,-6.97,-29.79,-13.35,5.79,130.24
+Edge AI,POWI,"Power Integrations, Inc.",46.98,-0.3,5.55,-8.28,-33.61,-37.35,29.21
+Wearable AI,SNAP,Snap Inc.,6.34,-0.16,-1.71,13.62,42.47,13.42,-22.96
+Wearable AI,GRMN,Garmin Ltd.,293.74,-0.56,2.23,3.51,21.8,12.55,44.22
+Wearable AI,VUZI,Vuzix Corporation,2.06,0.0,-6.36,-31.1,-12.71,-15.05,-45.79
+Wearable AI,KOPN,Kopin Corporation,3.38,0.9,-8.65,-31.3,-10.11,-6.89,41.42
+Wearable Platforms,META,"Meta Platforms, Inc.",642.62,-0.96,-12.77,-14.04,6.17,-2.68,-3.03
+Wearable Platforms,AAPL,Apple Inc.,347.73,-0.14,0.47,1.95,8.06,27.49,27.72
+Wearable Platforms,QCOM,QUALCOMM Incorporated,175.91,1.78,0.51,-11.87,3.67,20.81,1.22
+Routers,CSCO,"Cisco Systems, Inc.",106.5,1.53,-3.15,0.26,-5.22,21.85,38.95
+Routers,ANET,"Arista Networks, Inc.",172.37,0.76,-6.34,-16.1,-0.94,-1.24,28.59
+Routers,HPE,Hewlett Packard Enterprise Company,56.69,2.2,-1.67,-8.9,18.1,100.46,133.48
+Routers,NOK,Nokia Corporation Sponsored,8.14,3.3,-15.08,-25.05,-15.03,-23.57,23.52
+Routers,ERIC,Ericsson,10.66,2.7,0.85,8.89,13.77,-4.82,10.01
+Routers,CIEN,Ciena Corporation,320.26,-0.74,-8.74,-13.12,-20.3,-37.79,32.89
+Routers,FFIV,"F5, Inc.",455.42,1.19,-0.54,0.33,15.66,51.93,78.02
+Routers,EXTR,"Extreme Networks, Inc.",21.97,-0.32,-1.74,-0.54,-26.15,30.0,30.62
+Routers,CALX,"Calix, Inc",36.47,-1.19,-2.07,3.81,1.19,-14.29,-31.68
+Routers,VIAV,Viavi Solutions Inc.,30.45,0.48,-16.61,-16.68,-26.46,-35.8,68.67
+Neoclouds,CRWV,"CoreWeave, Inc.",54.23,-2.46,-16.81,-39.05,-31.78,-55.17,-26.64
+Neoclouds,NBIS,Nebius Group N.V.,158.74,-0.27,-12.38,-32.5,-27.18,-3.01,82.49
+Neoclouds,IREN,IREN Limited,24.91,-2.37,-14.71,-48.25,-37.76,-53.22,-36.16
+Neoclouds,CORZ,"Core Scientific, Inc.",13.1,-0.76,-6.76,-30.02,-44.54,-39.15,-11.37
+Neoclouds,WULF,TeraWulf Inc.,11.32,0.0,-7.82,-33.96,-42.83,-46.22,-3.29
+Neoclouds,APLD,Applied Digital Corporation,18.25,-4.4,-7.71,-36.65,-37.71,-51.29,-27.89
+Neoclouds,HUT,Hut 8 Corp.,61.23,-4.28,-16.58,-41.86,-47.33,-23.69,27.96
+Neoclouds,CIFR,Cipher Digital Inc.,7.94,-4.57,-18.27,-58.21,-68.63,-58.39,-46.96
+Neoclouds,GDS,GDS Holdings Limited,22.25,0.47,-11.2,-33.4,-31.38,-50.13,-39.05
+Hyperscalers,MSFT,Microsoft Corporation,524.51,0.66,-3.1,4.74,35.51,25.79,8.28
+Hyperscalers,AMZN,"Amazon.com, Inc.",248.0,-0.95,-2.78,-1.98,5.81,-4.61,7.2
+Hyperscalers,GOOGL,Alphabet Inc.,320.21,-1.24,-8.06,-8.47,0.56,-5.47,1.04
+Hyperscalers,META,"Meta Platforms, Inc.",642.62,-0.96,-12.77,-14.04,6.17,-2.68,-3.03
+Hyperscalers,ORCL,Oracle Corporation,126.16,0.49,-5.49,-14.93,3.01,-30.11,-36.11
+Hyperscalers,IBM,International Business Machines Corporation,253.56,0.58,7.42,8.6,21.16,9.33,-14.79
+Data Center REITs,DLR,"Digital Realty Trust, Inc.",172.37,0.84,-1.63,-6.47,-9.28,-14.64,11.47
+Data Center REITs,EQIX,"Equinix, Inc.",955.03,0.25,-4.43,-9.65,-9.85,-14.87,24.65
+Data Center REITs,IRM,Iron Mountain Incorporated (Delaware),109.96,-0.63,-2.65,-5.0,-13.43,-5.52,32.48
+Data Center Power,VRT,"Vertiv Holdings, LLC",194.32,-0.65,-7.91,-23.4,-35.33,-40.76,14.67
+Data Center Power,ETN,"Eaton Corporation, PLC",366.11,-0.78,-8.27,-17.27,-10.67,-14.87,13.27
+Data Center Power,GEV,GE Vernova Inc.,815.0,-1.5,-11.11,-14.21,-20.32,-29.8,23.26
+Data Center Power,PWR,"Quanta Services, Inc.",546.43,-1.09,-14.54,-15.08,-15.98,-14.35,28.59
+Data Center Power,HUBB,Hubbell Inc,448.1,0.52,-3.79,-1.48,-8.03,-19.91,0.08
+Data Center Power,FIX,"Comfort Systems USA, Inc.",1160.86,-9.26,-21.4,-28.64,-36.26,-34.57,23.71
+Data Center Power,EME,"EMCOR Group, Inc.",647.66,-1.93,-11.31,-14.41,-15.25,-26.06,5.06
+Data Center Power,POWL,"Powell Industries, Inc.",150.95,0.16,-11.14,-21.47,-37.49,-41.21,39.77
+Data Center Power,MOD,Modine Manufacturing Company,133.34,-1.35,-12.72,-25.48,-42.07,-43.09,6.31
+Data Center Power,TT,Trane Technologies plc,444.9,-0.87,-2.42,2.15,-6.78,-8.37,13.82
+Cybersecurity,CRWD,"CrowdStrike Holdings, Inc.",257.57,8.25,4.29,2.21,39.23,130.01,117.36
+Cybersecurity,PANW,"Palo Alto Networks, Inc.",380.55,7.22,1.88,0.2,15.99,118.71,105.91
+Cybersecurity,ZS,"Zscaler, Inc.",255.15,7.31,14.27,19.79,79.77,91.38,12.54
+Cybersecurity,FTNT,"Fortinet, Inc.",179.99,4.05,-1.29,1.99,17.87,116.59,125.07
+Cybersecurity,NET,"Cloudflare, Inc.",325.73,7.29,2.11,-8.35,22.47,58.92,63.77
+Cybersecurity,S,"SentinelOne, Inc.",24.0,6.67,2.35,0.13,36.05,71.31,58.94
+Cybersecurity,OKTA,"Okta, Inc.",213.05,5.82,1.65,7.49,54.09,180.14,144.46
+Cybersecurity,TENB,"Tenable Holdings, Inc.",44.59,6.17,13.63,22.53,42.92,126.69,88.14
+Cybersecurity,QLYS,"Qualys, Inc.",216.7,4.08,11.95,17.65,61.08,158.38,63.42
+Cybersecurity,CHKP,Check Point Software Technologies Ltd.,159.03,4.64,14.08,14.98,24.34,19.11,-14.38
+Cybersecurity,RPD,"Rapid7, Inc.",14.91,1.22,12.95,14.34,53.55,159.76,-1.97
+Cybersecurity,GEN,Gen Digital Inc.,24.88,-0.04,0.04,-8.9,-2.32,31.78,-8.63
+AI Servers,SMCI,"Super Micro Computer, Inc.",32.94,-2.31,-4.45,-22.07,7.58,19.65,9.95
+AI Servers,DELL,Dell Technologies Inc.,456.44,0.77,-3.58,-18.35,3.99,113.3,255.48
+AI Servers,HPE,Hewlett Packard Enterprise Company,56.69,2.2,-1.67,-8.9,18.1,100.46,133.48
+AI Servers,CLS,"Celestica, Inc.",260.01,-3.35,-16.48,-26.97,-21.73,-35.8,-12.78
+AI Servers,FN,Fabrinet,314.94,-0.86,-16.95,-22.38,-38.35,-54.75,-32.23
+AI Servers,JBL,Jabil Inc.,273.97,2.45,-3.72,-10.65,-14.14,-20.01,18.45
+AI Servers,HPQ,HP Inc.,33.64,-0.36,8.31,4.04,35.81,65.39,49.25
+Autonomous Driving,TSLA,"Tesla, Inc.",372.22,-0.63,0.83,-2.07,16.06,-0.34,-18.69
+Autonomous Driving,GOOGL,Alphabet Inc.,320.21,-1.24,-8.06,-8.47,0.56,-5.47,1.04
+Autonomous Driving,GM,General Motors Company,75.92,-1.67,-10.43,-8.59,-5.74,-2.95,-6.74
+Autonomous Driving,MBLY,Mobileye Global Inc.,6.54,-5.9,-13.49,-14.29,-13.49,-26.19,-37.71
+Autonomous Driving,APTV,Aptiv PLC,42.69,-2.56,-6.2,-3.48,-24.12,-29.37,-34.41
+Autonomous Driving,AUR,"Aurora Innovation, Inc.",4.81,-1.03,-9.76,-25.54,-20.36,-1.84,24.61
+Lidar,OUST,"Ouster, Inc.",29.69,6.11,-3.13,-25.96,-20.21,8.08,33.2
+Lidar,HSAI,Hesai Group,13.13,8.15,0.46,-21.94,-11.28,-38.33,-43.21
+Lidar,AEVA,"Aeva Technologies, Inc.",10.17,2.94,-6.06,-33.7,-36.16,-35.92,-24.33
+Lidar,INVZ,Innoviz Technologies Ltd.,0.22,6.12,-22.83,-34.71,-64.2,-65.3,-75.13
+Lidar,MVIS,"MicroVision, Inc.",1.18,3.51,-5.6,-29.34,-72.07,-87.9,-90.55
+Drones,AVAV,"AeroVironment, Inc.",123.25,4.72,-0.43,-21.12,-22.8,-39.52,-50.39
+Drones,KTOS,"Kratos Defense & Security Solutions, Inc.",38.68,1.07,-5.27,-17.65,-21.62,-41.18,-49.47
+Drones,RC,Ready Capital Corporation,1.05,3.96,-6.25,-36.75,-29.53,-41.99,-52.27
+Drones,EH,EHang Holdings Limited,3.4,0.15,-14.05,-28.07,-33.04,-67.32,-75.07
+Drones,LMT,Lockheed Martin Corporation,604.18,2.42,12.07,15.18,6.26,15.08,25.02
+Drones,NOC,Northrop Grumman Corporation,551.44,-0.16,8.99,8.03,2.98,-5.3,-3.19
+Drones,RTX,RTX Corporation,191.01,-1.9,1.19,-0.45,-9.4,7.44,4.09
+Drones,AXON,"Axon Enterprise, Inc.",420.37,1.39,-0.5,-8.53,-15.88,6.66,-26.68
+Quantum Computing,IONQ,"IonQ, Inc.",31.27,0.35,-5.33,-31.78,-8.3,-29.54,-32.04
+Quantum Computing,RGTI,"Rigetti Computing, Inc.",11.52,0.35,-6.49,-34.64,-22.42,-32.71,-48.94
+Quantum Computing,QBTS,D-Wave Quantum Inc.,11.66,0.26,-6.42,-38.4,-31.45,-40.72,-56.73
+Quantum Computing,QUBT,Quantum Computing Inc.,6.56,-0.46,-2.67,-32.16,-16.43,-29.14,-37.82
+Quantum Computing,IBM,International Business Machines Corporation,253.56,0.58,7.42,8.6,21.16,9.33,-14.79
+Quantum Computing,HON,Honeywell International Inc.,221.15,1.3,4.6,5.81,-10.43,-0.86,7.81
+Quantum Computing,GOOGL,Alphabet Inc.,320.21,-1.24,-8.06,-8.47,0.56,-5.47,1.04
+Quantum Computing,MSFT,Microsoft Corporation,524.51,0.66,-3.1,4.74,35.51,25.79,8.28
+GLP-1,LLY,Eli Lilly and Company,1273.46,-2.54,1.39,8.41,6.62,41.49,18.31
+GLP-1,NVO,Novo Nordisk A/S,39.05,-0.96,-0.71,0.39,-20.03,-2.52,-24.34
+GLP-1,AMGN,Amgen Inc.,439.26,-1.79,0.31,7.11,17.85,26.95,33.61
+GLP-1,VKTX,"Viking Therapeutics, Inc.",24.4,-5.54,-10.2,-41.57,-31.34,-26.31,-31.34
+GLP-1,GPCR,Structure Therapeutics Inc.,21.19,-3.37,-4.33,-41.95,-58.25,-54.91,-69.63
+GLP-1,ALT,"Altimmune, Inc.",2.12,-2.3,-10.36,-38.01,-25.61,-28.14,-41.44
+GLP-1,PFE,"Pfizer, Inc.",30.03,-1.28,1.04,7.4,21.97,12.51,20.22
+GLP-1,NVS,Novartis AG,151.12,-3.3,0.31,5.57,-3.2,3.49,9.29
+GLP-1,REGN,"Regeneron Pharmaceuticals, Inc.",805.02,-1.72,0.25,-0.03,22.29,5.92,3.97
+Genomics,ILMN,"Illumina, Inc.",269.42,0.01,0.72,8.29,36.07,116.14,105.15
+Genomics,TXG,"10x Genomics, Inc.",71.55,2.58,-0.5,-10.97,47.4,233.72,338.69
+Genomics,PACB,"Pacific Biosciences of California, Inc.",2.11,2.43,7.65,45.52,48.59,36.13,8.21
+Genomics,TWST,Twist Bioscience Corporation,139.92,3.28,-2.75,-14.86,49.34,134.69,340.97
+Genomics,NTRA,"Natera, Inc.",403.95,0.64,-0.45,4.4,52.61,100.83,76.44
+Genomics,GH,"Guardant Health, Inc.",169.08,3.77,1.93,-4.05,12.57,91.64,65.28
+Genomics,CRSP,CRISPR Therapeutics AG,49.39,-1.2,-3.54,-16.44,3.07,-10.22,-6.32
+Genomics,BEAM,Beam Therapeutics Inc.,24.05,-2.08,-2.08,-6.6,-8.28,-20.29,-13.43
+Genomics,NTLA,"Intellia Therapeutics, Inc.",11.21,0.45,-3.36,-11.87,-0.44,-29.45,21.45
+AI Drug Discovery,RXRX,"Recursion Pharmaceuticals, Inc.",3.7,3.35,-9.98,-8.19,21.71,5.71,-11.27
+AI Drug Discovery,SDGR,"Schrodinger, Inc.",23.8,5.31,-7.36,-20.8,55.35,108.96,31.49
+AI Drug Discovery,ABCL,AbCellera Biologics Inc.,11.82,3.96,-6.78,-5.74,108.47,189.71,245.61
+AI Drug Discovery,RLAY,"Relay Therapeutics, Inc.",18.18,-0.87,5.88,-5.07,-5.21,19.84,117.72
+AI Drug Discovery,ABSI,Absci Corporation,9.18,-2.03,2.8,-12.65,12.92,131.23,158.59
+AI Drug Discovery,CERT,"Certara, Inc.",10.33,2.38,6.0,17.12,44.88,72.17,14.78
+AI Drug Discovery,TEM,"Tempus AI, Inc.",67.61,5.96,-4.62,-11.58,46.19,29.7,12.3
+Medical Devices,ISRG,"Intuitive Surgical, Inc.",452.29,1.9,5.57,12.82,35.17,-5.92,-20.2
+Medical Devices,SYK,Stryker Corporation,307.15,0.02,3.81,11.91,-5.52,-6.35,-12.56
+Medical Devices,BSX,Boston Scientific Corporation,45.69,-0.7,2.79,1.53,3.91,-30.56,-52.27
+Medical Devices,MDT,Medtronic plc.,95.41,-1.22,-0.44,5.39,15.13,14.25,-0.66
+Medical Devices,EW,Edwards Lifesciences Corporation,89.07,-1.13,0.97,0.42,1.22,7.96,4.22
+Medical Devices,ABT,Abbott Laboratories,103.7,1.16,-1.85,-0.5,2.17,12.53,-16.84
+Medical Devices,ZBH,"Zimmer Biomet Holdings, Inc.",98.56,-0.25,3.75,6.44,8.28,7.04,9.55
+Medical Devices,DXCM,"DexCom, Inc.",77.94,-0.49,-11.36,-12.92,9.7,24.37,16.97
+Medical Devices,PODD,Insulet Corporation,149.01,0.6,6.09,7.15,-6.41,-21.1,-47.8
+Medical Devices,INSP,"Inspire Medical Systems, Inc.",71.11,-2.13,1.01,-0.38,37.89,26.64,-23.15
+Medical Devices,RMD,ResMed Inc.,252.86,-0.08,4.69,13.5,30.16,15.9,4.6
+Medical Devices,COO,"The Cooper Companies, Inc.",61.21,-0.71,5.53,11.03,-13.31,-5.44,-25.44
+Radiopharma,LNTH,"Lantheus Holdings, Inc.",99.8,-0.3,-0.29,-0.48,-4.78,20.79,49.4
+Radiopharma,LLY,Eli Lilly and Company,1273.46,-2.54,1.39,8.41,6.62,41.49,18.31
+Radiopharma,NVS,Novartis AG,151.12,-3.3,0.31,5.57,-3.2,3.49,9.29
+Radiopharma,AZN,AstraZeneca PLC,171.49,-0.63,2.71,2.95,0.97,-9.34,-7.33
+Radiopharma,TLX,Telix Pharmaceuticals Limited,9.15,-4.09,-16.21,-19.81,-12.02,-11.17,20.87
+Radiopharma,GEHC,GE HealthCare Technologies Inc.,71.45,0.04,0.49,8.0,14.37,2.85,-13.48
+Nuclear Power,CEG,Constellation Energy Corporation,253.45,-0.69,-7.79,-3.23,-8.17,-13.82,-29.2
+Nuclear Power,VST,Vistra Corp.,140.16,-0.48,-8.12,0.42,-16.92,-10.34,-14.48
+Nuclear Power,TLN,Talen Energy Corporation,327.91,-1.06,-7.16,12.19,-13.48,-5.7,-13.96
+Nuclear Power,NRG,"NRG Energy, Inc.",92.31,-2.19,-10.81,-9.5,-35.34,-40.39,-42.87
+Nuclear Power,EXC,Exelon Corporation,44.43,-0.94,4.14,6.88,-6.09,-4.32,2.0
+Nuclear Power,DUK,Duke Energy Corporation (Holding Company),124.98,-0.33,4.81,7.74,-3.37,-2.2,6.66
+Nuclear Power,SO,Southern Company (The),92.89,-0.99,3.52,9.59,-4.25,-0.91,6.56
+Nuclear Power,PEG,Public Service Enterprise Group Incorporated,72.02,-0.96,2.19,4.53,-10.2,-10.14,-10.86
+Nuclear Power,ETR,Entergy Corporation,107.34,-0.79,2.57,6.67,-7.76,-5.64,15.96
+Nuclear Power,BWXT,"BWX Technologies, Inc.",127.19,-0.09,-7.1,-11.64,-28.17,-43.72,-27.12
+Independent Power,VST,Vistra Corp.,140.16,-0.48,-8.12,0.42,-16.92,-10.34,-14.48
+Independent Power,NRG,"NRG Energy, Inc.",92.31,-2.19,-10.81,-9.5,-35.34,-40.39,-42.87
+Independent Power,TLN,Talen Energy Corporation,327.91,-1.06,-7.16,12.19,-13.48,-5.7,-13.96
+Independent Power,AES,The AES Corporation,15.0,0.2,0.2,1.21,1.01,3.52,3.38
+Independent Power,CEG,Constellation Energy Corporation,253.45,-0.69,-7.79,-3.23,-8.17,-13.82,-29.2
+Independent Power,CWEN,"Clearway Energy, Inc.",31.11,-1.02,3.77,1.67,-7.88,-21.76,-7.25
+Advanced Nuclear,OKLO,Oklo Inc.,26.35,-2.44,-10.37,-34.47,-39.55,-67.59,-64.39
+Advanced Nuclear,SMR,NuScale Power Corporation,5.38,0.0,-10.11,-39.0,-38.09,-59.24,-63.05
+Advanced Nuclear,NNE,Nano Nuclear Energy Inc.,12.16,-2.95,-10.39,-29.3,-26.92,-53.27,-51.65
+Advanced Nuclear,LEU,Centrus Energy Corp.,102.45,-1.63,-17.15,-34.33,-39.94,-54.7,-58.66
+Uranium,CCJ,Cameco Corporation,78.6,-0.42,-5.48,-16.03,-12.03,-37.32,-15.48
+Uranium,UEC,Uranium Energy Corp.,7.35,-1.74,-9.15,-27.73,-25.3,-50.93,-38.49
+Uranium,UUUU,Energy Fuels Inc,7.52,-2.21,-11.94,-37.18,-37.85,-66.31,-48.7
+Uranium,DNN,Denison Mines Corp,2.17,0.46,-7.66,-24.91,-29.55,-45.48,-20.8
+Uranium,NXE,Nexgen Energy Ltd.,8.15,0.62,-3.66,-17.68,-13.48,-36.43,-13.67
+Uranium,LEU,Centrus Energy Corp.,102.45,-1.63,-17.15,-34.33,-39.94,-54.7,-58.66
+Uranium,URG,Ur Energy Inc,0.81,-0.59,-9.51,-32.99,-36.66,-53.13,-42.09
+Uranium,EU,enCore Energy Corp.,0.7,-9.31,-15.85,-41.44,-41.58,-64.95,-72.29
+Grid Equipment,ETN,"Eaton Corporation, PLC",366.11,-0.78,-8.27,-17.27,-10.67,-14.87,13.27
+Grid Equipment,HUBB,Hubbell Inc,448.1,0.52,-3.79,-1.48,-8.03,-19.91,0.08
+Grid Equipment,PWR,"Quanta Services, Inc.",546.43,-1.09,-14.54,-15.08,-15.98,-14.35,28.59
+Grid Equipment,GEV,GE Vernova Inc.,815.0,-1.5,-11.11,-14.21,-20.32,-29.8,23.26
+Grid Equipment,VRT,"Vertiv Holdings, LLC",194.32,-0.65,-7.91,-23.4,-35.33,-40.76,14.67
+Grid Equipment,EME,"EMCOR Group, Inc.",647.66,-1.93,-11.31,-14.41,-15.25,-26.06,5.06
+Grid Equipment,FIX,"Comfort Systems USA, Inc.",1160.86,-9.26,-21.4,-28.64,-36.26,-34.57,23.71
+Grid Equipment,MYRG,"MYR Group, Inc.",254.49,-0.19,-10.76,-11.82,-37.71,-25.25,15.24
+Grid Equipment,POWL,"Powell Industries, Inc.",150.95,0.16,-11.14,-21.47,-37.49,-41.21,39.77
+Grid Equipment,NVT,nVent Electric plc,125.4,-1.78,-13.0,-21.82,-20.09,-12.49,21.94
+LNG,LNG,"Cheniere Energy, Inc.",298.67,4.06,6.04,8.73,10.05,16.51,53.59
+LNG,WMB,"Williams Companies, Inc. (The)",71.7,1.51,3.14,0.55,-4.91,-0.11,19.28
+LNG,KMI,"Kinder Morgan, Inc.",34.43,2.11,4.27,9.79,4.59,8.51,25.25
+LNG,EPD,Enterprise Products Partners L.P.,37.08,1.53,3.95,-2.57,-4.11,-1.77,15.51
+LNG,ET,Energy Transfer LP,20.45,2.05,1.89,-0.39,0.25,6.84,24.32
+LNG,TRGP,"Targa Resources, Inc.",302.37,4.43,5.78,6.26,5.72,26.55,64.48
+LNG,OKE,"ONEOK, Inc.",95.83,2.06,4.86,5.6,2.52,9.9,30.45
+LNG,SHEL,Shell PLC,108.18,2.25,2.79,14.87,22.39,20.53,46.11
+LNG,TTE,TotalEnergies SE,92.78,2.0,2.78,3.35,7.25,2.55,41.76
+LNG,EQNR,Equinor ASA,48.82,5.17,6.44,15.74,19.97,27.33,104.7
+Solar,FSLR,"First Solar, Inc.",171.99,0.43,-3.49,-14.17,-16.48,-12.8,-35.31
+Solar,ENPH,"Enphase Energy, Inc.",31.6,0.8,3.13,-8.54,-18.83,-14.08,-2.02
+Solar,SEDG,"SolarEdge Technologies, Inc.",33.32,1.15,6.01,-7.39,-26.72,-30.42,10.92
+Solar,ARRY,"Array Technologies, Inc.",3.19,-3.33,-11.39,-19.44,-44.04,-60.76,-66.03
+Solar,NXT,Nextpower Inc.,78.89,1.62,-5.0,-4.81,-23.58,-37.35,-10.38
+Solar,RUN,Sunrun Inc.,7.58,-1.56,0.0,-13.27,-27.53,-41.87,-60.37
+Solar,CSIQ,Canadian Solar Inc.,9.23,0.11,-12.51,-20.84,-37.13,-38.96,-62.02
+Solar,JKS,JinkoSolar Holding Company Limited,8.41,3.32,-1.64,-18.86,-47.04,-63.58,-68.62
+Solar,DQ,DAQO New Energy Corp.,10.2,1.19,-3.86,-16.39,-14.21,-55.77,-66.0
+Solar,SHLS,"Shoals Technologies Group, Inc.",7.58,-1.94,-1.81,-6.99,-23.51,-4.05,-12.57
+Batteries,ALB,Albemarle Corporation,93.67,1.22,-3.53,-17.96,-19.68,-50.96,-34.85
+Batteries,QS,QuantumScape Corporation,4.03,-2.89,-4.28,-19.88,-19.88,-46.27,-61.8
+Batteries,ENVX,Enovix Corporation,2.79,9.41,5.28,-8.22,-35.12,-58.97,-62.95
+Batteries,AMPX,"Amprius Technologies, Inc.",8.18,3.41,-1.45,-17.62,-17.79,-62.94,-3.2
+Batteries,TSLA,"Tesla, Inc.",372.22,-0.63,0.83,-2.07,16.06,-0.34,-18.69
+Batteries,ENS,EnerSys,166.08,-1.54,-3.51,-6.9,-16.32,-20.28,13.17
+Batteries,FLNC,"Fluence Energy, Inc.",5.59,-1.93,-11.97,-25.66,-60.8,-58.56,-72.54
+Batteries,STEM,"Stem, Inc.",3.01,-0.33,-20.16,-24.75,-48.19,-73.67,-80.68
+Copper,FCX,"Freeport-McMoRan, Inc.",65.18,0.91,-7.01,-10.63,4.19,5.01,26.01
+Copper,SCCO,Southern Copper Corporation,185.01,0.77,-8.25,-7.63,2.7,3.27,30.04
+Copper,TECK,Teck Resources Ltd,59.05,0.25,-9.35,-11.62,-2.28,-2.69,21.13
+Copper,HBM,Hudbay Minerals Inc.,21.98,0.41,-8.26,-18.08,-3.09,-9.62,8.38
+Copper,BHP,BHP Group Limited,77.85,0.35,-6.62,-9.27,-6.32,-2.6,26.44
+Copper,RIO,Rio Tinto Plc,83.42,-0.86,-7.39,-13.09,-8.97,-16.14,2.82
+Copper,ERO,Ero Copper Corp.,29.95,-0.6,-13.39,-17.38,12.26,9.79,3.6
+Copper,VALE,VALE S.A.,12.4,1.64,-4.98,-11.99,-15.76,-27.78,-6.42
+Rare Earths,MP,MP Materials Corp.,38.3,-0.67,-7.26,-24.56,-13.82,-41.21,-25.6
+Rare Earths,UUUU,Energy Fuels Inc,7.52,-2.21,-11.94,-37.18,-37.85,-66.31,-48.7
+Rare Earths,USAR,"USA Rare Earth, Inc.",9.33,-3.12,-15.03,-44.45,-38.13,-61.21,-24.02
+Rare Earths,CRML,Critical Metals Corp.,6.36,2.75,-6.74,-24.2,3.84,-43.62,-10.42
+Rare Earths,METC,"Ramaco Resources, Inc.",7.32,1.24,-12.86,-22.95,-35.34,-47.22,-59.71
+Lithium,ALB,Albemarle Corporation,93.67,1.22,-3.53,-17.96,-19.68,-50.96,-34.85
+Lithium,SQM,Sociedad Quimica y Minera S.A.,57.14,1.37,-5.44,-16.58,-17.78,-34.9,-18.49
+Lithium,LAC,Lithium Americas Corp.,2.07,-1.43,-6.76,-29.83,-29.11,-56.69,-53.48
+Lithium,SGML,Sigma Lithium Corporation,7.83,4.68,-11.02,-23.68,-20.02,-62.8,-42.26
+Lithium,LAR,Lithium Argentina AG,4.24,1.44,-9.79,-27.77,-30.72,-54.16,-25.22
+Lithium,ELVR,Elevra Lithium Limited - American Depository Shares,23.53,-6.33,-16.26,-46.7,-57.94,-72.32,-55.31
+Gold Miners,NEM,Newmont Corporation,108.87,-4.59,-5.6,-12.08,16.14,-5.34,7.8
+Gold Miners,AEM,Agnico Eagle Mines Limited,173.94,-1.25,-7.1,-12.15,19.73,-13.71,2.17
+Gold Miners,B,Barrick Mining Corporation,38.14,-1.32,-5.48,-11.3,1.84,-6.11,-13.6
+Gold Miners,KGC,Kinross Gold Corporation,22.34,-1.5,-6.17,-19.81,-6.49,-30.99,-21.82
+Gold Miners,AU,AngloGold Ashanti PLC,83.59,-1.88,-8.81,-16.77,5.38,-14.95,-4.05
+Gold Miners,GFI,Gold Fields Limited,34.59,-1.57,-7.12,-16.21,6.23,-23.25,-21.9
+Gold Miners,WPM,Wheaton Precious Metals Corp,120.89,-2.14,-8.98,-19.23,8.42,-15.53,1.59
+Gold Miners,FNV,Franco-Nevada Corporation,228.75,-1.38,-4.91,-12.37,5.9,-7.39,9.67
+Gold Miners,RGLD,"Royal Gold, Inc.",227.42,-3.11,-2.39,-10.56,12.61,-10.25,1.53
+Gold Miners,HMY,Harmony Gold Mining Company Limited,15.83,-2.34,-7.7,-17.01,-0.06,-3.94,-21.67
+Silver Miners,PAAS,Pan American Silver Corp.,40.15,-2.24,-7.72,-18.64,-9.53,-27.83,-24.1
+Silver Miners,AG,First Majestic Silver Corp.,14.77,-2.31,-7.46,-24.72,-10.97,-27.53,-13.32
+Silver Miners,HL,Hecla Mining Company,13.85,-1.84,-9.89,-24.73,-9.89,-25.26,-29.52
+Silver Miners,CDE,"Coeur Mining, Inc.",13.45,-3.1,-12.03,-32.55,-12.78,-29.87,-27.3
+Silver Miners,EXK,Endeavour Silver Corporation,7.47,-2.35,-8.9,-25.67,-6.39,-21.86,-23.15
+Silver Miners,FSM,Fortuna Mining Corp.,9.18,-3.57,-11.9,-22.4,8.0,-10.35,-8.11
+Silver Miners,WPM,Wheaton Precious Metals Corp,120.89,-2.14,-8.98,-19.23,8.42,-15.53,1.59
+Silver Miners,BVN,Buenaventura Mining Company Inc.,27.92,-2.0,-9.29,-17.35,-11.0,-13.43,-1.62
+Superconductors,AMSC,American Superconductor Corporation,25.12,0.44,-4.92,-21.52,-23.79,-47.82,-15.56
+Superconductors,BRKR,Bruker Corporation,57.59,0.49,2.02,-5.12,-7.84,57.95,22.04
+Superconductors,GEHC,GE HealthCare Technologies Inc.,71.45,0.04,0.49,8.0,14.37,2.85,-13.48
+Defense,LMT,Lockheed Martin Corporation,604.18,2.42,12.07,15.18,6.26,15.08,25.02
+Defense,RTX,RTX Corporation,191.01,-1.9,1.19,-0.45,-9.4,7.44,4.09
+Defense,NOC,Northrop Grumman Corporation,551.44,-0.16,8.99,8.03,2.98,-5.3,-3.19
+Defense,GD,General Dynamics Corporation,349.36,-0.41,2.75,1.5,-9.01,10.33,3.81
+Defense,HII,"Huntington Ingalls Industries, Inc.",274.08,-1.71,1.53,1.51,-5.3,-26.16,-19.4
+Defense,LHX,"L3Harris Technologies, Inc.",253.97,-0.1,4.28,5.83,-15.58,-22.76,-13.62
+Defense,LDOS,"Leidos Holdings, Inc.",136.08,1.0,8.82,9.82,21.49,-7.27,-24.23
+Defense,BA,Boeing Company (The),188.35,0.43,-0.93,-4.86,-10.35,-19.85,-13.66
+Defense,HWM,Howmet Aerospace Inc.,185.91,-3.82,-15.8,-17.74,-35.3,-23.94,-9.53
+Defense,TDG,Transdigm Group Inc.,1104.84,-3.23,-3.43,-0.52,-9.23,-4.5,-16.87
+Defense,KTOS,"Kratos Defense & Security Solutions, Inc.",38.68,1.07,-5.27,-17.65,-21.62,-41.18,-49.47
+Defense,AVAV,"AeroVironment, Inc.",123.25,4.72,-0.43,-21.12,-22.8,-39.52,-50.39
+Space,RKLB,Rocket Lab Corporation,52.6,2.69,-3.47,-27.82,-24.1,-39.08,-25.53
+Space,LUNR,"Intuitive Machines, Inc.",10.52,0.67,-8.0,-34.86,-22.19,-63.32,-37.27
+Space,ASTS,"AST SpaceMobile, Inc.",39.79,2.63,-7.93,-37.34,-33.07,-49.63,-46.48
+Space,RDW,Redwire Corporation,8.36,2.7,-4.02,-28.49,-9.03,-18.68,5.56
+Space,PL,Planet Labs PBC,13.41,2.52,-6.22,-20.42,-39.73,-65.71,-32.46
+Space,IRDM,Iridium Communications Inc,44.4,1.39,-1.31,-8.64,-5.83,16.2,153.42
+Space,SPCX,Space Exploration Technologies Corp,147.49,1.89,-0.21,-3.77,27.14,-1.67,-1.67
+Space,FLY,Firefly Aerospace Inc.,18.23,4.05,3.11,-21.76,-12.19,-53.47,-21.12
+Space,VSAT,"ViaSat, Inc.",61.47,4.19,0.77,-18.26,-17.6,-3.35,75.23
+Space,GSAT,"Globalstar, Inc.",82.52,0.17,-0.61,0.0,3.88,0.76,33.1
+Crypto Miners,MARA,"MARA Holdings, Inc.",7.02,-3.17,-13.33,-47.81,-44.02,-41.45,-23.61
+Crypto Miners,RIOT,"Riot Platforms, Inc.",12.53,-2.79,-16.58,-48.9,-46.13,-32.54,-3.69
+Crypto Miners,CLSK,"CleanSpark, Inc.",7.88,-3.31,-13.12,-47.54,-48.9,-37.19,-24.19
+Crypto Miners,CIFR,Cipher Digital Inc.,7.94,-4.57,-18.27,-58.21,-68.63,-58.39,-46.96
+Crypto Miners,WULF,TeraWulf Inc.,11.32,0.0,-7.82,-33.96,-42.83,-46.22,-3.29
+Crypto Miners,IREN,IREN Limited,24.91,-2.37,-14.71,-48.25,-37.76,-53.22,-36.16
+Crypto Miners,HUT,Hut 8 Corp.,61.23,-4.28,-16.58,-41.86,-47.33,-23.69,27.96
+Crypto Miners,BTDR,Bitdeer Technologies Group,6.96,-4.4,-15.23,-45.79,-41.9,-44.32,-39.05
+Crypto Miners,CORZ,"Core Scientific, Inc.",13.1,-0.76,-6.76,-30.02,-44.54,-39.15,-11.37
+Crypto Equities,MSTR,Strategy Inc,146.01,0.14,0.04,-12.69,56.38,-17.45,-5.55
+Crypto Equities,COIN,"Coinbase Global, Inc.",164.45,-2.74,-9.16,-16.94,2.1,-18.62,-28.68
+Crypto Equities,HOOD,"Robinhood Markets, Inc.",95.07,-1.56,-7.43,-22.57,-5.0,11.98,-17.67
+Crypto Equities,CRCL,"Circle Internet Group, Inc.",85.91,-0.82,-0.51,-7.64,39.42,-15.99,6.27
+Crypto Equities,GLXY,Galaxy Digital Inc.,14.68,-3.99,-17.3,-44.77,-38.83,-44.98,-35.87
+Crypto Equities,MARA,"MARA Holdings, Inc.",7.02,-3.17,-13.33,-47.81,-44.02,-41.45,-23.61
+Crypto,MSTR,Strategy Inc,146.01,0.14,0.04,-12.69,56.38,-17.45,-5.55
+Crypto,COIN,"Coinbase Global, Inc.",164.45,-2.74,-9.16,-16.94,2.1,-18.62,-28.68
+Crypto,HOOD,"Robinhood Markets, Inc.",95.07,-1.56,-7.43,-22.57,-5.0,11.98,-17.67
+Crypto,CRCL,"Circle Internet Group, Inc.",85.91,-0.82,-0.51,-7.64,39.42,-15.99,6.27
+Crypto,GLXY,Galaxy Digital Inc.,14.68,-3.99,-17.3,-44.77,-38.83,-44.98,-35.87
+Crypto,MARA,"MARA Holdings, Inc.",7.02,-3.17,-13.33,-47.81,-44.02,-41.45,-23.61
+Crypto,RIOT,"Riot Platforms, Inc.",12.53,-2.79,-16.58,-48.9,-46.13,-32.54,-3.69
+Crypto,IREN,IREN Limited,24.91,-2.37,-14.71,-48.25,-37.76,-53.22,-36.16
+Fintech,PYPL,"PayPal Holdings, Inc.",57.02,-0.9,-0.59,8.01,1.26,14.5,-2.81
+Fintech,HOOD,"Robinhood Markets, Inc.",95.07,-1.56,-7.43,-22.57,-5.0,11.98,-17.67
+Fintech,COIN,"Coinbase Global, Inc.",164.45,-2.74,-9.16,-16.94,2.1,-18.62,-28.68
+Fintech,AFRM,"Affirm Holdings, Inc.",70.08,-3.2,-8.08,-1.52,-1.66,10.36,-6.56
+Fintech,SOFI,"SoFi Technologies, Inc.",14.62,-1.05,-3.05,-14.13,-12.59,-20.74,-45.18
+Fintech,UPST,"Upstart Holdings, Inc.",23.78,-0.29,-3.92,-7.76,-15.9,-27.7,-45.99
+Fintech,NU,Nu Holdings Ltd.,15.16,2.92,3.06,7.75,6.87,5.13,-11.14
+Fintech,TOST,"Toast, Inc.",32.71,-2.12,0.37,10.32,13.89,16.53,-8.55
+Fintech,BILL,"BILL Holdings, Inc.",50.7,0.06,6.85,8.33,19.24,38.34,-7.82
+Fintech,XYZ,"Block, Inc.",76.46,-3.24,-4.94,-0.27,-0.7,8.7,16.34
+Banks,JPM,JP Morgan Chase & Co.,331.58,-1.47,-2.32,-1.79,-5.44,6.57,2.82
+Banks,BAC,Bank of America Corporation,50.56,-1.02,-3.03,-9.59,-17.83,-3.36,-8.12
+Banks,WFC,Wells Fargo & Company,82.39,-0.75,-1.47,-0.43,-4.14,2.85,-11.69
+Banks,C,"Citigroup, Inc.",120.62,-1.54,-2.73,-8.06,-8.79,-5.97,2.91
+Banks,GS,"Goldman Sachs Group, Inc. (The)",875.68,-1.75,-2.26,-6.91,-18.54,-5.89,-0.94
+Banks,MS,Morgan Stanley,179.49,-2.44,-1.75,-9.58,-17.05,-4.93,0.55
+Banks,USB,U.S. Bancorp,59.58,-0.73,2.56,0.98,-6.0,4.99,11.72
+Banks,PNC,"PNC Financial Services Group, Inc. (The)",224.46,-0.47,3.64,-0.87,-10.04,-0.15,7.54
+Banks,TFC,Truist Financial Corporation,48.44,0.04,2.45,1.59,-5.78,-5.81,-1.65
+Banks,COF,Capital One Financial Corporation,201.34,-1.03,0.37,1.12,1.43,3.35,-17.6
+Regional Banks,RF,Regions Financial Corporation,28.47,0.25,2.08,2.59,-7.32,0.46,5.09
+Regional Banks,KEY,KeyCorp,21.08,-0.61,4.62,2.93,-7.14,-4.53,2.18
+Regional Banks,FITB,Fifth Third Bancorp,52.98,-0.47,4.37,0.95,-7.52,3.94,13.08
+Regional Banks,CFG,"Citizens Financial Group, Inc.",65.14,-0.15,0.99,0.22,-9.4,-0.11,11.43
+Regional Banks,HBAN,Huntington Bancshares Incorporated,15.73,0.45,2.01,1.09,-8.44,-5.41,-9.49
+Regional Banks,ZION,Zions Bancorporation N.A.,66.2,-0.29,4.71,4.38,-4.57,5.7,12.93
+Regional Banks,WAL,Western Alliance Bancorporation,76.12,-0.72,1.49,-1.79,-8.61,-4.61,-9.56
+Regional Banks,MTB,M&T Bank Corporation,221.66,-0.53,0.08,0.02,-10.16,1.01,10.3
+Regional Banks,EWBC,"East West Bancorp, Inc.",131.19,-1.1,3.34,4.5,-0.06,5.66,16.71
+Regional Banks,SSB,SouthState Bank Corporation,105.51,0.28,3.44,3.35,1.64,10.29,12.23
+Insurance Brokers,MRSH,Marsh,197.48,-0.9,5.27,16.54,11.91,14.54,7.09
+Insurance Brokers,AON,Aon plc,303.52,-1.07,5.1,6.62,-14.72,-5.86,-13.56
+Insurance Brokers,AJG,Arthur J. Gallagher & Co.,268.04,-1.08,6.36,17.2,10.34,23.55,4.25
+Insurance Brokers,WTW,Willis Towers Watson Public Limited Company,325.01,-2.16,3.82,8.1,12.37,13.39,-0.75
+Insurance Brokers,BRO,"Brown & Brown, Inc.",72.97,-2.04,6.14,18.82,11.49,8.89,-8.52
+Insurance Brokers,RYAN,"Ryan Specialty Holdings, Inc.",43.68,-1.82,8.17,13.99,8.82,25.09,-14.79
+Insurance Brokers,ERIE,Erie Indemnity Company,253.52,-1.28,5.44,8.29,16.81,1.93,-11.05
+Oil Producers,XOM,ExxonMobil Holdings Corporation,183.21,2.79,3.81,14.78,16.7,22.43,52.56
+Oil Producers,CVX,Chevron Corporation,233.21,2.88,5.12,14.06,19.93,25.9,53.26
+Oil Producers,COP,ConocoPhillips,150.8,3.55,5.68,19.49,25.38,22.13,61.09
+Oil Producers,EOG,"EOG Resources, Inc.",163.03,3.21,6.56,15.52,13.22,22.28,55.27
+Oil Producers,OXY,Occidental Petroleum Corporation,64.17,2.67,4.96,12.64,11.99,11.41,55.6
+Oil Producers,FANG,"Diamondback Energy, Inc.",205.75,4.37,4.44,10.76,-0.04,5.35,36.17
+Oil Producers,DVN,Devon Energy Corporation,51.39,4.49,3.82,8.46,13.64,7.22,40.1
+Oil Producers,APA,APA Corporation,51.9,4.98,8.46,21.15,42.78,34.49,111.15
+Oil Producers,OVV,Ovintiv Inc. (DE),72.27,4.29,8.27,21.81,17.72,28.69,84.83
+Oil Producers,PR,Permian Resources Corporation,25.49,4.47,7.01,18.28,19.11,22.73,81.81
+Oil & Gas Midstream,EPD,Enterprise Products Partners L.P.,37.08,1.53,3.95,-2.57,-4.11,-1.77,15.51
+Oil & Gas Midstream,ET,Energy Transfer LP,20.45,2.05,1.89,-0.39,0.25,6.84,24.32
+Oil & Gas Midstream,WMB,"Williams Companies, Inc. (The)",71.7,1.51,3.14,0.55,-4.91,-0.11,19.28
+Oil & Gas Midstream,KMI,"Kinder Morgan, Inc.",34.43,2.11,4.27,9.79,4.59,8.51,25.25
+Oil & Gas Midstream,OKE,"ONEOK, Inc.",95.83,2.06,4.86,5.6,2.52,9.9,30.45
+Oil & Gas Midstream,TRGP,"Targa Resources, Inc.",302.37,4.43,5.78,6.26,5.72,26.55,64.48
+Oil & Gas Midstream,MPLX,MPLX LP,59.13,1.63,3.12,-0.2,2.55,6.64,11.06
+Oil & Gas Midstream,ENB,Enbridge Inc,48.15,0.29,2.16,0.52,-14.87,-8.57,0.48
+Marine Shipping,ZIM,ZIM Integrated Shipping Services Ltd.,29.35,0.93,-1.34,-4.02,14.51,12.45,35.44
+Marine Shipping,DAC,Danaos Corporation,158.34,0.34,-0.94,1.49,15.21,35.24,68.09
+Marine Shipping,GSL,Global Ship Lease Inc New,41.85,1.09,-1.62,-6.58,-2.72,9.9,18.99
+Marine Shipping,SBLK,Star Bulk Carriers Corp.,28.98,1.15,2.62,-6.12,6.0,20.3,49.69
+Marine Shipping,STNG,Scorpio Tankers Inc.,85.92,4.22,2.55,3.83,7.53,10.85,70.0
+Marine Shipping,INSW,"International Seaways, Inc.",110.78,2.18,-4.09,6.52,21.4,45.17,129.83
+Marine Shipping,FRO,Frontline Plc,52.94,3.36,-1.29,10.48,34.37,52.0,149.6
+Marine Shipping,DHT,"DHT Holdings, Inc.",24.6,1.99,1.32,15.22,31.55,38.44,102.97
+Marine Shipping,MATX,"Matson, Inc.",228.64,0.51,-4.73,1.16,6.65,30.89,84.24
+Marine Shipping,TRMD,TORM plc,39.89,3.53,1.4,14.53,31.87,31.02,100.75
+Aerospace,BA,Boeing Company (The),188.35,0.43,-0.93,-4.86,-10.35,-19.85,-13.66
+Aerospace,GE,GE Aerospace,285.64,-2.69,-9.26,-10.29,-18.44,1.79,-7.78
+Aerospace,RTX,RTX Corporation,191.01,-1.9,1.19,-0.45,-9.4,7.44,4.09
+Aerospace,TDG,Transdigm Group Inc.,1104.84,-3.23,-3.43,-0.52,-9.23,-4.5,-16.87
+Aerospace,HWM,Howmet Aerospace Inc.,185.91,-3.82,-15.8,-17.74,-35.3,-23.94,-9.53
+Aerospace,HEI,Heico Corporation,297.36,-0.89,-4.03,-2.6,-13.06,11.43,-8.0
+Aerospace,TXT,Textron Inc.,76.83,-1.55,1.47,-0.85,-17.86,-14.42,-12.2
+Aerospace,HXL,Hexcel Corporation,79.62,-2.03,-12.02,-7.04,-27.7,-11.82,7.2
+Aerospace,CW,Curtiss-Wright Corporation,464.94,-1.97,-7.62,-15.09,-38.02,-35.65,-16.17
+Aerospace,ATI,ATI Inc.,156.88,-3.06,-17.43,-15.43,-21.56,2.04,36.02
+Homebuilders,DHI,"D.R. Horton, Inc.",147.48,-0.12,5.44,3.89,3.73,-10.06,2.18
+Homebuilders,LEN,Lennar Corporation,84.92,0.56,9.03,3.56,2.97,-9.59,-17.56
+Homebuilders,PHM,"PulteGroup, Inc.",121.19,1.43,6.74,0.76,-3.92,-6.93,2.31
+Homebuilders,NVR,"NVR, Inc.",5983.68,-2.08,-0.2,-4.79,-2.75,-13.14,-17.89
+Homebuilders,TOL,"Toll Brothers, Inc.",139.9,-0.84,3.99,3.24,-4.79,-6.06,3.47
+Homebuilders,KBH,KB Home,47.05,1.86,7.86,-0.21,-15.3,-16.43,-16.74
+Homebuilders,MTH,Meritage Homes Corporation,64.19,0.88,6.1,-1.67,-10.55,-8.63,-2.24
+Homebuilders,SKY,"Champion Homes, Inc.",78.92,-1.0,-1.55,-10.15,-2.22,-2.78,-6.6
+Travel,BKNG,Booking Holdings Inc. Common Stock,155.83,-3.27,-6.81,-4.25,-10.75,-11.78,-27.27
+Travel,ABNB,"Airbnb, Inc.",172.01,-2.13,-1.95,7.83,24.43,22.72,26.53
+Travel,EXPE,"Expedia Group, Inc.",289.01,-3.18,-1.92,3.96,11.36,16.3,2.12
+Travel,MAR,Marriott International,390.71,-1.53,0.51,12.82,6.87,6.33,25.81
+Travel,HLT,Hilton Worldwide Holdings Inc.,349.63,-2.36,1.27,13.79,9.09,4.3,21.88
+Travel,CCL,Carnival Corporation Ltd.,26.11,-3.58,-2.54,18.28,1.79,-2.39,-14.92
+Travel,RCL,Royal Caribbean Cruises Ltd.,276.48,-3.37,-2.18,17.08,-3.26,5.93,-0.73
+Travel,NCLH,Norwegian Cruise Line Holdings Ltd.,15.1,-2.83,-2.39,6.79,-20.44,-18.2,-32.95
+Travel,DAL,"Delta Air Lines, Inc.",76.78,-3.13,-1.9,-7.16,-7.11,11.65,9.92
+Travel,UAL,"United Airlines Holdings, Inc.",97.93,-3.99,-3.36,-14.03,-15.85,6.42,-13.03
+Casinos,LVS,Las Vegas Sands Corp.,35.68,-2.33,-7.25,-10.26,-23.43,-31.74,-45.28
+Casinos,WYNN,"Wynn Resorts, Limited",72.73,-3.19,-5.78,-11.75,-25.24,-31.23,-39.43
+Casinos,MGM,MGM Resorts International,28.06,-4.88,-5.46,-27.19,-37.82,-27.79,-23.4
+Casinos,CZR,"Caesars Entertainment, Inc.",28.8,-0.93,-1.61,-2.7,-3.74,3.52,22.09
+Casinos,MLCO,Melco Resorts & Entertainment Limited,3.73,-5.81,-12.44,-21.97,-33.39,-33.63,-51.24
+Casinos,BYD,Boyd Gaming Corporation,71.69,-0.8,0.27,0.0,-16.01,-13.16,-15.99
+Casinos,PENN,"PENN Entertainment, Inc.",14.5,-6.21,-4.92,-7.99,-29.27,-15.84,-2.29
+Casinos,DKNG,DraftKings Inc.,20.91,-0.14,7.78,-4.39,-9.36,-4.04,-39.55
+Casinos,CHDN,"Churchill Downs, Incorporated",83.73,-0.85,1.34,5.24,0.58,-15.88,-26.11
+Payments,V,Visa Inc.,407.92,-1.55,1.35,12.92,15.4,32.83,16.59
+Payments,MA,Mastercard Incorporated,623.6,-1.52,0.68,12.2,17.34,24.97,9.27
+Payments,AXP,American Express Company,313.22,-3.68,-0.96,2.73,-3.96,-1.04,-15.23
+Payments,PYPL,"PayPal Holdings, Inc.",57.02,-0.9,-0.59,8.01,1.26,14.5,-2.81
+Payments,FIS,"Fidelity National Information Services, Inc.",37.53,-1.98,3.05,7.2,-7.06,-16.9,-43.56
+Payments,FISV,"Fiserv, Inc.",49.86,-1.89,4.75,7.85,-0.74,-18.83,-26.17
+Payments,GPN,Global Payments Inc.,82.82,-3.56,-2.56,-1.94,5.42,22.91,6.73
+Payments,TOST,"Toast, Inc.",32.71,-2.12,0.37,10.32,13.89,16.53,-8.55
+Payments,CPAY,"Corpay, Inc.",408.46,-1.58,-0.41,4.46,10.95,31.0,35.41
+Reshoring,CAT,"Caterpillar, Inc.",687.0,-2.42,-6.45,-14.55,-23.24,-18.14,18.94
+Reshoring,DE,Deere & Company,646.15,0.39,-0.99,-7.96,5.54,10.38,38.66
+Reshoring,EMR,Emerson Electric Company,161.59,0.81,0.12,5.62,11.52,13.5,21.29
+Reshoring,ETN,"Eaton Corporation, PLC",366.11,-0.78,-8.27,-17.27,-10.67,-14.87,13.27
+Reshoring,PH,Parker-Hannifin Corporation,880.57,-1.42,-8.8,-8.37,-10.98,-9.32,-0.12
+Reshoring,URI,"United Rentals, Inc.",1098.88,-1.09,5.44,5.47,-2.91,10.11,35.57
+Reshoring,CMI,Cummins Inc.,517.4,-0.41,-2.37,-0.65,-22.2,-21.21,1.36
+Reshoring,PCAR,PACCAR Inc.,106.96,-2.4,-4.17,-5.55,-18.18,-15.52,-2.58
+Reshoring,HON,Honeywell International Inc.,221.15,1.3,4.6,5.81,-10.43,-0.86,7.81
+Reshoring,ROK,"Rockwell Automation, Inc.",426.11,0.53,0.69,0.36,-7.97,4.57,8.7
+Water,AWK,"American Water Works Company, Inc.",142.75,-0.34,6.9,7.11,5.51,6.28,9.61
+Water,WTRG,"Essential Utilities, Inc.",43.11,-0.44,6.47,6.81,7.96,7.05,12.74
+Water,XYL,Xylem Inc.,108.74,-0.48,4.58,1.63,-7.28,-10.09,-20.21
+Water,ECL,Ecolab Inc.,288.53,-1.29,-1.28,4.77,9.4,6.6,10.46
+Water,PNR,Pentair plc.,55.3,-0.25,2.94,-0.02,-10.56,-38.38,-46.94
+Water,VLTO,Veralto Corp,104.33,-0.54,2.83,9.39,13.77,17.95,5.15
+Water,FELE,"Franklin Electric Co., Inc.",98.36,-0.86,-2.32,3.05,-7.48,-2.86,2.96
+Water,AWR,American States Water Company,85.44,0.46,2.66,1.7,-2.74,7.46,18.06
+Water,WMS,"Advanced Drainage Systems, Inc.",130.4,-0.4,0.67,1.13,-7.35,-14.46,-10.09
+Waste,WM,"Waste Management, Inc.",239.38,0.12,6.5,15.09,0.78,2.82,9.14
+Waste,RSG,"Republic Services, Inc.",240.45,-0.6,4.24,12.64,10.39,13.24,14.2
+Waste,WCN,"Waste Connections, Inc.",186.6,0.93,11.88,20.05,11.16,10.58,6.7
+Waste,CLH,"Clean Harbors, Inc.",318.76,-0.69,-0.76,1.73,3.93,2.87,36.12
+Waste,CWST,"Casella Waste Systems, Inc.",97.61,0.74,12.31,14.79,7.68,16.66,-0.34
+Waste,GFL,"GFL Environmental Inc. Subordinate voting shares, no par value",45.56,3.22,3.76,7.73,17.18,11.12,5.76
+Railroads,UNP,Union Pacific Corporation,292.87,-1.75,1.49,6.91,-3.82,7.33,26.59
+Railroads,CSX,CSX Corporation,50.79,-1.7,3.78,8.89,-3.75,10.75,39.55
+Railroads,NSC,Norfolk Southern Corporation,329.99,-2.44,1.36,5.43,-6.14,2.05,14.23
+Railroads,CP,Canadian Pacific Kansas City Limited,89.51,-1.22,2.62,2.37,-3.43,4.05,21.24
+Railroads,CNI,Canadian National Railway Company,123.15,-1.42,1.76,3.39,-6.36,8.03,24.49
+Railroads,WAB,Westinghouse Air Brake Technologies Corporation,272.35,-1.49,-5.62,-5.54,-8.85,1.57,27.49
+Railroads,GBX,"Greenbrier Companies, Inc. (The)",38.09,-1.78,-3.64,-10.84,-26.57,-22.72,-18.31
+Railroads,TRN,"Trinity Industries, Inc.",25.54,-1.08,-0.08,-7.16,-31.45,-18.84,-3.48
+Trucking,ODFL,"Old Dominion Freight Line, Inc.",182.7,-3.79,-3.53,2.97,-20.7,-18.03,15.82
+Trucking,SAIA,"Saia, Inc.",332.14,-3.59,-2.88,-4.35,-22.06,-24.87,1.57
+Trucking,XPO,"XPO, Inc.",183.21,-2.94,-2.99,1.5,-14.28,-18.29,35.18
+Trucking,JBHT,"J.B. Hunt Transport Services, Inc.",226.03,-1.98,-0.86,-4.43,-21.89,-10.91,16.25
+Trucking,KNX,Knight-Swift Transportation Holdings Inc.,61.21,-2.1,-6.41,-8.56,-14.54,-7.03,16.84
+Trucking,ARCB,ArcBest Corporation,127.01,-2.52,-4.45,-3.54,-18.97,6.21,71.06
+Trucking,TFII,TFI International Inc.,112.5,-2.17,-1.87,-9.68,-26.08,-18.29,7.96
+Trucking,WERN,"Werner Enterprises, Inc.",28.79,-1.34,-13.52,-16.98,-34.1,-15.07,-4.07
+Steel,NUE,Nucor Corporation,258.11,0.02,0.37,5.6,6.51,20.63,56.26
+Steel,STLD,"Steel Dynamics, Inc.",241.53,0.68,-0.87,4.11,0.24,7.28,40.73
+Steel,CLF,Cleveland-Cliffs Inc.,13.9,6.51,15.16,12.28,22.68,53.42,2.89
+Steel,RS,"Reliance, Inc.",415.62,-0.55,1.09,8.21,4.07,20.0,42.91
+Steel,CMC,Commercial Metals Company,62.77,-1.6,-5.17,-2.44,-8.65,-8.07,-10.46
+Steel,MT,Arcelor Mittal NY Registry Shares NEW,59.43,-1.25,-7.07,-18.68,-11.81,0.25,27.59
+Steel,GGB,Gerdau S.A.,5.1,0.59,0.2,1.8,7.82,17.51,36.0
+Brazil,PBR,Petroleo Brasileiro S.A. Petrobras,26.16,2.11,1.83,23.69,38.49,25.05,120.2
+Brazil,VALE,VALE S.A.,12.4,1.64,-4.98,-11.99,-15.76,-27.78,-6.42
+Brazil,ITUB,Itau Unibanco Banco Holding SA,9.67,1.9,0.94,14.57,16.37,10.39,32.83
+Brazil,BBD,Banco Bradesco Sa,4.07,3.04,0.25,13.69,11.81,3.3,20.41
+Brazil,ABEV,Ambev S.A.,3.3,-0.9,0.61,10.74,6.45,13.79,32.53
+Brazil,EMBJ,Embraer S.A.,70.84,2.36,-3.21,-7.4,7.77,12.07,8.97
+Brazil,NU,Nu Holdings Ltd.,15.16,2.92,3.06,7.75,6.87,5.13,-11.14
+Brazil,GGB,Gerdau S.A.,5.1,0.59,0.2,1.8,7.82,17.51,36.0
+Brazil,SBS,Companhia de saneamento Basico Do Estado De Sao Paulo - Sabesp,6.4,2.07,1.11,19.4,13.07,-7.17,31.74
+Brazil,STNE,StoneCo Ltd.,11.48,2.96,0.26,16.9,3.8,-6.06,-23.26
+Brazil,VIV,Telefonica Brasil S.A.,12.96,-0.92,4.68,9.37,-5.4,-18.75,6.75
+Argentina,MELI,"MercadoLibre, Inc.",1810.15,-0.81,-3.13,0.57,0.52,-0.51,-10.72
+Argentina,YPF,YPF Sociedad Anonima,50.68,3.07,-0.95,-5.94,-1.59,17.53,38.58
+Argentina,GGAL,Grupo Financiero Galicia S.A.,37.91,4.96,3.55,-7.78,-24.44,-12.08,-29.72
+Argentina,BMA,Banco Macro S.A.,66.04,4.91,0.95,-10.08,-27.9,-11.33,-27.24
+Argentina,PAM,Pampa Energia S.A.,79.5,2.05,-1.85,-1.29,-10.16,-3.38,-10.11
+Argentina,VIST,Vista Energy S.A.B. de C.V.,74.84,5.99,5.84,6.49,9.26,6.46,53.99
+Argentina,TEO,Telecom Argentina SA,12.9,1.9,2.46,-8.38,-5.7,11.59,10.73
+Argentina,CEPU,Central Puerto S.A.,12.1,2.8,-7.14,-8.95,-20.34,-16.95,-31.05
+Argentina,BBAR,Banco BBVA Argentina S.A.,13.17,5.36,1.23,-5.93,-30.13,-9.55,-27.72
+Argentina,ARCO,Arcos Dorados Holdings Inc.,8.09,0.87,0.37,6.59,-3.11,-13.1,10.07
