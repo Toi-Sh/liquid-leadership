@@ -1,0 +1,5 @@
+name,close,ema8w,dist_to_ema8w_pct,ema8w_slope_pct,off_8w_high_pct,tagged_ema8w,ema8w_rising,signal,tradingview_url,description,exchange,industry,Perf.1M,Perf.3M,Perf.6M
+ASST,26.32,26.2664,0.2,0.058,17.96,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:ASST&interval=D,"Strive, Inc.",NASDAQ,Financial Conglomerates,-11.958521491888273,128.07625649913345,70.13574660633483
+SNOW,334.95,330.0768,1.48,0.424,9.61,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NYSE:SNOW&interval=D,Snowflake Inc.,NYSE,Packaged Software,0.30244954183385964,22.683319903303794,136.9817461440498
+BRBR,9.56,9.3103,2.68,0.772,9.79,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NYSE:BRBR&interval=D,"BellRing Brands, Inc.",NYSE,Beverages: Non-Alcoholic,23.99481193255513,-31.123919308357348,-43.23040380047505
+WING,122.88,119.6037,2.74,0.789,9.86,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:WING&interval=D,Wingstop Inc.,NASDAQ,Restaurants,24.675324675324667,-9.991210079109297,-21.79972634995386

@@ -1,0 +1,6 @@
+date,frame,kind,industry,signal,prior_count,current_count,delta,members
+2026-10-27,6m,industry,Packaged Software,RISING,14,15,1,
+2026-10-27,3m,industry,Financial Conglomerates,RISING,2,3,1,
+2026-10-27,3m,industry,Medical Specialties,RISING,2,3,1,
+2026-10-27,3m,industry,Computer Peripherals,RISING,1,2,1,
+2026-10-27,3m,cluster,Semis complex,RISING,1,2,1,Computer Peripherals|Computer Processing Hardware|Electronic Equipment/Instruments|Electronic Production Equipment|Electronics/Appliances|Semiconductors

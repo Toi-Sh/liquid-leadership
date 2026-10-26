@@ -1,0 +1,4 @@
+name,close,SMA5,SMA10,SMA20,SMA30,sma5_gt_sma10,sma20_gt_sma30,sma20_30_gap_pct,cross_days_ago,signal,tradingview_url,description,exchange,industry,Perf.1M,Perf.3M,Perf.6M
+KD,14.68,14.576,13.659,12.6385,12.4937,True,True,1.159,1,20x30_1D,https://www.tradingview.com/chart/?symbol=NYSE:KD&interval=D,"Kyndryl Holdings, Inc.",NYSE,Data Processing Services,25.255972696245724,14.597970335675246,9.715994020926747
+LIFE,42.3,42.844,40.794,37.9385,37.348,True,True,1.581,1,20x30_1D,https://www.tradingview.com/chart/?symbol=NASDAQ:LIFE&interval=D,Ethos Technologies Inc.,NASDAQ,Packaged Software,20.102214650766605,135.91745677635245,134.60898502495837
+GLOB,45.0,44.132,41.363,38.5475,37.7053,True,True,2.234,2,20x30_2D,https://www.tradingview.com/chart/?symbol=NYSE:GLOB&interval=D,Globant S.A.,NYSE,Information Technology Services,30.057803468208085,35.66475731082303,11.11111111111111
