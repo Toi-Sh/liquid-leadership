@@ -1,0 +1,3 @@
+name,description,exchange,industry,close,change,volume,earn_yoy,sales_yoy,Perf.1M,sma10_rising,sma20_rising,tradingview_url
+CDNA,"CareDx, Inc.",NASDAQ,Medical Specialties,70.53,2.069464544138939,1175978,103.17304867299974,52.22602937274312,15.00081526169901,True,True,https://www.tradingview.com/chart/?symbol=NASDAQ:CDNA&interval=D
+ZETA,Zeta Global Holdings Corp.,NYSE,Packaged Software,33.35,-1.0385756676557905,3651849,92.81997918834547,43.5491923927351,13.435374149659875,True,True,https://www.tradingview.com/chart/?symbol=NYSE:ZETA&interval=D

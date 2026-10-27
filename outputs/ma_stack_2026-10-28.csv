@@ -1,0 +1,5 @@
+name,close,SMA5,SMA10,SMA20,SMA30,sma5_gt_sma10,sma20_gt_sma30,sma20_30_gap_pct,cross_days_ago,signal,tradingview_url,description,exchange,industry,Perf.1M,Perf.3M,Perf.6M
+LIFE,42.53,43.136,41.086,38.3725,37.423,True,True,2.537,2,20x30_2D,https://www.tradingview.com/chart/?symbol=NASDAQ:LIFE&interval=D,Ethos Technologies Inc.,NASDAQ,Packaged Software,20.75525269733107,126.46432374866879,140.69043576683643
+SNOW,337.42,326.898,324.644,335.362,334.9413,True,True,0.126,,20x30_NEAR,https://www.tradingview.com/chart/?symbol=NYSE:SNOW&interval=D,Snowflake Inc.,NYSE,Packaged Software,1.0421033718632144,21.856265799927787,140.65330575565224
+PANW,401.7,374.976,364.942,384.83,383.1893,True,True,0.428,,20x30_NEAR,https://www.tradingview.com/chart/?symbol=NASDAQ:PANW&interval=D,"Palo Alto Networks, Inc.",NASDAQ,Packaged Software,3.5469402484920325,25.774938944204397,122.11777716339509
+CRWD,268.02,252.94,244.142,256.077,254.7313,True,True,0.528,,20x30_NEAR,https://www.tradingview.com/chart/?symbol=NASDAQ:CRWD&interval=D,"CrowdStrike Holdings, Inc.",NASDAQ,Packaged Software,3.271298115824764,46.759753593429146,139.83356077045255
