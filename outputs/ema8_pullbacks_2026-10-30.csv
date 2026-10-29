@@ -1,0 +1,4 @@
+name,close,ema8w,dist_to_ema8w_pct,ema8w_slope_pct,off_8w_high_pct,tagged_ema8w,ema8w_rising,signal,tradingview_url,description,exchange,industry,Perf.1M,Perf.3M,Perf.6M
+SNOW,330.27,329.0368,0.37,0.107,10.87,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NYSE:SNOW&interval=D,Snowflake Inc.,NYSE,Packaged Software,-0.2747750468023507,10.273789649415686,132.58450704225353
+PANW,380.57,373.4828,1.9,0.545,11.97,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:PANW&interval=D,"Palo Alto Networks, Inc.",NASDAQ,Packaged Software,-2.4429633427326403,14.513969338167819,109.1043956043956
+TEAM,204.1,198.2244,2.96,0.854,11.25,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:TEAM&interval=D,Atlassian Corporation,NASDAQ,Packaged Software,14.837112473977385,113.31521739130432,146.1408586589484
