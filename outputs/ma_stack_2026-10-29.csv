@@ -1,0 +1,4 @@
+name,close,SMA5,SMA10,SMA20,SMA30,sma5_gt_sma10,sma20_gt_sma30,sma20_30_gap_pct,cross_days_ago,signal,tradingview_url,description,exchange,industry,Perf.1M,Perf.3M,Perf.6M
+SNOW,339.91,330.334,325.127,335.3795,335.2377,True,True,0.042,,20x30_NEAR,https://www.tradingview.com/chart/?symbol=NYSE:SNOW&interval=D,Snowflake Inc.,NYSE,Packaged Software,6.218555670135319,19.266666666666676,139.37323943661974
+PANW,394.49,384.424,366.887,384.689,383.8173,True,True,0.227,,20x30_NEAR,https://www.tradingview.com/chart/?symbol=NASDAQ:PANW&interval=D,"Palo Alto Networks, Inc.",NASDAQ,Packaged Software,6.443431100078248,24.8267569534538,116.75274725274726
+CRWD,266.66,258.404,245.879,256.1725,255.5747,True,True,0.234,,20x30_NEAR,https://www.tradingview.com/chart/?symbol=NASDAQ:CRWD&interval=D,"CrowdStrike Holdings, Inc.",NASDAQ,Packaged Software,7.131091559198115,47.66862332484218,134.58620158789506

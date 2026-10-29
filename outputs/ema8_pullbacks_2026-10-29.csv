@@ -1,0 +1,2 @@
+name,close,ema8w,dist_to_ema8w_pct,ema8w_slope_pct,off_8w_high_pct,tagged_ema8w,ema8w_rising,signal,tradingview_url,description,exchange,industry,Perf.1M,Perf.3M,Perf.6M
+SNOW,339.91,331.179,2.64,0.759,8.27,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NYSE:SNOW&interval=D,Snowflake Inc.,NYSE,Packaged Software,6.218555670135319,19.266666666666676,139.37323943661974
