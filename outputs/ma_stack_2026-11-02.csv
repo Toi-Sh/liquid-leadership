@@ -1,0 +1,4 @@
+name,close,SMA5,SMA10,SMA20,SMA30,sma5_gt_sma10,sma20_gt_sma30,sma20_30_gap_pct,cross_days_ago,signal,tradingview_url,description,exchange,industry,Perf.1M,Perf.3M,Perf.6M
+HRI,165.76,157.814,143.23,134.944,134.7797,True,True,0.122,0,20x30_TODAY,https://www.tradingview.com/chart/?symbol=NYSE:HRI&interval=D,Herc Holdings Inc.,NYSE,Finance/Rental/Leasing,29.499999999999993,13.30143540669855,29.916137628340767
+AMC,3.06,3.002,2.994,2.965,2.9593,True,True,0.191,1,20x30_1D,https://www.tradingview.com/chart/?symbol=NYSE:AMC&interval=D,"AMC Entertainment Holdings, Inc.",NYSE,Movies/Entertainment,-1.9230769230769247,11.272727272727275,101.3157894736842
+MIR,18.37,16.824,15.939,15.9565,15.7087,True,True,1.578,2,20x30_2D,https://www.tradingview.com/chart/?symbol=NYSE:MIR&interval=D,"Mirion Technologies, Inc.",NYSE,Aerospace & Defense,28.371767994409506,21.816976127320963,-7.642031171442933

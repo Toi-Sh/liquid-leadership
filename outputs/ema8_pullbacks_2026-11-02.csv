@@ -1,0 +1,2 @@
+name,close,ema8w,dist_to_ema8w_pct,ema8w_slope_pct,off_8w_high_pct,tagged_ema8w,ema8w_rising,signal,tradingview_url,description,exchange,industry,Perf.1M,Perf.3M,Perf.6M
+CRWD,250.43,244.1883,2.56,0.736,12.74,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:CRWD&interval=D,"CrowdStrike Holdings, Inc.",NASDAQ,Packaged Software,-5.237068149998099,33.762418545027245,120.30834194726077
