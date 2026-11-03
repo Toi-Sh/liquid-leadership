@@ -1,0 +1,5 @@
+name,close,ema8w,dist_to_ema8w_pct,ema8w_slope_pct,off_8w_high_pct,tagged_ema8w,ema8w_rising,signal,tradingview_url,description,exchange,industry,Perf.1M,Perf.3M,Perf.6M
+NEO,17.38,17.2077,1.0,0.287,13.75,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:NEO&interval=D,"NeoGenomics, Inc.",NASDAQ,Medical/Nursing Services,-8.337965536409117,3.841309823677567,85.28089887640446
+AMLX,28.86,28.2721,2.08,0.598,16.88,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:AMLX&interval=D,"Amylyx Pharmaceuticals, Inc.",NASDAQ,Pharmaceuticals: Major,-1.6140350877193013,37.85644051130776,69.83646274984855
+CRWD,250.43,244.1883,2.56,0.736,12.74,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:CRWD&interval=D,"CrowdStrike Holdings, Inc.",NASDAQ,Packaged Software,-10.274582560296846,17.497570456754126,106.49871904355253
+TRU,76.79,74.7671,2.71,0.779,8.43,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NYSE:TRU&interval=D,TransUnion,NYSE,Financial Publishing/Services,27.749113189293777,-0.012619888944965808,15.042834325540873
