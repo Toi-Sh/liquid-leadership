@@ -1,0 +1,4 @@
+name,close,SMA5,SMA10,SMA20,SMA30,sma5_gt_sma10,sma20_gt_sma30,sma20_30_gap_pct,cross_days_ago,signal,tradingview_url,description,exchange,industry,Perf.1M,Perf.3M,Perf.6M
+HRI,170.01,168.806,152.061,138.3395,136.5577,True,True,1.305,2,20x30_2D,https://www.tradingview.com/chart/?symbol=NYSE:HRI&interval=D,Herc Holdings Inc.,NYSE,Finance/Rental/Leasing,27.119784656796753,-0.8630240830369224,24.049616928128405
+VRDN,25.15,24.838,23.982,21.591,21.0382,True,True,2.628,2,20x30_2D,https://www.tradingview.com/chart/?symbol=NASDAQ:VRDN&interval=D,"Viridian Therapeutics, Inc.",NASDAQ,Pharmaceuticals: Major,31.263048016701454,19.761904761904756,43.22323462414579
+AMC,3.28,3.12,3.035,3.0015,2.9797,True,True,0.733,,20x30_NEAR,https://www.tradingview.com/chart/?symbol=NYSE:AMC&interval=D,"AMC Entertainment Holdings, Inc.",NYSE,Movies/Entertainment,17.142857142857142,23.308270676691716,101.94557320527028

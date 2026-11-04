@@ -1,0 +1,3 @@
+name,description,exchange,industry,close,change,volume,earn_yoy,sales_yoy,Perf.1M,sma10_rising,sma20_rising,tradingview_url
+KNSA,"Kiniksa Pharmaceuticals International, plc",NASDAQ,Pharmaceuticals: Major,93.29,2.7422907488986885,1021923,142.0755536257056,58.12114677504078,23.432124900767413,True,True,https://www.tradingview.com/chart/?symbol=NASDAQ:KNSA&interval=D
+KRMN,Karman Holdings Inc.,NYSE,Aerospace & Defense,39.51,0.9711219013544479,2177831,106.03112840466923,58.182228902577826,22.892690513219286,True,True,https://www.tradingview.com/chart/?symbol=NYSE:KRMN&interval=D

@@ -1,0 +1,9 @@
+name,close,ema8w,dist_to_ema8w_pct,ema8w_slope_pct,off_8w_high_pct,tagged_ema8w,ema8w_rising,signal,tradingview_url,description,exchange,industry,Perf.1M,Perf.3M,Perf.6M
+PBF,77.81,77.7205,0.12,0.033,15.84,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NYSE:PBF&interval=D,PBF Energy Inc.,NYSE,Oil Refining/Marketing,-4.339808212441604,18.36020687557044,92.26587595749939
+CRWD,244.68,244.2975,0.16,0.045,14.74,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:CRWD&interval=D,"CrowdStrike Holdings, Inc.",NASDAQ,Packaged Software,-9.209647495361777,14.577382346054785,101.34542985866817
+RBRK,116.51,115.4633,0.91,0.26,16.73,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NYSE:RBRK&interval=D,"Rubrik, Inc.",NYSE,Information Technology Services,-0.41880341880341443,41.39563106796116,91.00000000000001
+GTLB,52.37,51.551,1.59,0.456,9.72,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:GTLB&interval=D,GitLab Inc.,NASDAQ,Packaged Software,2.9891838741396186,41.31138694009712,107.81746031746032
+NSIT,167.35,164.6981,1.61,0.462,8.11,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:NSIT&interval=D,"Insight Enterprises, Inc.",NASDAQ,Information Technology Services,2.048905421062251,22.555840351519574,123.96948608137045
+BRBR,9.42,9.2673,1.65,0.473,5.1,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NYSE:BRBR&interval=D,"BellRing Brands, Inc.",NYSE,Beverages: Non-Alcoholic,26.104417670682736,-25.76832151300236,-14.363636363636363
+GH,175.0,170.8098,2.45,0.706,8.4,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:GH&interval=D,"Guardant Health, Inc.",NASDAQ,Medical Specialties,0.9693053311793255,9.375,88.56742632401271
+AZTA,37.14,36.1004,2.88,0.83,19.97,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:AZTA&interval=D,"Azenta, Inc.",NASDAQ,Medical/Nursing Services,5.962910128388027,19.845111326234278,101.73818576860401
