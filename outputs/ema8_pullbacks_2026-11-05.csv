@@ -1,0 +1,6 @@
+name,close,ema8w,dist_to_ema8w_pct,ema8w_slope_pct,off_8w_high_pct,tagged_ema8w,ema8w_rising,signal,tradingview_url,description,exchange,industry,Perf.1M,Perf.3M,Perf.6M
+LQDA,47.38,47.2221,0.33,0.096,36.61,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:LQDA&interval=D,Liquidia Corporation,NASDAQ,Pharmaceuticals: Major,68.79230495190596,-46.91316526610644,12.70218839200762
+ZETA,31.78,31.4332,1.1,0.316,11.1,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NYSE:ZETA&interval=D,Zeta Global Holdings Corp.,NYSE,Packaged Software,-3.6969696969696937,18.58208955223881,85.52247518972564
+MSTR,142.54,140.6233,1.36,0.391,16.74,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:MSTR&interval=D,Strategy Inc,NASDAQ,Financial Conglomerates,-13.444255525868359,48.38642515094731,-20.226102529661972
+GTLB,52.37,51.551,1.59,0.456,9.72,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:GTLB&interval=D,GitLab Inc.,NASDAQ,Packaged Software,5.05516549648946,52.905109489051085,106.83254344391783
+RBRK,118.99,116.0144,2.56,0.738,14.96,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NYSE:RBRK&interval=D,"Rubrik, Inc.",NYSE,Information Technology Services,-0.008403361344542113,45.09206194366539,97.33001658374793
