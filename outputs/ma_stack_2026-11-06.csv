@@ -1,0 +1,4 @@
+name,close,SMA5,SMA10,SMA20,SMA30,sma5_gt_sma10,sma20_gt_sma30,sma20_30_gap_pct,cross_days_ago,signal,tradingview_url,description,exchange,industry,Perf.1M,Perf.3M,Perf.6M
+RUN,9.87,8.614,8.046,7.7748,7.7565,True,True,0.235,0,20x30_TODAY,https://www.tradingview.com/chart/?symbol=NASDAQ:RUN&interval=D,Sunrun Inc.,NASDAQ,Semiconductors,29.019607843137237,0.8686765457332557,-30.148619957537164
+AXGN,48.75,49.764,46.124,41.0305,40.4927,True,True,1.328,1,20x30_1D,https://www.tradingview.com/chart/?symbol=NASDAQ:AXGN&interval=D,"Axogen, Inc.",NASDAQ,Medical Specialties,30.942788074133773,8.938547486033519,12.120515179392832
+ABG,207.03,203.676,195.178,181.4645,179.1013,True,True,1.319,2,20x30_2D,https://www.tradingview.com/chart/?symbol=NYSE:ABG&interval=D,Asbury Automotive Group Inc,NYSE,Specialty Stores,20.98527349228611,-3.983860495315835,2.918075164048521

@@ -1,0 +1,10 @@
+name,close,ema8w,dist_to_ema8w_pct,ema8w_slope_pct,off_8w_high_pct,tagged_ema8w,ema8w_rising,signal,tradingview_url,description,exchange,industry,Perf.1M,Perf.3M,Perf.6M
+GME,24.17,24.1008,0.29,0.082,14.59,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NYSE:GME&interval=D,GameStop Corporation,NYSE,Electronics/Appliance Stores,-3.455162772119027,25.819885476314425,0.12427506213753578
+HTFL,51.95,51.6315,0.62,0.177,14.22,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:HTFL&interval=D,"Heartflow, Inc.",NASDAQ,Packaged Software,-3.796296296296291,88.63471314451708,72.93608521970708
+RVTY,150.83,149.2167,1.08,0.31,12.18,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NYSE:RVTY&interval=D,"Revvity, Inc.",NYSE,Medical Specialties,-6.6761539413438875,31.17933553661507,52.15373751639264
+TEM,70.43,69.6658,1.1,0.314,20.95,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:TEM&interval=D,"Tempus AI, Inc.",NASDAQ,Packaged Software,-17.107044076972866,48.10219745557777,42.71529888551166
+QLYS,199.63,196.9861,1.34,0.385,15.25,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:QLYS&interval=D,"Qualys, Inc.",NASDAQ,Packaged Software,-0.18999050047497398,8.819841918778963,113.16604378003201
+CAKE,110.71,109.0143,1.56,0.446,6.68,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:CAKE&interval=D,The Cheesecake Factory Incorporated,NASDAQ,Restaurants,0.6454545454545397,3.9530516431924823,79.25841968911918
+RBLX,47.65,46.8422,1.72,0.495,15.03,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NYSE:RBLX&interval=D,Roblox Corporation,NYSE,Packaged Software,7.4165915238953986,29.518891002989943,7.976433265352359
+ELF,109.85,107.7654,1.93,0.556,10.79,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NYSE:ELF&interval=D,"e.l.f. Beauty, Inc.",NYSE,Household/Personal Care,5.452625515983482,19.001191636875735,76.43752007709605
+PAYC,250.02,244.6618,2.19,0.63,9.16,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NYSE:PAYC&interval=D,"Paycom Software, Inc.",NYSE,Packaged Software,11.800742297545058,15.248455794228825,82.82998171846437
