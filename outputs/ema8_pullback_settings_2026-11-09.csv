@@ -1,0 +1,8 @@
+setting,value
+ema_span,8
+rising_weeks,2
+touch_pct,3.0
+max_undercut_pct,1.5
+min_off_high_pct,1.0
+history_period,2y
+min_weeks,20

@@ -1,0 +1,5 @@
+name,close,ema8w,dist_to_ema8w_pct,ema8w_slope_pct,off_8w_high_pct,tagged_ema8w,ema8w_rising,signal,tradingview_url,description,exchange,industry,Perf.1M,Perf.3M,Perf.6M
+HTFL,52.4,51.7315,1.29,0.371,13.47,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:HTFL&interval=D,"Heartflow, Inc.",NASDAQ,Packaged Software,5.305466237942124,90.26870007262164,74.43408788282291
+ANF,149.54,147.5489,1.35,0.387,13.06,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NYSE:ANF&interval=D,Abercrombie & Fitch Company,NYSE,Apparel/Footwear Retail,7.204817549645123,37.192660550458704,90.52108548859728
+TENB,42.13,41.2853,2.05,0.588,20.84,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:TENB&interval=D,"Tenable Holdings, Inc.",NASDAQ,Packaged Software,6.983240223463687,17.22314969393435,97.88633161108504
+AVAH,13.25,12.8702,2.95,0.85,9.93,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:AVAH&interval=D,Aveanna Healthcare Holdings Inc.,NASDAQ,Medical/Nursing Services,8.251633986928102,42.47311827956988,92.3076923076923

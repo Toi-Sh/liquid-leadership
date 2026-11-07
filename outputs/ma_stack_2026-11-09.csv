@@ -1,0 +1,5 @@
+name,close,SMA5,SMA10,SMA20,SMA30,sma5_gt_sma10,sma20_gt_sma30,sma20_30_gap_pct,cross_days_ago,signal,tradingview_url,description,exchange,industry,Perf.1M,Perf.3M,Perf.6M
+RUN,9.98,9.114,8.286,7.8918,7.8188,True,True,0.933,1,20x30_1D,https://www.tradingview.com/chart/?symbol=NASDAQ:RUN&interval=D,Sunrun Inc.,NASDAQ,Semiconductors,31.6622691292876,1.9928461931527877,-29.370134465675868
+GPK,11.19,11.024,9.887,9.215,9.074,True,True,1.554,1,20x30_1D,https://www.tradingview.com/chart/?symbol=NYSE:GPK&interval=D,Graphic Packaging Holding Company,NYSE,Containers/Packaging,31.184056271981245,-5.569620253164558,1.6348773841961828
+RKT,15.06,14.494,13.209,12.1355,11.9723,True,True,1.363,2,20x30_2D,https://www.tradingview.com/chart/?symbol=NYSE:RKT&interval=D,"Rocket Companies, Inc.",NYSE,Finance/Rental/Leasing,35.7980162308386,5.832747716092761,3.080082135523621
+AXGN,50.02,49.894,47.32,41.725,40.7137,True,True,2.484,2,20x30_2D,https://www.tradingview.com/chart/?symbol=NASDAQ:AXGN&interval=D,"Axogen, Inc.",NASDAQ,Medical Specialties,37.75819333516937,11.776536312849169,15.041398344066254
