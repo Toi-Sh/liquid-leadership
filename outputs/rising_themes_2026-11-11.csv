@@ -1,0 +1,6 @@
+date,frame,kind,industry,signal,prior_count,current_count,delta,members
+2026-11-11,1m,industry,Packaged Software,RISING,2,3,1,
+2026-11-11,6m,industry,Packaged Software,RISING,16,17,1,
+2026-11-11,3m,industry,Medical/Nursing Services,RISING,2,3,1,
+2026-11-11,6m,industry,Restaurants,RISING,2,3,1,
+2026-11-11,3m,industry,Data Processing Services,RISING,1,2,1,
