@@ -1,0 +1,5 @@
+name,close,ema8w,dist_to_ema8w_pct,ema8w_slope_pct,off_8w_high_pct,tagged_ema8w,ema8w_rising,signal,tradingview_url,description,exchange,industry,Perf.1M,Perf.3M,Perf.6M
+CAKE,108.8,108.0565,0.69,0.197,8.04,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:CAKE&interval=D,The Cheesecake Factory Incorporated,NASDAQ,Restaurants,1.3211382113821202,-7.059322033898304,87.98423037367158
+TENB,41.96,41.4352,1.27,0.363,21.16,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:TENB&interval=D,"Tenable Holdings, Inc.",NASDAQ,Packaged Software,1.0593220338983118,14.510536142971452,108.65127582017011
+GRAL,124.74,122.4199,1.9,0.544,25.07,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:GRAL&interval=D,"GRAIL, Inc.",NASDAQ,Medical Specialties,-8.56560657885161,82.24543080939948,109.4
+NSIT,168.75,164.0257,2.88,0.83,7.34,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:NSIT&interval=D,"Insight Enterprises, Inc.",NASDAQ,Information Technology Services,3.3422786045376855,9.783594661137744,91.30631139211924
