@@ -1,0 +1,6 @@
+name,close,ema8w,dist_to_ema8w_pct,ema8w_slope_pct,off_8w_high_pct,tagged_ema8w,ema8w_rising,signal,tradingview_url,description,exchange,industry,Perf.1M,Perf.3M,Perf.6M
+PAYC,242.66,242.0219,0.26,0.075,11.83,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NYSE:PAYC&interval=D,"Paycom Software, Inc.",NYSE,Packaged Software,5.45408314616265,10.787587373669911,82.72874137171391
+PACB,2.09,2.0821,0.38,0.109,39.24,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:PACB&interval=D,"Pacific Biosciences of California, Inc.",NASDAQ,Medical Specialties,-4.830917874396129,71.30434782608697,62.8099173553719
+ATRC,57.53,56.891,1.12,0.322,12.86,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:ATRC&interval=D,"AtriCure, Inc.",NASDAQ,Medical Specialties,-2.812500000000008,28.071379547014402,97.46031746031744
+ANF,151.92,148.5203,2.29,0.658,11.67,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NYSE:ANF&interval=D,Abercrombie & Fitch Company,NYSE,Apparel/Footwear Retail,2.7656378038787293,37.786119758286034,105.44709897610923
+GRAL,125.64,122.6199,2.46,0.709,24.53,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:GRAL&interval=D,"GRAIL, Inc.",NASDAQ,Medical Specialties,-12.122528785574632,78.50838481906442,102.24999999999999

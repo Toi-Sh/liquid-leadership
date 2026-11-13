@@ -1,0 +1,5 @@
+name,description,exchange,industry,close,change,volume,earn_yoy,sales_yoy,Perf.1M,sma10_rising,sma20_rising,tradingview_url
+APP,Applovin Corporation,NASDAQ,Packaged Software,393.68,-2.7398275563900425,3067381,75.4152552748643,55.49786661637172,46.74494455316375,True,True,https://www.tradingview.com/chart/?symbol=NASDAQ:APP&interval=D
+DCTH,"Delcath Systems, Inc.",NASDAQ,Medical Specialties,21.38,-1.7914561322921476,1091855,718.840579710145,70.70466371638379,37.31535003211303,True,True,https://www.tradingview.com/chart/?symbol=NASDAQ:DCTH&interval=D
+FLY,Firefly Aerospace Inc.,NASDAQ,Aerospace & Defense,25.31,-4.885381435550547,4340925,40.94986807387863,259.61401000714795,34.12824589295176,True,True,https://www.tradingview.com/chart/?symbol=NASDAQ:FLY&interval=D
+INSM,Insmed Incorporated,NASDAQ,Pharmaceuticals: Major,118.07,-2.219461697722573,2397944,73.76101636717408,268.42815191580837,20.258708494601738,True,True,https://www.tradingview.com/chart/?symbol=NASDAQ:INSM&interval=D
