@@ -1,0 +1,4 @@
+name,description,exchange,industry,close,change,volume,earn_yoy,sales_yoy,Perf.1M,sma10_rising,sma20_rising,tradingview_url
+APP,Applovin Corporation,NASDAQ,Packaged Software,409.1,3.916886811623658,3433707,75.4152552748643,55.49786661637172,51.40636565507033,True,True,https://www.tradingview.com/chart/?symbol=NASDAQ:APP&interval=D
+FLY,Firefly Aerospace Inc.,NASDAQ,Aerospace & Defense,25.21,-0.3951007506914179,3399848,40.94986807387863,259.61401000714795,40.68080357142856,True,True,https://www.tradingview.com/chart/?symbol=NASDAQ:FLY&interval=D
+INSM,Insmed Incorporated,NASDAQ,Pharmaceuticals: Major,121.16,2.6170915558566983,1543594,73.76101636717408,268.42815191580837,24.407023308347874,True,True,https://www.tradingview.com/chart/?symbol=NASDAQ:INSM&interval=D

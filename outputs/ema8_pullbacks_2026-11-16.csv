@@ -1,0 +1,9 @@
+name,close,ema8w,dist_to_ema8w_pct,ema8w_slope_pct,off_8w_high_pct,tagged_ema8w,ema8w_rising,signal,tradingview_url,description,exchange,industry,Perf.1M,Perf.3M,Perf.6M
+ATRC,56.84,56.7377,0.18,0.052,13.9,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:ATRC&interval=D,"AtriCure, Inc.",NASDAQ,Medical Specialties,1.2649207197577068,30.038892701898884,100.49382716049382
+ANF,148.88,147.8447,0.7,0.2,13.44,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NYSE:ANF&interval=D,Abercrombie & Fitch Company,NYSE,Apparel/Footwear Retail,-0.02686005909212466,36.312030763596404,103.24914675767918
+TEM,71.6,71.067,0.75,0.215,19.63,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:TEM&interval=D,"Tempus AI, Inc.",NASDAQ,Packaged Software,6.865671641791036,32.838589981447114,59.42997105321755
+CAKE,109.11,108.1254,0.91,0.261,7.78,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:CAKE&interval=D,The Cheesecake Factory Incorporated,NASDAQ,Restaurants,-2.952948501289698,-3.185448092280393,87.02434007541994
+ECO,88.82,87.3798,1.65,0.473,13.4,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NYSE:ECO&interval=D,Okeanis Eco Tankers Corp.,NYSE,Marine Shipping,-10.92167285126868,49.427994616419916,67.42695570216776
+KRMN,40.66,39.946,1.79,0.513,14.47,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NYSE:KRMN&interval=D,Karman Holdings Inc.,NYSE,Aerospace & Defense,36.0776439089692,-33.442461941397944,-35.867507886435334
+RVTY,154.39,151.1061,2.17,0.625,10.1,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NYSE:RVTY&interval=D,"Revvity, Inc.",NYSE,Medical Specialties,0.08427330481005799,32.5122307098103,63.46214928533614
+NSIT,168.76,164.0279,2.88,0.831,7.34,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:NSIT&interval=D,"Insight Enterprises, Inc.",NASDAQ,Information Technology Services,-2.6590528926573302,7.937320115126316,90.5385570735012
