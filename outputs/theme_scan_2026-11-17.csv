@@ -1,0 +1,4 @@
+name,description,exchange,industry,close,change,volume,earn_yoy,sales_yoy,Perf.1M,sma10_rising,sma20_rising,tradingview_url
+APP,Applovin Corporation,NASDAQ,Packaged Software,415.22,1.4959667562943055,4548008,75.4152552748643,55.49786661637172,48.35908887896384,True,True,https://www.tradingview.com/chart/?symbol=NASDAQ:APP&interval=D
+LION,Lionsgate Studios Corp,NYSE,Movies/Entertainment,14.04,0.07127583749108901,3082935,86.54777070063695,40.77036413386656,27.17391304347826,True,True,https://www.tradingview.com/chart/?symbol=NYSE:LION&interval=D
+INSM,Insmed Incorporated,NASDAQ,Pharmaceuticals: Major,122.88,1.419610432485968,2233188,73.76101636717408,268.42815191580837,24.498480243161083,True,True,https://www.tradingview.com/chart/?symbol=NASDAQ:INSM&interval=D
