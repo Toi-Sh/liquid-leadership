@@ -1,0 +1,6 @@
+name,close,ema8w,dist_to_ema8w_pct,ema8w_slope_pct,off_8w_high_pct,tagged_ema8w,ema8w_rising,signal,tradingview_url,description,exchange,industry,Perf.1M,Perf.3M,Perf.6M
+CAKE,109.73,108.482,1.15,0.33,7.25,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:CAKE&interval=D,The Cheesecake Factory Incorporated,NASDAQ,Restaurants,-4.274965800273598,4.694221058537494,87.91540785498489
+SDGR,27.36,26.9158,1.65,0.474,19.53,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:SDGR&interval=D,"Schrodinger, Inc.",NASDAQ,Packaged Software,-0.11677695601401765,41.611479028697566,109.46938775510205
+SWKS,86.5,84.3981,2.49,0.717,7.23,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:SWKS&interval=D,"Skyworks Solutions, Inc.",NASDAQ,Semiconductors,8.73086169808934,26.85267198110424,16.12162162162163
+CDNA,73.72,71.775,2.71,0.78,18.87,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:CDNA&interval=D,"CareDx, Inc.",NASDAQ,Medical Specialties,12.390714501055168,59.1462113127001,253.7001897533207
+CRL,335.52,325.9325,2.94,0.848,11.62,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NYSE:CRL&interval=D,"Charles River Laboratories International, Inc.",NYSE,Miscellaneous Commercial Services,8.517102812898184,16.867215537259867,114.21385270217982

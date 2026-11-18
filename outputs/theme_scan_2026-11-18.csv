@@ -1,0 +1,4 @@
+name,description,exchange,industry,close,change,volume,earn_yoy,sales_yoy,Perf.1M,sma10_rising,sma20_rising,tradingview_url
+APP,Applovin Corporation,NASDAQ,Packaged Software,398.94,-3.9208130629545854,4577314,75.4152552748643,55.49786661637172,42.54220634211702,True,True,https://www.tradingview.com/chart/?symbol=NASDAQ:APP&interval=D
+INSM,Insmed Incorporated,NASDAQ,Pharmaceuticals: Major,121.86,-0.8300781249999969,2398022,73.76101636717408,268.42815191580837,23.465045592705163,True,True,https://www.tradingview.com/chart/?symbol=NASDAQ:INSM&interval=D
+MWH,"SOLV Energy, Inc.",NASDAQ,Engineering & Construction,27.26,-2.9547881808472707,1718210,57.9597438243367,131.69854763113113,13.536026655560182,True,True,https://www.tradingview.com/chart/?symbol=NASDAQ:MWH&interval=D
