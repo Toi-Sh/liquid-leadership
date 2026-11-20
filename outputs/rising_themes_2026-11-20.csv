@@ -1,0 +1,12 @@
+date,frame,kind,industry,signal,prior_count,current_count,delta,members
+2026-11-20,1m,industry,Pharmaceuticals: Major,RISING,7,9,2,
+2026-11-20,1m,industry,Movies/Entertainment,RISING,1,2,1,
+2026-11-20,1m,cluster,Semis complex,RISING,1,2,1,Computer Peripherals|Computer Processing Hardware|Electronic Equipment/Instruments|Electronic Production Equipment|Electronics/Appliances|Semiconductors
+2026-11-20,3m,industry,Information Technology Services,RISING,2,4,2,
+2026-11-20,6m,industry,Medical Specialties,RISING,2,4,2,
+2026-11-20,3m,industry,Apparel/Footwear,RISING,1,2,1,
+2026-11-20,3m,industry,Department Stores,RISING,1,2,1,
+2026-11-20,6m,industry,Electronics/Appliances,RISING,1,2,1,
+2026-11-20,6m,industry,Information Technology Services,RISING,1,2,1,
+2026-11-20,6m,cluster,Semis complex,RISING,1,2,1,Computer Peripherals|Computer Processing Hardware|Electronic Equipment/Instruments|Electronic Production Equipment|Electronics/Appliances|Semiconductors
+2026-11-20,3m,industry,Specialty Stores,RISING,1,2,1,

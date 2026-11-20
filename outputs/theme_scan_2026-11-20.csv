@@ -1,0 +1,5 @@
+name,description,exchange,industry,close,change,volume,earn_yoy,sales_yoy,Perf.1M,sma10_rising,sma20_rising,tradingview_url
+INO,"Inovio Pharmaceuticals, Inc.",NASDAQ,Pharmaceuticals: Major,1.71,1.1834319526627228,10162458,42.79325765393877,63.927782073852256,69.3069306930693,True,True,https://www.tradingview.com/chart/?symbol=NASDAQ:INO&interval=D
+ANGX,"Angel Studios, Inc.",NYSE,Movies/Entertainment,4.19,-0.7109004739336342,1545992,88.90701468189232,107.74809863103212,20.402298850574724,True,True,https://www.tradingview.com/chart/?symbol=NYSE:ANGX&interval=D
+RSKD,Riskified Ltd.,NYSE,Packaged Software,9.63,-1.6343207354443143,3168676,80.32128514056224,40.70142434873191,15.88447653429603,True,True,https://www.tradingview.com/chart/?symbol=NYSE:RSKD&interval=D
+AVGO,Broadcom Inc.,NASDAQ,Semiconductors,346.65,-2.0901002683236927,26075610,214.40478985677393,85.50025075225676,3.787425149700592,True,True,https://www.tradingview.com/chart/?symbol=NASDAQ:AVGO&interval=D
