@@ -1,0 +1,5 @@
+setting,value
+history_period,6mo
+min_bars,40
+cross_band_pct,0.75
+cross_lookback_days,3

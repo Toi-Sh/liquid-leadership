@@ -1,0 +1,3 @@
+name,description,exchange,industry,close,change,volume,earn_yoy,sales_yoy,Perf.1M,sma10_rising,sma20_rising,tradingview_url
+INO,"Inovio Pharmaceuticals, Inc.",NASDAQ,Pharmaceuticals: Major,1.76,2.9239766081871372,7920389,42.79325765393877,63.927782073852256,66.0377358490566,True,True,https://www.tradingview.com/chart/?symbol=NASDAQ:INO&interval=D
+RSKD,Riskified Ltd.,NYSE,Packaged Software,9.46,-1.7653167185877456,1684309,80.32128514056224,40.70142434873191,7.622298065984093,True,True,https://www.tradingview.com/chart/?symbol=NYSE:RSKD&interval=D
