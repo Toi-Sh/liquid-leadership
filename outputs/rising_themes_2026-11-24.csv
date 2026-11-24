@@ -1,0 +1,9 @@
+date,frame,kind,industry,signal,prior_count,current_count,delta,members
+2026-11-24,1m,industry,Engineering & Construction,RISING,2,4,2,
+2026-11-24,1m,industry,Pharmaceuticals: Major,RISING,8,9,1,
+2026-11-24,1m,industry,Medical Specialties,RISING,3,4,1,
+2026-11-24,1m,industry,Information Technology Services,RISING,2,3,1,
+2026-11-24,1m,industry,Airlines,RISING,1,2,1,
+2026-11-24,6m,industry,Packaged Software,RISING,15,18,3,
+2026-11-24,3m,industry,Information Technology Services,RISING,3,4,1,
+2026-11-24,3m,industry,Medical/Nursing Services,RISING,2,3,1,

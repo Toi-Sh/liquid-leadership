@@ -1,0 +1,9 @@
+setting,value
+top_theme_count,5
+min_price,1.0
+min_change,-5.0
+max_change,5.0
+min_volume,1000000
+min_growth,40.0
+slope_lookback,5
+history_period,6mo
