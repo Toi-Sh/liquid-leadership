@@ -1,0 +1,7 @@
+name,close,ema8w,dist_to_ema8w_pct,ema8w_slope_pct,off_8w_high_pct,tagged_ema8w,ema8w_rising,signal,tradingview_url,description,exchange,industry,Perf.1M,Perf.3M,Perf.6M
+ECO,81.12,81.0911,0.04,0.01,13.62,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NYSE:ECO&interval=D,Okeanis Eco Tankers Corp.,NYSE,Marine Shipping,-17.426710097719862,21.92995641064182,71.03099304237826
+CPRI,18.4,18.0062,2.19,0.629,15.44,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NYSE:CPRI&interval=D,Capri Holdings Limited,NYSE,Apparel/Footwear Retail,19.01681759379041,38.241923365890294,-5.689390056381358
+CAKE,111.2,108.7783,2.23,0.64,7.93,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NASDAQ:CAKE&interval=D,The Cheesecake Factory Incorporated,NASDAQ,Restaurants,11.077814404155435,0.4063205417607249,73.4518795819685
+ELF,112.98,110.2126,2.51,0.723,8.24,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NYSE:ELF&interval=D,"e.l.f. Beauty, Inc.",NYSE,Household/Personal Care,0.2929427430093194,5.885660731021557,97.55201958384335
+HNGE,111.17,108.0255,2.91,0.839,12.05,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NYSE:HNGE&interval=D,"Hinge Health, Inc.",NYSE,Packaged Software,-1.8019609575125803,20.836956521739133,101.43141873527813
+MANE,130.38,126.6828,2.92,0.841,16.76,True,True,EMA8W_PB,https://www.tradingview.com/chart/?symbol=NYSE:MANE&interval=D,"Veradermics, Incorporated",NYSE,Pharmaceuticals: Major,-6.316016382841124,27.44868035190616,24.088702769582184

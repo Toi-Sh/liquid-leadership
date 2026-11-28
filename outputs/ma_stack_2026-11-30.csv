@@ -1,0 +1,5 @@
+name,close,SMA5,SMA10,SMA20,SMA30,sma5_gt_sma10,sma20_gt_sma30,sma20_30_gap_pct,cross_days_ago,signal,tradingview_url,description,exchange,industry,Perf.1M,Perf.3M,Perf.6M
+INTA,46.09,44.844,44.808,44.7617,44.5995,True,True,0.364,0,20x30_TODAY,https://www.tradingview.com/chart/?symbol=NASDAQ:INTA&interval=D,"Intapp, Inc.",NASDAQ,Packaged Software,16.15423387096775,5.469107551487415,116.89207630987005
+NUAI,4.92,4.328,3.942,3.1238,3.0945,True,True,0.945,0,20x30_TODAY,https://www.tradingview.com/chart/?symbol=NASDAQ:NUAI&interval=D,"New Era Energy & Digital, Inc.",NASDAQ,Engineering & Construction,48.6404833836858,-2.574257425742572,1.0266940451745343
+TENB,47.21,45.188,43.51,44.1785,44.11,True,True,0.155,,20x30_NEAR,https://www.tradingview.com/chart/?symbol=NASDAQ:TENB&interval=D,"Tenable Holdings, Inc.",NASDAQ,Packaged Software,-2.639719529799961,25.926913843691647,79.64231354642313
+NTSK,28.5,26.044,24.2985,23.2733,23.2022,True,True,0.306,,20x30_NEAR,https://www.tradingview.com/chart/?symbol=NASDAQ:NTSK&interval=D,"Netskope, Inc.",NASDAQ,Packaged Software,9.028309104820197,91.40362659503022,145.26678141135974
